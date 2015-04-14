@@ -1,0 +1,57 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:tabelas="http://java.sun.com/jsf/composite/composites/tabelas"
+                xmlns:dialogs="http://java.sun.com/jsf/composite/composites/dialogs">
+
+        <h:form id="formEscola">
+
+            <p:fieldset id="fieldsetEscola" legend="#{i18n.crudEscola}" toggleable="false">
+
+                <h:panelGrid columns="2">
+
+                    <h:outputLabel for="cnpjEscola" value="#{i18n.cnpjEscola}:" />
+                    <p:inputMask id="cnpjEscola" mask="999.999.999/9999-99" value="#{crudEscolaBean.entity.cnpj}" />
+
+                    <h:outputLabel for="ieEscola" value="#{i18n.ieEscola}:" />
+                    <p:inputMask id="ieEscola" mask="999999999999" value="#{crudEscolaBean.entity.ie}" />
+
+                    <h:outputLabel for="nomeEscola" value="#{i18n.nomeEscola}:" />
+                    <p:inputText id="nomeEscola" value="#{crudEscolaBean.entity.nome}" required="true" requiredMessage="#{i18n.nomeEscolaRequerido}" />
+
+                    <h:outputLabel for="cursos" value="#{i18n.cursos}:" />
+
+                    <h:selectManyCheckbox id="cursos" layout="pageDirection" value="#{crudEscolaBean.listaCursosSelecionados}">
+                        <f:selectItems  value="#{crudEscolaBean.listaCursos}"/>
+                    </h:selectManyCheckbox>
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+            <p:button value="#{i18n.addEndereco}" onclick="dlgEndereco.show();return false;" />
+            <p:button value="#{i18n.addTelefone}" onclick="dlgTelefone.show();return false;" />
+
+            <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudEscolaBean.create}" process="@form" rendered="#{crudEscolaBean.createMode}" update="formEscola formTabelas growl" />
+            <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudEscolaBean.update}" rendered="#{crudEscolaBean.updateMode}" update="pgEngloba growl" />
+            <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudEscolaBean.back}" rendered="#{crudEscolaBean.updateMode}" update="pgEngloba" />
+
+        </h:form>
+
+        <h:form id="formTabelas">
+            <p:accordionPanel id="accordionTabelas" activeIndex="-1" autoHeight="true" collapsible="true">
+                <p:tab title="#{i18n.enderecos}" >
+                    <tabelas:tabelaEndereco managedBean="#{crudEscolaBean}" emptyMessage="#{i18n.enderecoRequerido}" />
+                </p:tab>
+
+                <p:tab title="#{i18n.telefones}" >
+                    <tabelas:tabelaTelefone managedBean="#{crudEscolaBean}" emptyMessage="#{i18n.telefoneRequerido}" />
+                </p:tab>
+            </p:accordionPanel>
+        </h:form>
+
+        <dialogs:dialogTelefone id="dialogTelefone" managedBean="#{crudEscolaBean}" widgetVar="dlgTelefone" formsToUpdate="formTabelas" />
+        <dialogs:dialogEndereco id="dialogEndereco" managedBean="#{crudEscolaBean}" widgetVar="dlgEndereco" formsToUpdate="formTabelas" />
+
+</ui:composition>

@@ -1,0 +1,32 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form id="formCurso">
+
+        <p:fieldset id="fieldsetCurso" legend="#{i18n.crudCurso}" toggleable="false">
+            <h:panelGrid columns="2" width="50%">
+
+                <h:outputLabel for="descricao" value="#{i18n.descricao}:" />
+                <p:inputText id="descricao" required="true"
+                             value="#{crudCursoBean.entity.descricao}"
+                             requiredMessage="#{i18n.campoObrigatorio}"/>
+
+                <h:outputLabel for="ementa" value="#{i18n.ementa}:" />
+                <p:inputTextarea id="ementa" value="#{crudCursoBean.entity.ementa}"
+                                 effectDuration="400" required="true"
+                                 requiredMessage="#{i18n.campoObrigatorio}"
+                                 autoResize="true" maxHeight="1000" styleClass="ementa" validatorMessage="#{i18n.tamanhoMaximoExcedido}" >
+                    <f:validateLength maximum="1000" />
+                </p:inputTextarea>
+            </h:panelGrid>
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudCursoBean.create}" rendered="#{crudCursoBean.createMode}" update="formCurso growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudCursoBean.update}" rendered="#{crudCursoBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudCursoBean.back}" rendered="#{crudCursoBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>

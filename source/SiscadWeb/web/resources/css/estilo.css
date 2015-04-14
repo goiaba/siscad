@@ -1,0 +1,96 @@
+body {
+    font-size: 10px;
+}
+
+div#siscadMain {
+    border: 0px;
+    width: 980px;
+    margin: auto;
+}
+
+div#header {
+    text-align: center;
+}
+
+div#content-wrapper {
+    min-height: 475px;
+}
+
+div#footer {
+    text-align: center;
+}
+/*
+div.fit-content {
+    width: -moz-fit-content;
+    margin: 0 auto;
+}
+*/
+table {
+    margin: 10px 0 0;
+}
+
+img.output-link-image {
+    border: 0px;
+    width: 30px;
+    margin: 0px 3px;
+}
+
+div.i18n {
+    display: inline; float: right;
+}
+
+.dialog-auto-width {
+    width: auto !important;
+}
+
+div.i18n img {
+    border: 0px;
+    width: 30px;
+    margin: 0px 3px;
+}
+
+ul li ul.wijmo-wijmenu-list {
+    width: 200px !important;
+}
+
+.tel-cod-area {
+    width: 10%;
+}
+
+.tel-numero {
+    width: 35%;
+}
+
+.tel-tipo {
+    width: 35%;
+}
+
+.tel-opcoes {
+    width: 20%;
+}
+
+td.opcoes {
+    width: 7%;
+    text-align: center;
+}
+
+td.opcoes a {
+    padding: 0px 2px;
+}
+
+button {
+    margin: 10px 0;
+}
+
+fieldset {
+    margin-bottom: 5px;
+}
+
+.lista-telefone table {
+    width: 50%;
+}
+
+textarea.ementa {
+    width:500px;
+    height:100px;
+}

@@ -1,0 +1,72 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="/pages/templates/masterLayout.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="m" value="#{matricularAlunoBean.manutencao}" />
+        </f:metadata>
+
+        <h:form>
+
+            <p:fieldset id="fsMatricula" legend="#{i18n.matricula}">
+
+                <h:panelGrid id="pgRaNome" columns="3">
+                    <h:outputLabel id="olRaNomeAluno" value="#{i18n.aluno}" />
+                    <p:autoComplete id="acNomeAluno"
+                                    minQueryLength="3"
+                                    rendered="#{matricularAlunoBean.editRa}"
+                                    value="#{matricularAlunoBean.matricula.aluno}"
+                                    completeMethod="#{matricularAlunoBean.complete}"
+                                    var="a"
+                                    itemLabel="#{a.nome}"
+                                    itemValue="#{a}"
+                                    onSelectUpdate="pgRaNome pgDados growl"
+                                    forceSelection="true"
+                                    selectListener="#{matricularAlunoBean.populaCampos}"/>
+
+                    <h:outputText id="otRaNome" value="#{matricularAlunoBean.matricula.aluno.ra} - #{matricularAlunoBean.matricula.aluno.nome}" rendered="#{!matricularAlunoBean.editRa}" />
+                    <p:commandButton id="btAlterar" image="ui-icon-search" style="width: 24px; height: 24px" title="#{i18n.procurar}" action="#{matricularAlunoBean.alterarAlunoSelecionado}" update="pgRaNome pgDados" rendered="#{!matricularAlunoBean.editRa}" />
+                </h:panelGrid>
+
+                <h:panelGrid id="pgDados" columns="2">
+
+                    <h:outputLabel value="#{i18n.escola}:" for="escola" />
+                    <p:inputText id="escola" readonly="true" value="#{matricularAlunoBean.matricula.turma.escola.nome}" />
+
+                    <h:outputLabel value="#{i18n.curso}:" for="curso" />
+                    <p:inputText id="curso" readonly="true" value="#{matricularAlunoBean.matricula.turma.serie.curso.descricao}" />
+
+                    <h:outputLabel value="#{i18n.serie}:" for="serie" />
+                    <p:inputText id="serie" readonly="true" value="#{matricularAlunoBean.matricula.turma.serie.descricao}" />
+
+                    <h:outputLabel value="#{i18n.turma}:" for="turma" />
+                    <p:inputText id="turma" readonly="true" value="#{matricularAlunoBean.matricula.turma.descricao}" />
+
+                    <h:outputLabel value="#{i18n.dataMatricula}:" for="dataMatricula" />
+                    <p:inputText id="dataMatricula" value="#{matricularAlunoBean.matricula.dataentrada}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </p:inputText>
+
+                    <h:outputLabel value="#{i18n.situacaoMatricula}:" for="situacaoMatricula" />
+                    <h:selectOneMenu id="situacaoMatricula" value="#{matricularAlunoBean.matricula.situacaoMatricula}">
+                        <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                        <f:selectItems value="#{matricularAlunoBean.situacoesMatricula}" />
+                        <f:converter converterId="situacaoMatriculaConverter" />
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+            <p:commandButton id="efetuarMatricula" value="#{i18n.alterar}" action="#{matricularAlunoBean.alterarMatriculaAluno}" update="fsMatricula growl" />
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+

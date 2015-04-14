@@ -1,0 +1,23 @@
+
+	id
+	idUsuario (professor, responsavel, aluno, secretario, diretor, admin, etc...)
+	senha
+	tipoUsuario
+	login
+
+
+
+
+ - Criacao da entidade funcionario (matricula, dataContratacao, funcao): A entidade professor poderia deixar de existir???
+ - Consequente criacao da entidade funcao (descricao, cargaHoraria, denominacao)
+ - Criacao da entidade Autenticacao
+
+Entao temos:
+
+	Mas, dessa maneira, um professor pode ser tambem funcionario, como coordenador?!
+
+	funcionario (cada tipo possui um privilegio)
+	professor
+	responsavel
+	aluno
+	visitante (nenhum privilegio no sistema).

@@ -1,0 +1,24 @@
+-classpath
+'/tmp/trunk/target/checkout/target/classes:/home/antonio/.m2/repository/org/objenesis/objenesis/1.2/objenesis-1.2.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/tmp/trunk/target/checkout/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2010. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/tmp/trunk/target/checkout/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'cloning 1.7.4 API'
+-link
+'http://java.sun.com/javase/6/docs/api'
+-use
+-version
+-windowtitle
+'cloning 1.7.4 API'

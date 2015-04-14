@@ -1,0 +1,55 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formBuscaAlocacao">
+
+        <p:fieldset id="fsDadosAlocacao" legend="#{i18n.buscaAlocacao}" collapsed="false">
+
+            <dt:dadosComunsAlocacao managedBean="#{crudAlocacaoBean}" requiredFields="false" />
+
+        </p:fieldset>
+
+        <p:commandButton value="#{i18n.procurar}" update="growl formListaAlocacao" action="#{crudAlocacaoBean.retrieve}" />
+
+    </h:form>
+
+    <h:form id="formListaAlocacao">
+
+        <p:dataTable id="alocacoes"
+                     rendered="#{crudAlocacaoBean.renderTable}"
+                     value="#{crudAlocacaoBean.dataModel}"
+                     var="alocacao"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.turma}">#{alocacao.turma.descricao}</p:column>
+
+            <p:column headerText="#{i18n.disciplina}">#{alocacao.disciplina.nome}</p:column>
+
+            <p:column headerText="#{i18n.matricula}">#{alocacao.professor.matricula}</p:column>
+
+            <p:column headerText="#{i18n.professor}">#{alocacao.professor.pessoa.nome}</p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudAlocacaoBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{alocacao}" target="#{crudAlocacaoBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

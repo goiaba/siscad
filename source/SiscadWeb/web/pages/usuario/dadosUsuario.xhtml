@@ -1,0 +1,63 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:tabelas="http://java.sun.com/jsf/composite/composites/tabelas"
+                xmlns:dialogs="http://java.sun.com/jsf/composite/composites/dialogs">
+
+    <h:form id="formDadosUsuario">
+
+        <p:fieldset legend="#{i18n.alterarInserir}">
+
+            <h:panelGrid columns="2" id="gridCadastroUsuario">
+
+                <h:outputLabel for="cpf" value="#{i18n.cpf}:" />
+                <p:inputMask mask="999.999.999-99" validator="#{crudUsuarioBean.validarCpf}" readonly="#{crudUsuarioBean.cpfReadOnly}" value="#{crudUsuarioBean.entity.pessoa.cpf}" id="cpf" required="true" requiredMessage="#{i18n.cpfRequerido}" immediate="true" />
+
+                <h:outputLabel for="nome" value="#{i18n.nome}:" />
+                <p:inputText value="#{crudUsuarioBean.entity.pessoa.nome}" id="nome" required="true" requiredMessage="#{i18n.nomeRequerido}" />
+
+                <h:outputLabel for="email" value="#{i18n.email}:" />
+                <p:inputText value="#{crudUsuarioBean.entity.pessoa.email}" id="email" required="true" requiredMessage="#{i18n.emailRequerido}" validatorMessage="#{i18n.emailInvalido}">
+                    <f:validateRegex pattern="[a-zA-Z0-9_]*[@]{1}[a-zA-Z0-9_]*[.]{1}[a-zA-Z]{2,3}" />
+                </p:inputText>
+
+                <h:outputLabel for="selectEstadoCivil" value="#{i18n.estadoCivil}:" />
+                <h:selectOneMenu id="selectEstadoCivil" value="#{crudUsuarioBean.entity.pessoa.estadoCivil}" required="true" requiredMessage="#{i18n.estadoCivilRequerido}" converter="estadoCivilConverter">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudUsuarioBean.listaEstadoCivil}"/>
+
+                </h:selectOneMenu>
+
+                <h:outputLabel for="selectPerfil" value="#{i18n.perfil}:" />
+                <h:selectOneMenu id="selectPerfil" value="#{crudUsuarioBean.entity.perfil.tipoPerfil}" required="true" requiredMessage="#{i18n.perfilRequerido}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudUsuarioBean.perfis}"/>
+
+                </h:selectOneMenu>
+
+                <h:outputLabel for="dataExpiracao" value="#{i18n.dataExpiracao}:" />
+                <p:calendar value="#{crudUsuarioBean.entity.dataExpiracao}" id="dataExpiracao" pattern="dd/MM/yyyy"/>
+
+                <h:outputLabel for="idiomaUsuario" value="#{i18n.idioma}:" />
+                <h:selectOneMenu id="idiomaUsuario" value="#{crudUsuarioBean.entity.localePadrao}" required="true" requiredMessage="#{i18n.idiomaRequerido}" >
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudUsuarioBean.supportedLocales}"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel for="ativo" value="#{i18n.ativo}:" />
+                <h:selectBooleanCheckbox id="ativo" value="#{crudUsuarioBean.entity.ativo}" />
+
+            </h:panelGrid>
+
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudUsuarioBean.create}" rendered="#{crudUsuarioBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudUsuarioBean.update}" rendered="#{crudUsuarioBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudUsuarioBean.back}" rendered="#{crudUsuarioBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,40 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="/pages/templates/masterLayout.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="mode" value="#{alteracaoDadosUsuario.mode}" />
+        </f:metadata>
+
+        <h:form>
+
+            <p:fieldset id="fsAlterarSenha" legend="#{i18n.alterarSenha}">
+
+                <h:panelGrid id="pgDadosAlterarSenha" columns="2">
+
+                    <h:outputLabel value="#{i18n.senhaAtual}:" for="senhaAtual" />
+                    <p:password id="senhaAtual" value="#{alteracaoDadosUsuario.senhaAtual}" feedback="false" />
+
+                    <h:outputLabel value="#{i18n.senhaNova}:" for="senhaNova" />
+                    <p:password id="senhaNova" value="#{alteracaoDadosUsuario.novaSenha}" feedback="false" />
+
+                    <h:outputLabel value="#{i18n.senhaConfirmacao}:" for="confirmacaoSenha" />
+                    <p:password id="confirmacaoSenha" value="#{alteracaoDadosUsuario.confirmacaoSenha}" feedback="false" />
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+            <p:commandButton id="alterarSenha" value="#{i18n.alterar}" action="#{alteracaoDadosUsuario.update}" ajax="false" />
+            <p:commandButton id="calcelar" value="#{i18n.cancelar}" action="#{alteracaoDadosUsuario.back}" ajax="false" />
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+

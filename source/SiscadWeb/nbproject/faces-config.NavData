@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="pages/professor/dadosprofessor.xhtml" x="253" y="213" zoom="false"/>
+        <Node id="index.jsp" x="900" y="300" zoom="true"/>
+        <Node id="pages/header/header.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="resources/composites/tabelas/tabelaAluno.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="pages/responsavel/dadosresponsavel.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="pages/menu/menu.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="pages/footer/footer.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="pages/escola/escola.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="acessoNegado.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="pages/login/login.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="pages/aluno/matricula.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="pages/registroNota/listaTurmas.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="resources/composites/dialogs/dialogAluno.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="principal.xhtml" x="400" y="450" zoom="false"/>
+        <Node id="pages/frequencia/listaTurmas.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="resources/composites/tabelas/tabelaEndereco.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="pages/templates/masterLayout.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="resources/composites/dialogs/dialogEndereco.xhtml" x="144" y="67" zoom="false"/>
+        <Node id="pages/professor/listaprofessores.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="resources/composites/tabelas/tabelaTelefone.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="resources/composites/dialogs/dialogTelefone.xhtml" x="1150" y="300" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

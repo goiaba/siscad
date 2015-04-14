@@ -1,0 +1,43 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form id="formListaCurso">
+
+        <p:dataTable id="cursos"
+                     value="#{crudCursoBean.dataModel}"
+                     var="curso"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.curso}">
+                <p:resizable />
+                #{curso.descricao}
+            </p:column>
+
+            <p:column headerText="#{i18n.ementa}">
+                <p:resizable />
+                #{curso.ementa}
+            </p:column>
+
+            <p:column styleClass="opcoes">
+
+                <h:commandLink action="#{crudCursoBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:edit.png']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:delete.png']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{curso}" target="#{crudCursoBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

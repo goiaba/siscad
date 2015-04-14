@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <!-- INTERFACE -->
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" type="br.com.r2jb.siscad.managedBean.CrudAvaliacaoBean" />
+        <composite:attribute name="requiredFields" default="true" />
+
+    </composite:interface>
+
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+
+        <h:panelGrid columns="2" id="gridDadosAvaliacao">
+
+            <h:outputLabel for="descricao" value="#{i18n.descricao}" />
+            <h:inputText id="descricao" value="#{cc.attrs.managedBean.entity.descricao}" required="#{requiredFields}" requiredMessage="#{i18n.descricaoRequerida}" />
+
+            <h:outputLabel for="abreviacao" value="#{i18n.abreviacao}" />
+            <h:inputText id="abreviacao" value="#{cc.attrs.managedBean.entity.abreviacao}" required="#{requiredFields}" requiredMessage="#{i18n.abreviacaoRequerida}" />
+
+            <h:outputLabel for="peso" value="#{i18n.peso}" rendered="#{cc.attrs.managedBean.createMode}" />
+            <h:inputText id="peso" value="#{cc.attrs.managedBean.entity.peso}" required="#{requiredFields}" requiredMessage="#{i18n.pesoRequerido}" rendered="#{cc.attrs.managedBean.createMode}" />
+
+            <h:outputLabel for="escola" value="#{i18n.escola}:" />
+            <h:selectOneMenu id="escola" value="#{cc.attrs.managedBean.escolaSelecionada}" required="true" requiredMessage="#{i18n.escolaRequerida}">
+                <f:selectItem itemLabel="#{i18n.selecioneEscola}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaEscola}" />
+                <p:ajax update="curso" />
+            </h:selectOneMenu>
+
+            <h:outputLabel for="curso" value="#{i18n.curso}:" />
+            <h:selectOneMenu id="curso" value="#{cc.attrs.managedBean.cursoSelecionado}" required="true" requiredMessage="#{i18n.cursoRequerido}">
+                <f:selectItem itemLabel="#{i18n.selecioneCurso}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaCurso}" />
+                <p:ajax update="periodoAvaliacao" />
+            </h:selectOneMenu>
+
+            <h:outputLabel for="periodo" value="#{i18n.periodo}" rendered="#{cc.attrs.managedBean.createMode}" />
+            <h:selectOneMenu id="periodo" value="#{cc.attrs.managedBean.periodoSelecionado}" required="#{requiredFields}" requiredMessage="#{i18n.periodoRequerido}"  rendered="#{cc.attrs.managedBean.createMode}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaPeriodo}" />
+                <p:ajax update="periodoAvaliacao" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="ano" value="#{i18n.ano}" rendered="#{cc.attrs.managedBean.createMode}" />
+            <h:selectOneMenu id="ano" value="#{cc.attrs.managedBean.anoSelecionado}" required="#{requiredFields}" requiredMessage="#{i18n.anoRequerido}"  rendered="#{cc.attrs.managedBean.createMode}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaAno}" />
+                <p:ajax update="periodoAvaliacao" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="periodoAvaliacao" value="#{i18n.periodoAvaliacao}" />
+            <h:selectOneMenu id="periodoAvaliacao" value="#{cc.attrs.managedBean.entity.periodoAvaliacao}" required="#{requiredFields}" requiredMessage="#{i18n.periodoAvaliacaoRequerido}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaPeriodoAvaliacao}" />
+
+            </h:selectOneMenu>
+
+        </h:panelGrid>
+
+    </composite:implementation>
+
+</html>

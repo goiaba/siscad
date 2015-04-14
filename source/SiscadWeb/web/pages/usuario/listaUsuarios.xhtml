@@ -1,0 +1,90 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form id="formBuscaUsuario">
+
+        <h:panelGrid columns="5" id="gridBusca">
+
+            <h:outputLabel value="#{i18n.buscaUsuario}" for="termoBusca" />
+            <p:inputText value="#{crudUsuarioBean.searchTerm}" id="termoBusca" />
+
+            <h:outputLabel value="#{i18n.perfil}" for="perfil" />
+            <h:selectOneMenu id="selectPerfil" value="#{crudUsuarioBean.perfilBusca}" >
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{crudUsuarioBean.perfis}"/>
+
+            </h:selectOneMenu>
+
+            <p:commandButton value="#{i18n.procurar}" update="growl formListaUsuarios" action="#{crudUsuarioBean.retrieve}" />
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <h:form id="formListaUsuarios">
+
+        <p:dataTable id="usuarios"
+                     rendered="#{crudUsuarioBean.renderTable}"
+                     value="#{crudUsuarioBean.dataModel}"
+                     var="usr"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="5"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.usuario}">#{usr.usuario}</p:column>
+
+            <p:column headerText="#{i18n.nome}">#{usr.pessoa.nome}</p:column>
+
+            <p:column headerText="#{i18n.perfil}"><h:outputText converter="tipoPerfilConverter" value="#{usr.perfil.tipoPerfil}" /></p:column>
+
+            <p:column headerText="#{i18n.dataUltimoAcesso}">
+                 <h:outputText value="#{usr.dataUltimoAcesso}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{i18n.dataExpiracao}">
+                <h:outputText value="#{usr.dataExpiracao}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{i18n.ativo}"><h:selectBooleanCheckbox value="#{usr.ativo}" disabled="true" /></p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudUsuarioBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{usr}" target="#{crudUsuarioBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+    <p:outputPanel id="opDialogExclusao">
+
+        <p:confirmDialog message="#{i18n.confirmaExclusaoPessoa}" header="#{i18n.confirmaExclusaoPessoaTitulo}" severity="Alert" widgetVar="confirmaExclusao">
+
+            <h:form>
+
+                <p:commandButton value="#{i18n.sim}" update="growl formListaUsuarios" oncomplete="confirmaExclusao.hide();" actionListener="#{crudUsuarioBean.delete}" />
+                <p:commandButton value="#{i18n.nao}" onclick="confirmaExclusao.hide();" />
+
+            </h:form>
+
+        </p:confirmDialog>
+
+    </p:outputPanel>
+
+</ui:composition>

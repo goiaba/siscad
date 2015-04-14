@@ -1,0 +1,53 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="/pages/templates/masterLayout.xhtml">
+
+    <ui:define name="content">
+
+        <h:form>
+
+            <f:metadata>
+                <f:viewParam name="mode" value="#{alteracaoDadosUsuario.mode}" />
+            </f:metadata>
+
+            <p:fieldset id="fsAlterarDadosPessoais" legend="#{i18n.alterarDadosPessoais}">
+
+                <h:panelGrid id="pgDadosAlterarDPessoais" columns="2">
+
+                    <h:outputLabel for="nome" value="#{i18n.nome}:" onclick="populaDadosUsuario()" />
+                    <p:inputText value="#{alteracaoDadosUsuario.usuario.pessoa.nome}" id="nome" required="true" requiredMessage="#{i18n.nomeRequerido}" />
+
+                    <h:outputLabel for="email" value="#{i18n.email}:" />
+                    <p:inputText value="#{alteracaoDadosUsuario.usuario.pessoa.email}" id="email" required="true" requiredMessage="#{i18n.emailRequerido}" validatorMessage="#{i18n.emailInvalido}">
+                        <f:validateRegex pattern="[a-zA-Z0-9_]*[@]{1}[a-zA-Z0-9_]*[.]{1}[a-zA-Z]{2,3}" />
+                    </p:inputText>
+
+                    <h:outputLabel for="selectEstadoCivil" value="#{i18n.estadoCivil}:" />
+                    <h:selectOneMenu id="selectEstadoCivil" value="#{alteracaoDadosUsuario.usuario.pessoa.estadoCivil}" required="true" requiredMessage="#{i18n.estadoCivilRequerido}" converter="estadoCivilConverter">
+
+                        <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                        <f:selectItems value="#{alteracaoDadosUsuario.listaEstadoCivil}"/>
+
+                    </h:selectOneMenu>
+
+                    <h:outputLabel for="idiomaUsuario" value="#{i18n.idioma}:" />
+                    <h:selectOneMenu id="idiomaUsuario" value="#{alteracaoDadosUsuario.usuario.localePadrao}" required="true" requiredMessage="#{i18n.idiomaRequerido}" >
+                        <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                        <f:selectItems value="#{alteracaoDadosUsuario.supportedLocales}"/>
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+            <p:commandButton id="alterarSenha" value="#{i18n.alterar}" action="#{alteracaoDadosUsuario.update}" ajax="false" />
+            <p:commandButton id="calcelar" value="#{i18n.cancelar}" action="#{alteracaoDadosUsuario.back}" ajax="false" />
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
+

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="widgetVar" required="true" />
+        <composite:attribute name="formsToUpdate" />
+
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:dialog id="dialogEndereco" styleClass="dialog-auto-width" header="#{i18n.novoEndereco}" widgetVar="#{cc.attrs.widgetVar}" draggable="false" modal="true">
+
+            <h:form id="formEndereco">
+
+                <h:panelGrid columns="2" id="gridDadosEndereco">
+
+                    <h:outputLabel value="#{i18n.cep}:" for="cep" />
+                    <p:inputMask id="cep" mask="99.999-999" value="#{cc.attrs.managedBean.enderecoBean.endereco.cep}" required="true" requiredMessage="#{i18n.cepRequerido}">
+                        <p:ajax event="blur" process="@this" update="rua bairro cidade selectEstado" listener="#{cc.attrs.managedBean.enderecoBean.complementaEnderecoPorCepListener}"/>
+                    </p:inputMask>
+
+                    <h:outputLabel value="#{i18n.rua}:" for="rua" />
+                    <p:inputText value="#{cc.attrs.managedBean.enderecoBean.endereco.rua}" id="rua" required="true" requiredMessage="#{i18n.ruaRequerido}" />
+
+                    <h:outputLabel value="#{i18n.numero}:" for="numeroEndereco" />
+                    <p:inputText value="#{cc.attrs.managedBean.enderecoBean.endereco.numero}" id="numeroEndereco" required="true" requiredMessage="#{i18n.numeroRequerido}" converter="integerConverter" />
+
+                    <h:outputLabel value="#{i18n.complemento}:" for="complemento" />
+                    <p:inputText value="#{cc.attrs.managedBean.enderecoBean.endereco.complemento}" id="complemento" />
+
+                    <h:outputLabel value="#{i18n.tipoEndereco}:" for="selectTipoEndereco" />
+                    <h:selectOneMenu id="selectTipoEndereco" value="#{cc.attrs.managedBean.enderecoBean.endereco.tipo}" required="true" requiredMessage="#{i18n.tipoEnderecoRequerido}">
+
+                        <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                        <f:selectItems value="#{cc.attrs.managedBean.enderecoBean.listaTipoEndereco}"/>
+
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="#{i18n.bairro}:" for="bairro" />
+                    <p:inputText value="#{cc.attrs.managedBean.enderecoBean.endereco.bairro}" id="bairro" required="true" requiredMessage="#{i18n.bairroRequerido}" />
+
+                    <h:outputLabel value="#{i18n.cidade}:" for="cidade" />
+                    <p:inputText value="#{cc.attrs.managedBean.enderecoBean.endereco.cidade}" id="cidade" required="true" requiredMessage="#{i18n.cidadeRequerido}" />
+
+                    <h:outputLabel value="#{i18n.estado}:" for="selectEstado" />
+                    <h:selectOneMenu id="selectEstado" value="#{cc.attrs.managedBean.enderecoBean.endereco.estado}" required="true" requiredMessage="#{i18n.estadoRequerido}">
+
+                        <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                        <f:selectItems value="#{cc.attrs.managedBean.enderecoBean.listaEstadosBrasileiros}" />
+
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+                <p:commandButton value="#{i18n.limpar}" type="reset" />
+
+                <p:commandButton value="#{i18n.inserir}"
+                                 update="#{cc.attrs.formsToUpdate} growl"
+                                 action="#{cc.attrs.managedBean.enderecoBean.newEndereco}"
+                                 oncomplete="#{cc.attrs.widgetVar}.hide();" >
+
+                    <p:collector value="#{cc.attrs.managedBean.enderecoBean.endereco}" addTo="#{cc.attrs.managedBean.enderecoBean.enderecos}" />
+
+                </p:commandButton>
+
+            </h:form>
+
+        </p:dialog>
+
+    </composite:implementation>
+
+</html>

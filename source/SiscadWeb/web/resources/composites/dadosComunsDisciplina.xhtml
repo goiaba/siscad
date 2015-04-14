@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <!-- INTERFACE -->
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" type="br.com.r2jb.siscad.managedBean.CrudDisciplinaBean" />
+        <composite:attribute name="requiredFields" default="true" />
+
+    </composite:interface>
+
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+
+        <h:panelGrid id="gridDadosDisciplina" columns="2">
+
+                <h:outputLabel for="nome" value="#{i18n.nome}" />
+                <h:inputText id="nome" value="#{cc.attrs.managedBean.entity.nome}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.nomeRequerido}" />
+
+                <h:outputLabel for="descricao" value="#{i18n.descricao}" />
+                <h:inputText id="descricao" value="#{cc.attrs.managedBean.entity.descricao}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.descricaoRequerida}" />
+
+                <h:outputLabel for="abreviacao" value="#{i18n.abreviacao}" />
+                <h:inputText id="abreviacao" value="#{cc.attrs.managedBean.entity.abreviacao}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.abreviacaoRequerida}" />
+
+            </h:panelGrid>
+
+    </composite:implementation>
+
+</html>

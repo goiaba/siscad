@@ -1,0 +1,3242 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Started on 2011-09-16 20:20:14 BRT
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+ALTER TABLE ONLY public.turma DROP CONSTRAINT turno_turma_fk;
+ALTER TABLE ONLY public.matricula DROP CONSTRAINT turma_matricula_fk;
+ALTER TABLE ONLY public.alocacao DROP CONSTRAINT turma_alocacao_fk;
+ALTER TABLE ONLY public.responsavel DROP CONSTRAINT tipofuncao_responsavel_fk;
+ALTER TABLE ONLY public.professor DROP CONSTRAINT tipofuncao_professor_fk;
+ALTER TABLE ONLY public.pessoatelefone DROP CONSTRAINT telefone_pessoatelefone_fk;
+ALTER TABLE ONLY public.escolatelefone DROP CONSTRAINT telefone_escolatelefone_fk;
+ALTER TABLE ONLY public.turma DROP CONSTRAINT serie_turma_fk;
+ALTER TABLE ONLY public.serie DROP CONSTRAINT serie_serie_fk;
+ALTER TABLE ONLY public.matrizcurricular DROP CONSTRAINT serie_matrizcurricular_fk;
+ALTER TABLE ONLY public.sec_relusuarioperfil DROP CONSTRAINT sec_usuario_usuarioperfil_fk;
+ALTER TABLE ONLY public.sec_relusuarioperfil DROP CONSTRAINT sec_perfil_usuarioperfil_fk;
+ALTER TABLE ONLY public.aluno DROP CONSTRAINT responsavel_aluno_fk;
+ALTER TABLE ONLY public.alocacao DROP CONSTRAINT professor_alocacao_fk;
+ALTER TABLE ONLY public.tipofuncao DROP CONSTRAINT pessoa_tipofuncao_fk;
+ALTER TABLE ONLY public.sec_usuario DROP CONSTRAINT pessoa_sec_usuario_fk;
+ALTER TABLE ONLY public.pessoatelefone DROP CONSTRAINT pessoa_pessoatelefone_fk;
+ALTER TABLE ONLY public.pessoaendereco DROP CONSTRAINT pessoa_pessoaendereco_fk;
+ALTER TABLE ONLY public.frequencia DROP CONSTRAINT periodoavaliacao_frequencia_fk;
+ALTER TABLE ONLY public.avaliacao DROP CONSTRAINT periodoavaliacao_avaliacao_fk;
+ALTER TABLE ONLY public.matrizcurriculardisciplina DROP CONSTRAINT matrizcurricular_matrizcurriculardisciplina_fk;
+ALTER TABLE ONLY public.nota DROP CONSTRAINT matricula_nota_fk;
+ALTER TABLE ONLY public.frequencia DROP CONSTRAINT matricula_frequencia_fk;
+ALTER TABLE ONLY public.turma DROP CONSTRAINT escola_turma_fk;
+ALTER TABLE ONLY public.matrizcurricular DROP CONSTRAINT escola_matrizcurricular_fk;
+ALTER TABLE ONLY public.escolatelefone DROP CONSTRAINT escola_escolatelefone_fk;
+ALTER TABLE ONLY public.escolacurso DROP CONSTRAINT escola_escolacurso_fk;
+ALTER TABLE ONLY public.pessoaendereco DROP CONSTRAINT endereco_pessoaendereco_fk;
+ALTER TABLE ONLY public.escola DROP CONSTRAINT endereco_escola_fk;
+ALTER TABLE ONLY public.nota DROP CONSTRAINT disciplina_nota_fk;
+ALTER TABLE ONLY public.matrizcurriculardisciplina DROP CONSTRAINT disciplina_matrizcurriculardisciplina_fk;
+ALTER TABLE ONLY public.frequencia DROP CONSTRAINT disciplina_frequencia_fk;
+ALTER TABLE ONLY public.alocacao DROP CONSTRAINT disciplina_alocacao_fk;
+ALTER TABLE ONLY public.serie DROP CONSTRAINT curso_serie_fk;
+ALTER TABLE ONLY public.periodoavaliacao DROP CONSTRAINT curso_periodoavaliacao_fk;
+ALTER TABLE ONLY public.escolacurso DROP CONSTRAINT curso_escolacurso_fk;
+ALTER TABLE ONLY public.configuracaoglobal DROP CONSTRAINT configuracaoglobal_configuracaoglobal_fk;
+ALTER TABLE ONLY public.nota DROP CONSTRAINT avaliacao_nota_fk;
+ALTER TABLE ONLY public.sec_usuario DROP CONSTRAINT aluno_sec_usuario_fk;
+ALTER TABLE ONLY public.matricula DROP CONSTRAINT aluno_matricula_fk;
+DROP INDEX public.turno_idx;
+DROP INDEX public.turma_idx;
+DROP INDEX public.tipofuncao_idx;
+DROP INDEX public.telefone_idx;
+DROP INDEX public.serie_idx;
+DROP INDEX public.professor_idx;
+DROP INDEX public.pessoatelefone_idx;
+DROP INDEX public.pessoaendereco_idx;
+DROP INDEX public.pessoa_idx;
+DROP INDEX public.periodoavaliacao_idx;
+DROP INDEX public.nota_idx;
+DROP INDEX public.matrizcurriculardisciplina_idx;
+DROP INDEX public.matrizcurricular_idx;
+DROP INDEX public.matricula_idx;
+DROP INDEX public.frequencia_idx;
+DROP INDEX public.escolatelefone_idx;
+DROP INDEX public.escola_nome_unique;
+DROP INDEX public.escola_idx;
+DROP INDEX public.disciplina_idx;
+DROP INDEX public.curso_idx;
+DROP INDEX public.configuracaoglobal_idx;
+DROP INDEX public.avaliacao_idx;
+DROP INDEX public.aluno_idx;
+DROP INDEX public.alocacao_idx;
+ALTER TABLE ONLY public.turno DROP CONSTRAINT turno_pk;
+ALTER TABLE ONLY public.turma DROP CONSTRAINT turma_pk;
+ALTER TABLE ONLY public.tipofuncao DROP CONSTRAINT tipofuncao_pk;
+ALTER TABLE ONLY public.telefone DROP CONSTRAINT telefone_pk;
+ALTER TABLE ONLY public.serie DROP CONSTRAINT serie_pk;
+ALTER TABLE ONLY public.sec_relusuarioperfil DROP CONSTRAINT sec_usuarioperfil_pk;
+ALTER TABLE ONLY public.sec_usuario DROP CONSTRAINT sec_usuario_pk;
+ALTER TABLE ONLY public.sec_perfil DROP CONSTRAINT sec_perfil_pk;
+ALTER TABLE ONLY public.responsavel DROP CONSTRAINT responsavel_pk;
+ALTER TABLE ONLY public.professor DROP CONSTRAINT professor_pk;
+ALTER TABLE ONLY public.pessoatelefone DROP CONSTRAINT pessoatelefone_pk;
+ALTER TABLE ONLY public.pessoaendereco DROP CONSTRAINT pessoaendereco_pk;
+ALTER TABLE ONLY public.pessoa DROP CONSTRAINT pessoa_pk;
+ALTER TABLE ONLY public.periodoavaliacao DROP CONSTRAINT periodoavaliacao_pk;
+ALTER TABLE ONLY public.nota DROP CONSTRAINT nota_pk;
+ALTER TABLE ONLY public.matrizcurriculardisciplina DROP CONSTRAINT matrizcurriculardisciplina_pk;
+ALTER TABLE ONLY public.matrizcurricular DROP CONSTRAINT matrizcurricular_pk;
+ALTER TABLE ONLY public.matricula DROP CONSTRAINT matricula_pk;
+ALTER TABLE ONLY public.frequencia DROP CONSTRAINT frequencia_pk;
+ALTER TABLE ONLY public.escolatelefone DROP CONSTRAINT escolatelefone_pk;
+ALTER TABLE ONLY public.escolacurso DROP CONSTRAINT escolacurso_pk;
+ALTER TABLE ONLY public.escola DROP CONSTRAINT escola_pk;
+ALTER TABLE ONLY public.endereco DROP CONSTRAINT endereco_pk;
+ALTER TABLE ONLY public.disciplina DROP CONSTRAINT disciplina_pk;
+ALTER TABLE ONLY public.curso DROP CONSTRAINT curso_pk;
+ALTER TABLE ONLY public.configuracaoglobal DROP CONSTRAINT configuracaoglobal_pk;
+ALTER TABLE ONLY public.avaliacao DROP CONSTRAINT avaliacao_pk;
+ALTER TABLE ONLY public.aluno DROP CONSTRAINT aluno_pk;
+ALTER TABLE ONLY public.alocacao DROP CONSTRAINT alocacao_pk;
+ALTER TABLE public.turno ALTER COLUMN idturno DROP DEFAULT;
+ALTER TABLE public.turma ALTER COLUMN idturma DROP DEFAULT;
+ALTER TABLE public.tipofuncao ALTER COLUMN idtipofuncao DROP DEFAULT;
+ALTER TABLE public.telefone ALTER COLUMN idtelefone DROP DEFAULT;
+ALTER TABLE public.serie ALTER COLUMN idserie DROP DEFAULT;
+ALTER TABLE public.sec_usuario ALTER COLUMN idusuario DROP DEFAULT;
+ALTER TABLE public.sec_relusuarioperfil ALTER COLUMN idusuarioperfil DROP DEFAULT;
+ALTER TABLE public.sec_perfil ALTER COLUMN idperfil DROP DEFAULT;
+ALTER TABLE public.pessoatelefone ALTER COLUMN idpessoatelefone DROP DEFAULT;
+ALTER TABLE public.pessoaendereco ALTER COLUMN idpessoaendereco DROP DEFAULT;
+ALTER TABLE public.pessoa ALTER COLUMN idpessoa DROP DEFAULT;
+ALTER TABLE public.periodoavaliacao ALTER COLUMN idperiodoavaliacao DROP DEFAULT;
+ALTER TABLE public.nota ALTER COLUMN idnota DROP DEFAULT;
+ALTER TABLE public.matrizcurriculardisciplina ALTER COLUMN idmatrizcurriculardisciplina DROP DEFAULT;
+ALTER TABLE public.matrizcurricular ALTER COLUMN idmatrizcurricular DROP DEFAULT;
+ALTER TABLE public.matricula ALTER COLUMN idmatricula DROP DEFAULT;
+ALTER TABLE public.frequencia ALTER COLUMN idfrequencia DROP DEFAULT;
+ALTER TABLE public.escolatelefone ALTER COLUMN idescolatelefone DROP DEFAULT;
+ALTER TABLE public.escolacurso ALTER COLUMN idescolacurso DROP DEFAULT;
+ALTER TABLE public.escola ALTER COLUMN idescola DROP DEFAULT;
+ALTER TABLE public.endereco ALTER COLUMN idendereco DROP DEFAULT;
+ALTER TABLE public.disciplina ALTER COLUMN iddisciplina DROP DEFAULT;
+ALTER TABLE public.curso ALTER COLUMN idcurso DROP DEFAULT;
+ALTER TABLE public.configuracaoglobal ALTER COLUMN idconfiguracaoglobal DROP DEFAULT;
+ALTER TABLE public.avaliacao ALTER COLUMN idavaliacao DROP DEFAULT;
+ALTER TABLE public.aluno ALTER COLUMN idaluno DROP DEFAULT;
+ALTER TABLE public.alocacao ALTER COLUMN idalocacao DROP DEFAULT;
+DROP SEQUENCE public.turno_idturno_seq;
+DROP TABLE public.turno;
+DROP SEQUENCE public.turma_idturma_seq;
+DROP TABLE public.turma;
+DROP SEQUENCE public.tipofuncao_idtipofuncao_seq;
+DROP TABLE public.tipofuncao;
+DROP SEQUENCE public.telefone_idtelefone_seq;
+DROP TABLE public.telefone;
+DROP SEQUENCE public.serie_idserie_seq;
+DROP TABLE public.serie;
+DROP SEQUENCE public.sec_usuarioperfil_idsec_usuarioperfil_seq;
+DROP SEQUENCE public.sec_usuario_idusuario_seq;
+DROP TABLE public.sec_usuario;
+DROP TABLE public.sec_relusuarioperfil;
+DROP SEQUENCE public.sec_perfil_idperfil_seq;
+DROP TABLE public.sec_perfil;
+DROP TABLE public.responsavel;
+DROP SEQUENCE public.professor_matricula_seq;
+DROP TABLE public.professor;
+DROP SEQUENCE public.pessoatelefone_idpessoatelefone_seq;
+DROP TABLE public.pessoatelefone;
+DROP SEQUENCE public.pessoaendereco_idpessoaendereco_seq;
+DROP TABLE public.pessoaendereco;
+DROP SEQUENCE public.pessoa_idpessoa_seq;
+DROP TABLE public.pessoa;
+DROP SEQUENCE public.periodoavaliacao_idperiodoavaliacao_seq;
+DROP TABLE public.periodoavaliacao;
+DROP SEQUENCE public.nota_idnota_seq;
+DROP TABLE public.nota;
+DROP SEQUENCE public.matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq;
+DROP TABLE public.matrizcurriculardisciplina;
+DROP SEQUENCE public.matrizcurricular_idmatrizcurricular_seq;
+DROP TABLE public.matrizcurricular;
+DROP SEQUENCE public.matricula_idmatricula_seq;
+DROP TABLE public.matricula;
+DROP SEQUENCE public.frequencia_idfrequencia_seq;
+DROP TABLE public.frequencia;
+DROP SEQUENCE public.escolatelefone_idescolatelefone_seq;
+DROP TABLE public.escolatelefone;
+DROP SEQUENCE public.escolacurso_idescolacurso_seq;
+DROP TABLE public.escolacurso;
+DROP SEQUENCE public.escola_idescola_seq;
+DROP TABLE public.escola;
+DROP SEQUENCE public.endereco_idendereco_seq;
+DROP TABLE public.endereco;
+DROP SEQUENCE public.disciplina_iddisciplina_seq;
+DROP TABLE public.disciplina;
+DROP SEQUENCE public.curso_idcurso_seq;
+DROP TABLE public.curso;
+DROP SEQUENCE public.configuracaoglobal_idconfiguracaoglobal_seq;
+DROP TABLE public.configuracaoglobal;
+DROP SEQUENCE public.avaliacao_idavaliacao_seq;
+DROP TABLE public.avaliacao;
+DROP SEQUENCE public.aluno_ra_seq;
+DROP SEQUENCE public.aluno_idaluno_seq;
+DROP TABLE public.aluno;
+DROP SEQUENCE public.alocacao_idalocacao_seq;
+DROP TABLE public.alocacao;
+DROP SCHEMA public;
+--
+-- TOC entry 6 (class 2615 OID 21983)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO postgres;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 1612 (class 1259 OID 22133)
+-- Dependencies: 6
+-- Name: alocacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE alocacao (
+    idalocacao integer NOT NULL,
+    idtipofuncao integer NOT NULL,
+    idturma integer NOT NULL,
+    iddisciplina integer NOT NULL
+);
+
+
+ALTER TABLE public.alocacao OWNER TO postgres;
+
+--
+-- TOC entry 1611 (class 1259 OID 22131)
+-- Dependencies: 6 1612
+-- Name: alocacao_idalocacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE alocacao_idalocacao_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.alocacao_idalocacao_seq OWNER TO postgres;
+
+--
+-- TOC entry 2097 (class 0 OID 0)
+-- Dependencies: 1611
+-- Name: alocacao_idalocacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE alocacao_idalocacao_seq OWNED BY alocacao.idalocacao;
+
+
+--
+-- TOC entry 2098 (class 0 OID 0)
+-- Dependencies: 1611
+-- Name: alocacao_idalocacao_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('alocacao_idalocacao_seq', 1, false);
+
+
+--
+-- TOC entry 1615 (class 1259 OID 22147)
+-- Dependencies: 6
+-- Name: aluno; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aluno (
+    idaluno integer NOT NULL,
+    idtipofuncao integer NOT NULL,
+    ra integer NOT NULL,
+    nome character varying(200) NOT NULL,
+    datanascimento date NOT NULL,
+    localnascimento character varying(100) NOT NULL,
+    nacionalidade character varying(100) NOT NULL,
+    email character varying(100) NOT NULL,
+    ativo boolean NOT NULL,
+    sexo character varying(10) NOT NULL
+);
+
+
+ALTER TABLE public.aluno OWNER TO postgres;
+
+--
+-- TOC entry 1614 (class 1259 OID 22145)
+-- Dependencies: 6 1615
+-- Name: aluno_idaluno_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aluno_idaluno_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aluno_idaluno_seq OWNER TO postgres;
+
+--
+-- TOC entry 2099 (class 0 OID 0)
+-- Dependencies: 1614
+-- Name: aluno_idaluno_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aluno_idaluno_seq OWNED BY aluno.idaluno;
+
+
+--
+-- TOC entry 2100 (class 0 OID 0)
+-- Dependencies: 1614
+-- Name: aluno_idaluno_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aluno_idaluno_seq', 21, true);
+
+
+--
+-- TOC entry 1627 (class 1259 OID 22375)
+-- Dependencies: 6
+-- Name: aluno_ra_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aluno_ra_seq
+    START WITH 1000
+    INCREMENT BY 1
+    NO MAXVALUE
+    MINVALUE 1000
+    CACHE 1;
+
+
+ALTER TABLE public.aluno_ra_seq OWNER TO postgres;
+
+--
+-- TOC entry 2101 (class 0 OID 0)
+-- Dependencies: 1627
+-- Name: aluno_ra_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aluno_ra_seq', 1007, true);
+
+
+--
+-- TOC entry 1591 (class 1259 OID 22025)
+-- Dependencies: 6
+-- Name: avaliacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE avaliacao (
+    idavaliacao integer NOT NULL,
+    idperiodoavaliacao integer NOT NULL,
+    abreviacao character varying(5) NOT NULL,
+    descricao character varying(100) NOT NULL,
+    peso real NOT NULL
+);
+
+
+ALTER TABLE public.avaliacao OWNER TO postgres;
+
+--
+-- TOC entry 1590 (class 1259 OID 22023)
+-- Dependencies: 1591 6
+-- Name: avaliacao_idavaliacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE avaliacao_idavaliacao_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.avaliacao_idavaliacao_seq OWNER TO postgres;
+
+--
+-- TOC entry 2102 (class 0 OID 0)
+-- Dependencies: 1590
+-- Name: avaliacao_idavaliacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE avaliacao_idavaliacao_seq OWNED BY avaliacao.idavaliacao;
+
+
+--
+-- TOC entry 2103 (class 0 OID 0)
+-- Dependencies: 1590
+-- Name: avaliacao_idavaliacao_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('avaliacao_idavaliacao_seq', 1, false);
+
+
+--
+-- TOC entry 1639 (class 1259 OID 22737)
+-- Dependencies: 6
+-- Name: configuracaoglobal; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE configuracaoglobal (
+    idconfiguracaoglobal integer NOT NULL,
+    dominio_ character varying(30) NOT NULL,
+    key_ character varying(30) NOT NULL,
+    value_ character varying(30) NOT NULL,
+    parent integer
+);
+
+
+ALTER TABLE public.configuracaoglobal OWNER TO postgres;
+
+--
+-- TOC entry 1638 (class 1259 OID 22735)
+-- Dependencies: 6 1639
+-- Name: configuracaoglobal_idconfiguracaoglobal_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE configuracaoglobal_idconfiguracaoglobal_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.configuracaoglobal_idconfiguracaoglobal_seq OWNER TO postgres;
+
+--
+-- TOC entry 2104 (class 0 OID 0)
+-- Dependencies: 1638
+-- Name: configuracaoglobal_idconfiguracaoglobal_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE configuracaoglobal_idconfiguracaoglobal_seq OWNED BY configuracaoglobal.idconfiguracaoglobal;
+
+
+--
+-- TOC entry 2105 (class 0 OID 0)
+-- Dependencies: 1638
+-- Name: configuracaoglobal_idconfiguracaoglobal_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('configuracaoglobal_idconfiguracaoglobal_seq', 3, true);
+
+
+--
+-- TOC entry 1587 (class 1259 OID 22004)
+-- Dependencies: 6
+-- Name: curso; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE curso (
+    idcurso integer NOT NULL,
+    descricao character varying(100) NOT NULL,
+    ementa character varying(1000) NOT NULL
+);
+
+
+ALTER TABLE public.curso OWNER TO postgres;
+
+--
+-- TOC entry 1586 (class 1259 OID 22002)
+-- Dependencies: 6 1587
+-- Name: curso_idcurso_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE curso_idcurso_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.curso_idcurso_seq OWNER TO postgres;
+
+--
+-- TOC entry 2106 (class 0 OID 0)
+-- Dependencies: 1586
+-- Name: curso_idcurso_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE curso_idcurso_seq OWNED BY curso.idcurso;
+
+
+--
+-- TOC entry 2107 (class 0 OID 0)
+-- Dependencies: 1586
+-- Name: curso_idcurso_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('curso_idcurso_seq', 1, false);
+
+
+--
+-- TOC entry 1583 (class 1259 OID 21986)
+-- Dependencies: 6
+-- Name: disciplina; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE disciplina (
+    iddisciplina integer NOT NULL,
+    nome character varying(50) NOT NULL,
+    descricao character varying(100) NOT NULL,
+    abreviacao character varying(10) NOT NULL
+);
+
+
+ALTER TABLE public.disciplina OWNER TO postgres;
+
+--
+-- TOC entry 1582 (class 1259 OID 21984)
+-- Dependencies: 1583 6
+-- Name: disciplina_iddisciplina_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE disciplina_iddisciplina_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.disciplina_iddisciplina_seq OWNER TO postgres;
+
+--
+-- TOC entry 2108 (class 0 OID 0)
+-- Dependencies: 1582
+-- Name: disciplina_iddisciplina_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE disciplina_iddisciplina_seq OWNED BY disciplina.iddisciplina;
+
+
+--
+-- TOC entry 2109 (class 0 OID 0)
+-- Dependencies: 1582
+-- Name: disciplina_iddisciplina_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('disciplina_iddisciplina_seq', 1, false);
+
+
+--
+-- TOC entry 1597 (class 1259 OID 22052)
+-- Dependencies: 6
+-- Name: endereco; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE endereco (
+    idendereco integer NOT NULL,
+    rua character varying(200) NOT NULL,
+    numero integer NOT NULL,
+    complemento character varying(50) NOT NULL,
+    tipo character varying(20) NOT NULL,
+    bairro character varying(100) NOT NULL,
+    cidade character varying(100) NOT NULL,
+    estado character varying(2) NOT NULL,
+    cep character varying(8) NOT NULL
+);
+
+
+ALTER TABLE public.endereco OWNER TO postgres;
+
+--
+-- TOC entry 1596 (class 1259 OID 22050)
+-- Dependencies: 6 1597
+-- Name: endereco_idendereco_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE endereco_idendereco_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.endereco_idendereco_seq OWNER TO postgres;
+
+--
+-- TOC entry 2110 (class 0 OID 0)
+-- Dependencies: 1596
+-- Name: endereco_idendereco_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE endereco_idendereco_seq OWNED BY endereco.idendereco;
+
+
+--
+-- TOC entry 2111 (class 0 OID 0)
+-- Dependencies: 1596
+-- Name: endereco_idendereco_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('endereco_idendereco_seq', 34, true);
+
+
+--
+-- TOC entry 1599 (class 1259 OID 22061)
+-- Dependencies: 6
+-- Name: escola; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE escola (
+    idescola integer NOT NULL,
+    cnpj character varying(15) NOT NULL,
+    ie character varying(20) NOT NULL,
+    nome character varying(200) NOT NULL,
+    idendereco integer NOT NULL
+);
+
+
+ALTER TABLE public.escola OWNER TO postgres;
+
+--
+-- TOC entry 1598 (class 1259 OID 22059)
+-- Dependencies: 6 1599
+-- Name: escola_idescola_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE escola_idescola_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.escola_idescola_seq OWNER TO postgres;
+
+--
+-- TOC entry 2112 (class 0 OID 0)
+-- Dependencies: 1598
+-- Name: escola_idescola_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE escola_idescola_seq OWNED BY escola.idescola;
+
+
+--
+-- TOC entry 2113 (class 0 OID 0)
+-- Dependencies: 1598
+-- Name: escola_idescola_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('escola_idescola_seq', 5, true);
+
+
+--
+-- TOC entry 1601 (class 1259 OID 22083)
+-- Dependencies: 6
+-- Name: escolacurso; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE escolacurso (
+    idescolacurso integer NOT NULL,
+    idcurso integer NOT NULL,
+    idescola integer NOT NULL
+);
+
+
+ALTER TABLE public.escolacurso OWNER TO postgres;
+
+--
+-- TOC entry 1600 (class 1259 OID 22081)
+-- Dependencies: 1601 6
+-- Name: escolacurso_idescolacurso_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE escolacurso_idescolacurso_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.escolacurso_idescolacurso_seq OWNER TO postgres;
+
+--
+-- TOC entry 2114 (class 0 OID 0)
+-- Dependencies: 1600
+-- Name: escolacurso_idescolacurso_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE escolacurso_idescolacurso_seq OWNED BY escolacurso.idescolacurso;
+
+
+--
+-- TOC entry 2115 (class 0 OID 0)
+-- Dependencies: 1600
+-- Name: escolacurso_idescolacurso_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('escolacurso_idescolacurso_seq', 1, false);
+
+
+--
+-- TOC entry 1605 (class 1259 OID 22100)
+-- Dependencies: 6
+-- Name: escolatelefone; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE escolatelefone (
+    idescolatelefone integer NOT NULL,
+    idescola integer NOT NULL,
+    idtelefone integer NOT NULL
+);
+
+
+ALTER TABLE public.escolatelefone OWNER TO postgres;
+
+--
+-- TOC entry 1604 (class 1259 OID 22098)
+-- Dependencies: 1605 6
+-- Name: escolatelefone_idescolatelefone_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE escolatelefone_idescolatelefone_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.escolatelefone_idescolatelefone_seq OWNER TO postgres;
+
+--
+-- TOC entry 2116 (class 0 OID 0)
+-- Dependencies: 1604
+-- Name: escolatelefone_idescolatelefone_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE escolatelefone_idescolatelefone_seq OWNED BY escolatelefone.idescolatelefone;
+
+
+--
+-- TOC entry 2117 (class 0 OID 0)
+-- Dependencies: 1604
+-- Name: escolatelefone_idescolatelefone_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('escolatelefone_idescolatelefone_seq', 6, true);
+
+
+--
+-- TOC entry 1619 (class 1259 OID 22168)
+-- Dependencies: 6
+-- Name: frequencia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE frequencia (
+    idfrequencia integer NOT NULL,
+    idmatricula integer NOT NULL,
+    idperiodoavaliacao integer NOT NULL,
+    iddisciplina integer NOT NULL,
+    valor real NOT NULL
+);
+
+
+ALTER TABLE public.frequencia OWNER TO postgres;
+
+--
+-- TOC entry 1618 (class 1259 OID 22166)
+-- Dependencies: 6 1619
+-- Name: frequencia_idfrequencia_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE frequencia_idfrequencia_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.frequencia_idfrequencia_seq OWNER TO postgres;
+
+--
+-- TOC entry 2118 (class 0 OID 0)
+-- Dependencies: 1618
+-- Name: frequencia_idfrequencia_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE frequencia_idfrequencia_seq OWNED BY frequencia.idfrequencia;
+
+
+--
+-- TOC entry 2119 (class 0 OID 0)
+-- Dependencies: 1618
+-- Name: frequencia_idfrequencia_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('frequencia_idfrequencia_seq', 1, true);
+
+
+--
+-- TOC entry 1617 (class 1259 OID 22159)
+-- Dependencies: 6
+-- Name: matricula; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE matricula (
+    idmatricula integer NOT NULL,
+    idturma integer NOT NULL,
+    idaluno integer NOT NULL,
+    dataentrada date NOT NULL,
+    numeroordem integer NOT NULL,
+    datasaida date,
+    situacao character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.matricula OWNER TO postgres;
+
+--
+-- TOC entry 1616 (class 1259 OID 22157)
+-- Dependencies: 6 1617
+-- Name: matricula_idmatricula_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE matricula_idmatricula_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.matricula_idmatricula_seq OWNER TO postgres;
+
+--
+-- TOC entry 2120 (class 0 OID 0)
+-- Dependencies: 1616
+-- Name: matricula_idmatricula_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE matricula_idmatricula_seq OWNED BY matricula.idmatricula;
+
+
+--
+-- TOC entry 2121 (class 0 OID 0)
+-- Dependencies: 1616
+-- Name: matricula_idmatricula_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('matricula_idmatricula_seq', 1, false);
+
+
+--
+-- TOC entry 1635 (class 1259 OID 22677)
+-- Dependencies: 6
+-- Name: matrizcurricular; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE matrizcurricular (
+    idmatrizcurricular integer NOT NULL,
+    idescola integer NOT NULL,
+    idserie integer NOT NULL,
+    ano character varying NOT NULL,
+    semestre character varying NOT NULL
+);
+
+
+ALTER TABLE public.matrizcurricular OWNER TO postgres;
+
+--
+-- TOC entry 1634 (class 1259 OID 22675)
+-- Dependencies: 6 1635
+-- Name: matrizcurricular_idmatrizcurricular_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE matrizcurricular_idmatrizcurricular_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.matrizcurricular_idmatrizcurricular_seq OWNER TO postgres;
+
+--
+-- TOC entry 2122 (class 0 OID 0)
+-- Dependencies: 1634
+-- Name: matrizcurricular_idmatrizcurricular_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE matrizcurricular_idmatrizcurricular_seq OWNED BY matrizcurricular.idmatrizcurricular;
+
+
+--
+-- TOC entry 2123 (class 0 OID 0)
+-- Dependencies: 1634
+-- Name: matrizcurricular_idmatrizcurricular_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('matrizcurricular_idmatrizcurricular_seq', 1, false);
+
+
+--
+-- TOC entry 1637 (class 1259 OID 22696)
+-- Dependencies: 6
+-- Name: matrizcurriculardisciplina; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE matrizcurriculardisciplina (
+    idmatrizcurriculardisciplina integer NOT NULL,
+    iddisciplina integer NOT NULL,
+    idmatrizcurricular integer NOT NULL,
+    ementa character varying(10000) NOT NULL
+);
+
+
+ALTER TABLE public.matrizcurriculardisciplina OWNER TO postgres;
+
+--
+-- TOC entry 1636 (class 1259 OID 22694)
+-- Dependencies: 6 1637
+-- Name: matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq OWNER TO postgres;
+
+--
+-- TOC entry 2124 (class 0 OID 0)
+-- Dependencies: 1636
+-- Name: matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq OWNED BY matrizcurriculardisciplina.idmatrizcurriculardisciplina;
+
+
+--
+-- TOC entry 2125 (class 0 OID 0)
+-- Dependencies: 1636
+-- Name: matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq', 1, false);
+
+
+--
+-- TOC entry 1621 (class 1259 OID 22177)
+-- Dependencies: 6
+-- Name: nota; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE nota (
+    idnota integer NOT NULL,
+    idavaliacao integer NOT NULL,
+    iddisciplina integer NOT NULL,
+    idmatricula integer NOT NULL,
+    valor real NOT NULL
+);
+
+
+ALTER TABLE public.nota OWNER TO postgres;
+
+--
+-- TOC entry 1620 (class 1259 OID 22175)
+-- Dependencies: 1621 6
+-- Name: nota_idnota_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE nota_idnota_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.nota_idnota_seq OWNER TO postgres;
+
+--
+-- TOC entry 2126 (class 0 OID 0)
+-- Dependencies: 1620
+-- Name: nota_idnota_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE nota_idnota_seq OWNED BY nota.idnota;
+
+
+--
+-- TOC entry 2127 (class 0 OID 0)
+-- Dependencies: 1620
+-- Name: nota_idnota_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('nota_idnota_seq', 12, true);
+
+
+--
+-- TOC entry 1589 (class 1259 OID 22016)
+-- Dependencies: 6
+-- Name: periodoavaliacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE periodoavaliacao (
+    idperiodoavaliacao integer NOT NULL,
+    idcurso integer NOT NULL,
+    ano character varying NOT NULL,
+    semestre character varying NOT NULL,
+    abreviacao character varying(10) NOT NULL,
+    descricao character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.periodoavaliacao OWNER TO postgres;
+
+--
+-- TOC entry 1588 (class 1259 OID 22014)
+-- Dependencies: 6 1589
+-- Name: periodoavaliacao_idperiodoavaliacao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE periodoavaliacao_idperiodoavaliacao_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.periodoavaliacao_idperiodoavaliacao_seq OWNER TO postgres;
+
+--
+-- TOC entry 2128 (class 0 OID 0)
+-- Dependencies: 1588
+-- Name: periodoavaliacao_idperiodoavaliacao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE periodoavaliacao_idperiodoavaliacao_seq OWNED BY periodoavaliacao.idperiodoavaliacao;
+
+
+--
+-- TOC entry 2129 (class 0 OID 0)
+-- Dependencies: 1588
+-- Name: periodoavaliacao_idperiodoavaliacao_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('periodoavaliacao_idperiodoavaliacao_seq', 1, false);
+
+
+--
+-- TOC entry 1607 (class 1259 OID 22109)
+-- Dependencies: 6
+-- Name: pessoa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pessoa (
+    idpessoa integer NOT NULL,
+    cpf character varying(15) NOT NULL,
+    nome character varying(150) NOT NULL,
+    email character varying(100) NOT NULL,
+    estadocivil character varying(50)
+);
+
+
+ALTER TABLE public.pessoa OWNER TO postgres;
+
+--
+-- TOC entry 1606 (class 1259 OID 22107)
+-- Dependencies: 6 1607
+-- Name: pessoa_idpessoa_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pessoa_idpessoa_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pessoa_idpessoa_seq OWNER TO postgres;
+
+--
+-- TOC entry 2130 (class 0 OID 0)
+-- Dependencies: 1606
+-- Name: pessoa_idpessoa_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE pessoa_idpessoa_seq OWNED BY pessoa.idpessoa;
+
+
+--
+-- TOC entry 2131 (class 0 OID 0)
+-- Dependencies: 1606
+-- Name: pessoa_idpessoa_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pessoa_idpessoa_seq', 29, true);
+
+
+--
+-- TOC entry 1625 (class 1259 OID 22195)
+-- Dependencies: 6
+-- Name: pessoaendereco; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pessoaendereco (
+    idpessoaendereco integer NOT NULL,
+    idendereco integer NOT NULL,
+    idpessoa integer NOT NULL
+);
+
+
+ALTER TABLE public.pessoaendereco OWNER TO postgres;
+
+--
+-- TOC entry 1624 (class 1259 OID 22193)
+-- Dependencies: 6 1625
+-- Name: pessoaendereco_idpessoaendereco_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pessoaendereco_idpessoaendereco_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pessoaendereco_idpessoaendereco_seq OWNER TO postgres;
+
+--
+-- TOC entry 2132 (class 0 OID 0)
+-- Dependencies: 1624
+-- Name: pessoaendereco_idpessoaendereco_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE pessoaendereco_idpessoaendereco_seq OWNED BY pessoaendereco.idpessoaendereco;
+
+
+--
+-- TOC entry 2133 (class 0 OID 0)
+-- Dependencies: 1624
+-- Name: pessoaendereco_idpessoaendereco_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pessoaendereco_idpessoaendereco_seq', 38, true);
+
+
+--
+-- TOC entry 1623 (class 1259 OID 22186)
+-- Dependencies: 6
+-- Name: pessoatelefone; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pessoatelefone (
+    idpessoatelefone integer NOT NULL,
+    idtelefone integer NOT NULL,
+    idpessoa integer NOT NULL
+);
+
+
+ALTER TABLE public.pessoatelefone OWNER TO postgres;
+
+--
+-- TOC entry 1622 (class 1259 OID 22184)
+-- Dependencies: 6 1623
+-- Name: pessoatelefone_idpessoatelefone_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pessoatelefone_idpessoatelefone_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pessoatelefone_idpessoatelefone_seq OWNER TO postgres;
+
+--
+-- TOC entry 2134 (class 0 OID 0)
+-- Dependencies: 1622
+-- Name: pessoatelefone_idpessoatelefone_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE pessoatelefone_idpessoatelefone_seq OWNED BY pessoatelefone.idpessoatelefone;
+
+
+--
+-- TOC entry 2135 (class 0 OID 0)
+-- Dependencies: 1622
+-- Name: pessoatelefone_idpessoatelefone_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pessoatelefone_idpessoatelefone_seq', 38, true);
+
+
+--
+-- TOC entry 1610 (class 1259 OID 22125)
+-- Dependencies: 6
+-- Name: professor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE professor (
+    idtipofuncao integer NOT NULL,
+    matricula integer NOT NULL
+);
+
+
+ALTER TABLE public.professor OWNER TO postgres;
+
+--
+-- TOC entry 1626 (class 1259 OID 22373)
+-- Dependencies: 6
+-- Name: professor_matricula_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE professor_matricula_seq
+    START WITH 1000
+    INCREMENT BY 1
+    NO MAXVALUE
+    MINVALUE 1000
+    CACHE 1;
+
+
+ALTER TABLE public.professor_matricula_seq OWNER TO postgres;
+
+--
+-- TOC entry 2136 (class 0 OID 0)
+-- Dependencies: 1626
+-- Name: professor_matricula_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('professor_matricula_seq', 1012, true);
+
+
+--
+-- TOC entry 1613 (class 1259 OID 22140)
+-- Dependencies: 6
+-- Name: responsavel; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE responsavel (
+    idtipofuncao integer NOT NULL,
+    profissao character varying(40) NOT NULL,
+    localtrabalho character varying(100) NOT NULL,
+    renda real NOT NULL
+);
+
+
+ALTER TABLE public.responsavel OWNER TO postgres;
+
+--
+-- TOC entry 1629 (class 1259 OID 22420)
+-- Dependencies: 6
+-- Name: sec_perfil; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sec_perfil (
+    idperfil integer NOT NULL,
+    perfil character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public.sec_perfil OWNER TO postgres;
+
+--
+-- TOC entry 1628 (class 1259 OID 22418)
+-- Dependencies: 1629 6
+-- Name: sec_perfil_idperfil_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sec_perfil_idperfil_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_perfil_idperfil_seq OWNER TO postgres;
+
+--
+-- TOC entry 2137 (class 0 OID 0)
+-- Dependencies: 1628
+-- Name: sec_perfil_idperfil_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sec_perfil_idperfil_seq OWNED BY sec_perfil.idperfil;
+
+
+--
+-- TOC entry 2138 (class 0 OID 0)
+-- Dependencies: 1628
+-- Name: sec_perfil_idperfil_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sec_perfil_idperfil_seq', 1, false);
+
+
+--
+-- TOC entry 1633 (class 1259 OID 22436)
+-- Dependencies: 6
+-- Name: sec_relusuarioperfil; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sec_relusuarioperfil (
+    idusuarioperfil integer NOT NULL,
+    idusuario integer NOT NULL,
+    idperfil integer NOT NULL
+);
+
+
+ALTER TABLE public.sec_relusuarioperfil OWNER TO postgres;
+
+--
+-- TOC entry 1631 (class 1259 OID 22428)
+-- Dependencies: 6
+-- Name: sec_usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sec_usuario (
+    idusuario integer NOT NULL,
+    idpessoa integer,
+    idaluno integer,
+    usuario character varying(15) NOT NULL,
+    senha character varying(256) NOT NULL,
+    tipousuario character varying(30) NOT NULL,
+    datacriacao timestamp without time zone NOT NULL,
+    dataultimoacesso timestamp without time zone,
+    dataexpiracao timestamp without time zone,
+    localepadrao character varying(5) NOT NULL,
+    ativo boolean NOT NULL
+);
+
+
+ALTER TABLE public.sec_usuario OWNER TO postgres;
+
+--
+-- TOC entry 1630 (class 1259 OID 22426)
+-- Dependencies: 6 1631
+-- Name: sec_usuario_idusuario_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sec_usuario_idusuario_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_usuario_idusuario_seq OWNER TO postgres;
+
+--
+-- TOC entry 2139 (class 0 OID 0)
+-- Dependencies: 1630
+-- Name: sec_usuario_idusuario_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sec_usuario_idusuario_seq OWNED BY sec_usuario.idusuario;
+
+
+--
+-- TOC entry 2140 (class 0 OID 0)
+-- Dependencies: 1630
+-- Name: sec_usuario_idusuario_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sec_usuario_idusuario_seq', 32, true);
+
+
+--
+-- TOC entry 1632 (class 1259 OID 22434)
+-- Dependencies: 1633 6
+-- Name: sec_usuarioperfil_idsec_usuarioperfil_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sec_usuarioperfil_idsec_usuarioperfil_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sec_usuarioperfil_idsec_usuarioperfil_seq OWNER TO postgres;
+
+--
+-- TOC entry 2141 (class 0 OID 0)
+-- Dependencies: 1632
+-- Name: sec_usuarioperfil_idsec_usuarioperfil_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sec_usuarioperfil_idsec_usuarioperfil_seq OWNED BY sec_relusuarioperfil.idusuarioperfil;
+
+
+--
+-- TOC entry 2142 (class 0 OID 0)
+-- Dependencies: 1632
+-- Name: sec_usuarioperfil_idsec_usuarioperfil_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sec_usuarioperfil_idsec_usuarioperfil_seq', 1, false);
+
+
+--
+-- TOC entry 1593 (class 1259 OID 22034)
+-- Dependencies: 6
+-- Name: serie; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE serie (
+    idserie integer NOT NULL,
+    idcurso integer NOT NULL,
+    descricao character varying(100) NOT NULL,
+    ordem integer NOT NULL,
+    idseriesucessora integer NOT NULL
+);
+
+
+ALTER TABLE public.serie OWNER TO postgres;
+
+--
+-- TOC entry 1592 (class 1259 OID 22032)
+-- Dependencies: 6 1593
+-- Name: serie_idserie_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE serie_idserie_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.serie_idserie_seq OWNER TO postgres;
+
+--
+-- TOC entry 2143 (class 0 OID 0)
+-- Dependencies: 1592
+-- Name: serie_idserie_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE serie_idserie_seq OWNED BY serie.idserie;
+
+
+--
+-- TOC entry 2144 (class 0 OID 0)
+-- Dependencies: 1592
+-- Name: serie_idserie_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('serie_idserie_seq', 1, false);
+
+
+--
+-- TOC entry 1595 (class 1259 OID 22043)
+-- Dependencies: 6
+-- Name: telefone; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE telefone (
+    idtelefone integer NOT NULL,
+    codigoarea integer NOT NULL,
+    numero character varying(12) NOT NULL,
+    tipo character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.telefone OWNER TO postgres;
+
+--
+-- TOC entry 1594 (class 1259 OID 22041)
+-- Dependencies: 6 1595
+-- Name: telefone_idtelefone_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE telefone_idtelefone_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.telefone_idtelefone_seq OWNER TO postgres;
+
+--
+-- TOC entry 2145 (class 0 OID 0)
+-- Dependencies: 1594
+-- Name: telefone_idtelefone_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE telefone_idtelefone_seq OWNED BY telefone.idtelefone;
+
+
+--
+-- TOC entry 2146 (class 0 OID 0)
+-- Dependencies: 1594
+-- Name: telefone_idtelefone_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('telefone_idtelefone_seq', 35, true);
+
+
+--
+-- TOC entry 1609 (class 1259 OID 22118)
+-- Dependencies: 6
+-- Name: tipofuncao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipofuncao (
+    idtipofuncao integer NOT NULL,
+    idpessoa integer NOT NULL,
+    codigofuncao integer NOT NULL,
+    dtype character varying(30) NOT NULL,
+    ativo boolean NOT NULL
+);
+
+
+ALTER TABLE public.tipofuncao OWNER TO postgres;
+
+--
+-- TOC entry 1608 (class 1259 OID 22116)
+-- Dependencies: 1609 6
+-- Name: tipofuncao_idtipofuncao_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipofuncao_idtipofuncao_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipofuncao_idtipofuncao_seq OWNER TO postgres;
+
+--
+-- TOC entry 2147 (class 0 OID 0)
+-- Dependencies: 1608
+-- Name: tipofuncao_idtipofuncao_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipofuncao_idtipofuncao_seq OWNED BY tipofuncao.idtipofuncao;
+
+
+--
+-- TOC entry 2148 (class 0 OID 0)
+-- Dependencies: 1608
+-- Name: tipofuncao_idtipofuncao_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipofuncao_idtipofuncao_seq', 29, true);
+
+
+--
+-- TOC entry 1603 (class 1259 OID 22091)
+-- Dependencies: 6
+-- Name: turma; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE turma (
+    idturma integer NOT NULL,
+    idserie integer NOT NULL,
+    descricao character varying(100) NOT NULL,
+    codigo character varying(10) NOT NULL,
+    semestre character varying NOT NULL,
+    ano character varying NOT NULL,
+    idturno integer NOT NULL,
+    idescola integer NOT NULL,
+    status integer NOT NULL
+);
+
+
+ALTER TABLE public.turma OWNER TO postgres;
+
+--
+-- TOC entry 1602 (class 1259 OID 22089)
+-- Dependencies: 6 1603
+-- Name: turma_idturma_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE turma_idturma_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.turma_idturma_seq OWNER TO postgres;
+
+--
+-- TOC entry 2149 (class 0 OID 0)
+-- Dependencies: 1602
+-- Name: turma_idturma_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE turma_idturma_seq OWNED BY turma.idturma;
+
+
+--
+-- TOC entry 2150 (class 0 OID 0)
+-- Dependencies: 1602
+-- Name: turma_idturma_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('turma_idturma_seq', 1, false);
+
+
+--
+-- TOC entry 1585 (class 1259 OID 21995)
+-- Dependencies: 6
+-- Name: turno; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE turno (
+    idturno integer NOT NULL,
+    descricao character varying(100) NOT NULL,
+    horainicio time without time zone NOT NULL,
+    horatermino time without time zone NOT NULL
+);
+
+
+ALTER TABLE public.turno OWNER TO postgres;
+
+--
+-- TOC entry 1584 (class 1259 OID 21993)
+-- Dependencies: 1585 6
+-- Name: turno_idturno_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE turno_idturno_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.turno_idturno_seq OWNER TO postgres;
+
+--
+-- TOC entry 2151 (class 0 OID 0)
+-- Dependencies: 1584
+-- Name: turno_idturno_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE turno_idturno_seq OWNED BY turno.idturno;
+
+
+--
+-- TOC entry 2152 (class 0 OID 0)
+-- Dependencies: 1584
+-- Name: turno_idturno_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('turno_idturno_seq', 1, false);
+
+
+--
+-- TOC entry 1931 (class 2604 OID 22136)
+-- Dependencies: 1611 1612 1612
+-- Name: idalocacao; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE alocacao ALTER COLUMN idalocacao SET DEFAULT nextval('alocacao_idalocacao_seq'::regclass);
+
+
+--
+-- TOC entry 1932 (class 2604 OID 22150)
+-- Dependencies: 1615 1614 1615
+-- Name: idaluno; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE aluno ALTER COLUMN idaluno SET DEFAULT nextval('aluno_idaluno_seq'::regclass);
+
+
+--
+-- TOC entry 1921 (class 2604 OID 22028)
+-- Dependencies: 1590 1591 1591
+-- Name: idavaliacao; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE avaliacao ALTER COLUMN idavaliacao SET DEFAULT nextval('avaliacao_idavaliacao_seq'::regclass);
+
+
+--
+-- TOC entry 1943 (class 2604 OID 22740)
+-- Dependencies: 1639 1638 1639
+-- Name: idconfiguracaoglobal; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE configuracaoglobal ALTER COLUMN idconfiguracaoglobal SET DEFAULT nextval('configuracaoglobal_idconfiguracaoglobal_seq'::regclass);
+
+
+--
+-- TOC entry 1919 (class 2604 OID 22007)
+-- Dependencies: 1587 1586 1587
+-- Name: idcurso; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE curso ALTER COLUMN idcurso SET DEFAULT nextval('curso_idcurso_seq'::regclass);
+
+
+--
+-- TOC entry 1917 (class 2604 OID 21989)
+-- Dependencies: 1582 1583 1583
+-- Name: iddisciplina; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE disciplina ALTER COLUMN iddisciplina SET DEFAULT nextval('disciplina_iddisciplina_seq'::regclass);
+
+
+--
+-- TOC entry 1924 (class 2604 OID 22055)
+-- Dependencies: 1597 1596 1597
+-- Name: idendereco; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE endereco ALTER COLUMN idendereco SET DEFAULT nextval('endereco_idendereco_seq'::regclass);
+
+
+--
+-- TOC entry 1925 (class 2604 OID 22064)
+-- Dependencies: 1599 1598 1599
+-- Name: idescola; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE escola ALTER COLUMN idescola SET DEFAULT nextval('escola_idescola_seq'::regclass);
+
+
+--
+-- TOC entry 1926 (class 2604 OID 22086)
+-- Dependencies: 1600 1601 1601
+-- Name: idescolacurso; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE escolacurso ALTER COLUMN idescolacurso SET DEFAULT nextval('escolacurso_idescolacurso_seq'::regclass);
+
+
+--
+-- TOC entry 1928 (class 2604 OID 22103)
+-- Dependencies: 1604 1605 1605
+-- Name: idescolatelefone; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE escolatelefone ALTER COLUMN idescolatelefone SET DEFAULT nextval('escolatelefone_idescolatelefone_seq'::regclass);
+
+
+--
+-- TOC entry 1934 (class 2604 OID 22171)
+-- Dependencies: 1619 1618 1619
+-- Name: idfrequencia; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE frequencia ALTER COLUMN idfrequencia SET DEFAULT nextval('frequencia_idfrequencia_seq'::regclass);
+
+
+--
+-- TOC entry 1933 (class 2604 OID 22162)
+-- Dependencies: 1617 1616 1617
+-- Name: idmatricula; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE matricula ALTER COLUMN idmatricula SET DEFAULT nextval('matricula_idmatricula_seq'::regclass);
+
+
+--
+-- TOC entry 1941 (class 2604 OID 22680)
+-- Dependencies: 1635 1634 1635
+-- Name: idmatrizcurricular; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE matrizcurricular ALTER COLUMN idmatrizcurricular SET DEFAULT nextval('matrizcurricular_idmatrizcurricular_seq'::regclass);
+
+
+--
+-- TOC entry 1942 (class 2604 OID 22699)
+-- Dependencies: 1637 1636 1637
+-- Name: idmatrizcurriculardisciplina; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE matrizcurriculardisciplina ALTER COLUMN idmatrizcurriculardisciplina SET DEFAULT nextval('matrizcurriculardisciplina_idmatrizcurriculardisciplina_seq'::regclass);
+
+
+--
+-- TOC entry 1935 (class 2604 OID 22180)
+-- Dependencies: 1621 1620 1621
+-- Name: idnota; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE nota ALTER COLUMN idnota SET DEFAULT nextval('nota_idnota_seq'::regclass);
+
+
+--
+-- TOC entry 1920 (class 2604 OID 22019)
+-- Dependencies: 1589 1588 1589
+-- Name: idperiodoavaliacao; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE periodoavaliacao ALTER COLUMN idperiodoavaliacao SET DEFAULT nextval('periodoavaliacao_idperiodoavaliacao_seq'::regclass);
+
+
+--
+-- TOC entry 1929 (class 2604 OID 22112)
+-- Dependencies: 1606 1607 1607
+-- Name: idpessoa; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE pessoa ALTER COLUMN idpessoa SET DEFAULT nextval('pessoa_idpessoa_seq'::regclass);
+
+
+--
+-- TOC entry 1937 (class 2604 OID 22198)
+-- Dependencies: 1625 1624 1625
+-- Name: idpessoaendereco; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE pessoaendereco ALTER COLUMN idpessoaendereco SET DEFAULT nextval('pessoaendereco_idpessoaendereco_seq'::regclass);
+
+
+--
+-- TOC entry 1936 (class 2604 OID 22189)
+-- Dependencies: 1623 1622 1623
+-- Name: idpessoatelefone; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE pessoatelefone ALTER COLUMN idpessoatelefone SET DEFAULT nextval('pessoatelefone_idpessoatelefone_seq'::regclass);
+
+
+--
+-- TOC entry 1938 (class 2604 OID 22423)
+-- Dependencies: 1629 1628 1629
+-- Name: idperfil; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE sec_perfil ALTER COLUMN idperfil SET DEFAULT nextval('sec_perfil_idperfil_seq'::regclass);
+
+
+--
+-- TOC entry 1940 (class 2604 OID 22439)
+-- Dependencies: 1633 1632 1633
+-- Name: idusuarioperfil; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE sec_relusuarioperfil ALTER COLUMN idusuarioperfil SET DEFAULT nextval('sec_usuarioperfil_idsec_usuarioperfil_seq'::regclass);
+
+
+--
+-- TOC entry 1939 (class 2604 OID 22431)
+-- Dependencies: 1630 1631 1631
+-- Name: idusuario; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE sec_usuario ALTER COLUMN idusuario SET DEFAULT nextval('sec_usuario_idusuario_seq'::regclass);
+
+
+--
+-- TOC entry 1922 (class 2604 OID 22037)
+-- Dependencies: 1593 1592 1593
+-- Name: idserie; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE serie ALTER COLUMN idserie SET DEFAULT nextval('serie_idserie_seq'::regclass);
+
+
+--
+-- TOC entry 1923 (class 2604 OID 22046)
+-- Dependencies: 1594 1595 1595
+-- Name: idtelefone; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE telefone ALTER COLUMN idtelefone SET DEFAULT nextval('telefone_idtelefone_seq'::regclass);
+
+
+--
+-- TOC entry 1930 (class 2604 OID 22121)
+-- Dependencies: 1609 1608 1609
+-- Name: idtipofuncao; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE tipofuncao ALTER COLUMN idtipofuncao SET DEFAULT nextval('tipofuncao_idtipofuncao_seq'::regclass);
+
+
+--
+-- TOC entry 1927 (class 2604 OID 22094)
+-- Dependencies: 1602 1603 1603
+-- Name: idturma; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE turma ALTER COLUMN idturma SET DEFAULT nextval('turma_idturma_seq'::regclass);
+
+
+--
+-- TOC entry 1918 (class 2604 OID 21998)
+-- Dependencies: 1585 1584 1585
+-- Name: idturno; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE turno ALTER COLUMN idturno SET DEFAULT nextval('turno_idturno_seq'::regclass);
+
+
+--
+-- TOC entry 2081 (class 0 OID 22133)
+-- Dependencies: 1612
+-- Data for Name: alocacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO alocacao (idalocacao, idtipofuncao, idturma, iddisciplina) VALUES (1, 1, 1, 1);
+INSERT INTO alocacao (idalocacao, idtipofuncao, idturma, iddisciplina) VALUES (2, 1, 1, 2);
+
+
+--
+-- TOC entry 2083 (class 0 OID 22147)
+-- Dependencies: 1615
+-- Data for Name: aluno; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO aluno (idaluno, idtipofuncao, ra, nome, datanascimento, localnascimento, nacionalidade, email, ativo, sexo) VALUES (18, 20, 1006, 'Gabriela', '1994-02-10', 'Caçapava', 'brasileira', 'gabi@gmail.com', false, 'FEMININO');
+INSERT INTO aluno (idaluno, idtipofuncao, ra, nome, datanascimento, localnascimento, nacionalidade, email, ativo, sexo) VALUES (21, 20, 1007, 'Gabriel Pavão', '2011-03-03', 'São Paulo', 'brasileira', 'gpavao@gmail.com', true, 'FEMININO');
+INSERT INTO aluno (idaluno, idtipofuncao, ra, nome, datanascimento, localnascimento, nacionalidade, email, ativo, sexo) VALUES (1, 2, 1001, 'Gabriela Godoy', '1993-10-14', 'São Paulo', 'Brasileira', 'gabi@gmail.com', true, 'FEMININO');
+
+
+--
+-- TOC entry 2070 (class 0 OID 22025)
+-- Dependencies: 1591
+-- Data for Name: avaliacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (1, 1, 'P1', 'Prova 1', 0.1);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (2, 1, 'P2', 'Prova 2', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (3, 1, 'P3', 'Prova 3', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (4, 1, 'P4', 'Prova 4', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (5, 1, 'T1', 'Trabalho 1', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (6, 1, 'T2', 'Trabalho 2', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (7, 2, 'P1', 'Prova 1', 0.1);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (8, 2, 'P2', 'Prova 2', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (9, 2, 'P3', 'Prova 3', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (10, 2, 'P4', 'Prova 4', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (11, 2, 'T1', 'Trabalho 1', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (12, 2, 'T2', 'Trabalho 2', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (13, 3, 'P1', 'Prova 1', 0.1);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (14, 3, 'P2', 'Prova 2', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (15, 3, 'P3', 'Prova 3', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (16, 3, 'P4', 'Prova 4', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (17, 3, 'T1', 'Trabalho 1', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (18, 3, 'T2', 'Trabalho 2', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (19, 4, 'P1', 'Prova 1', 0.1);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (20, 4, 'P2', 'Prova 2', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (21, 4, 'P3', 'Prova 3', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (22, 4, 'P4', 'Prova 4', 0.2);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (23, 4, 'T1', 'Trabalho 1', 0.15000001);
+INSERT INTO avaliacao (idavaliacao, idperiodoavaliacao, abreviacao, descricao, peso) VALUES (24, 4, 'T2', 'Trabalho 2', 0.15000001);
+
+
+--
+-- TOC entry 2094 (class 0 OID 22737)
+-- Dependencies: 1639
+-- Data for Name: configuracaoglobal; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO configuracaoglobal (idconfiguracaoglobal, dominio_, key_, value_, parent) VALUES (1, 'SITUACAO_MATRICULA', 'ativa', 'ui.situacaoMatricula.ativa', NULL);
+INSERT INTO configuracaoglobal (idconfiguracaoglobal, dominio_, key_, value_, parent) VALUES (2, 'SITUACAO_MATRICULA', 'inativa', 'ui.situacaoMatricula.inativa', NULL);
+INSERT INTO configuracaoglobal (idconfiguracaoglobal, dominio_, key_, value_, parent) VALUES (3, 'TURNO', 'manha', 'ui.turno.manha', NULL);
+INSERT INTO configuracaoglobal (idconfiguracaoglobal, dominio_, key_, value_, parent) VALUES (4, 'TURNO', 'horarioInicio', '08:00', 3);
+INSERT INTO configuracaoglobal (idconfiguracaoglobal, dominio_, key_, value_, parent) VALUES (5, 'TURNO', 'horarioTermino', '12:00', 3);
+
+
+--
+-- TOC entry 2068 (class 0 OID 22004)
+-- Dependencies: 1587
+-- Data for Name: curso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO curso (idcurso, descricao, ementa) VALUES (2, 'Ensino Médio', 'Ementa para o curso de ensino médio');
+INSERT INTO curso (idcurso, descricao, ementa) VALUES (1, 'Ensino Fundamental', 'Ementa para o curso de ensino fundamentallll');
+
+
+--
+-- TOC entry 2066 (class 0 OID 21986)
+-- Dependencies: 1583
+-- Data for Name: disciplina; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO disciplina (iddisciplina, nome, descricao, abreviacao) VALUES (1, 'Português', 'Portugues', 'lpt');
+INSERT INTO disciplina (iddisciplina, nome, descricao, abreviacao) VALUES (2, 'Espanhol', 'Lingua Espanhola', 'les');
+
+
+--
+-- TOC entry 2073 (class 0 OID 22052)
+-- Dependencies: 1597
+-- Data for Name: endereco; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (5, 'rua das Horquídeas', 293, 'casa', 'RESIDENCIAL', 'Cidade Jardim', 'São Carlos', 'SP', '19330201');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (18, '14 de abril', 180, 'com', 'RESIDENCIAL', 'Centro', 'São Paulo', 'MG', '10201100');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (22, 'alves guimarães', 1490, 'casa', 'RESIDENCIAL', 'sumaré', 'são paulo', 'SP', '05410002');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (23, 'dsfds', 228, 'vkjsdf', 'RESIDENCIAL', 'clas', 'sad', 'RJ', '1921029');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (26, 'qweqw', 12, 'qweqw', 'RESIDENCIAL', 'qweqwe', 'adsad', 'SP', '1212');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (31, 'Rua Alves Guimaraes', 154, '', 'RESIDENCIAL', 'Pinheiros', 'Sao Paulo', 'SP', '05410002');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (32, 'Rua Conceicao', 10, '', 'RESIDENCIAL', 'Centro', 'Campinas', 'SP', '13010050');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (33, 'Alameda das Hortencias', 11, '', 'RESIDENCIAL', 'Cidade Jardim', 'Sao Carlos', 'SP', '13566533');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (34, 'Alameda dos Crisantemos', 291, '', 'RESIDENCIAL', 'Cidade Jardim', 'Sao Carlos', 'SP', '13566550');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (1, 'Conceição', 286, 'apto 86', 'ENTREGA', 'Centro', 'Campinas', 'SP', '13010050');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (6, 'Sei não', 293, 'Apto 10', 'ENTREGA', 'Laranjeiras', 'Rio de Janeiro', 'RJ', '29102210');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (7, 'rua da Consolação', 281, 'Apto 12', 'ENTREGA', 'Centro', 'São Paulo', 'SP', '05410002');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (15, 'ruaa', 11, 'cpl', 'ENTREGA', 'bro', 'cdd', 'SP', '10201100');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (17, 'rua tal', 22, 'cpl', 'ENTREGA', 'sumaré', 'Cami', 'MG', '29102222');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (19, '14 de abril', 11, 'cpl', 'ENTREGA', 'Cidade Jardim', 'São Carlos', 'MG', '19330201');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (20, 'asdsa', 12, 'asdfjk', 'ENTREGA', 'asdasd', 'asdsa', 'ES', '12211122');
+INSERT INTO endereco (idendereco, rua, numero, complemento, tipo, bairro, cidade, estado, cep) VALUES (28, 'qweqwe', 12, 'wqeqw', 'ENTREGA', 'aeqw', 'qwewe', 'MG', '12');
+
+
+--
+-- TOC entry 2074 (class 0 OID 22061)
+-- Dependencies: 1599
+-- Data for Name: escola; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO escola (idescola, cnpj, ie, nome, idendereco) VALUES (1, '02030715002166', '324729', 'Centro Potencial', 1);
+INSERT INTO escola (idescola, cnpj, ie, nome, idendereco) VALUES (2, '123123123123123', '123489720234', 'Colégio Boa Ventura', 31);
+INSERT INTO escola (idescola, cnpj, ie, nome, idendereco) VALUES (3, '345234565463663', '543654654634', 'Colégio Central', 32);
+INSERT INTO escola (idescola, cnpj, ie, nome, idendereco) VALUES (4, '908098098080808', '878978979879', 'Escola Trocados', 33);
+INSERT INTO escola (idescola, cnpj, ie, nome, idendereco) VALUES (5, '348934823894234', '123891283128', 'Escola Crescendinho', 34);
+
+
+--
+-- TOC entry 2075 (class 0 OID 22083)
+-- Dependencies: 1601
+-- Data for Name: escolacurso; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO escolacurso (idescolacurso, idcurso, idescola) VALUES (1, 1, 1);
+
+
+--
+-- TOC entry 2077 (class 0 OID 22100)
+-- Dependencies: 1605
+-- Data for Name: escolatelefone; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO escolatelefone (idescolatelefone, idescola, idtelefone) VALUES (2, 2, 31);
+INSERT INTO escolatelefone (idescolatelefone, idescola, idtelefone) VALUES (3, 3, 32);
+INSERT INTO escolatelefone (idescolatelefone, idescola, idtelefone) VALUES (4, 3, 33);
+INSERT INTO escolatelefone (idescolatelefone, idescola, idtelefone) VALUES (5, 4, 34);
+INSERT INTO escolatelefone (idescolatelefone, idescola, idtelefone) VALUES (6, 5, 35);
+
+
+--
+-- TOC entry 2085 (class 0 OID 22168)
+-- Dependencies: 1619
+-- Data for Name: frequencia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO frequencia (idfrequencia, idmatricula, idperiodoavaliacao, iddisciplina, valor) VALUES (1, 1, 1, 1, 75);
+
+
+--
+-- TOC entry 2084 (class 0 OID 22159)
+-- Dependencies: 1617
+-- Data for Name: matricula; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO matricula (idmatricula, idturma, idaluno, dataentrada, numeroordem, datasaida, situacao) VALUES (1, 1, 1, '2011-01-10', 1, NULL, 'MATRICULADO');
+
+
+--
+-- TOC entry 2092 (class 0 OID 22677)
+-- Dependencies: 1635
+-- Data for Name: matrizcurricular; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO matrizcurricular (idmatrizcurricular, idescola, idserie, ano, semestre) VALUES (1, 1, 1, '_2011', '_1_SEMESTRE');
+
+
+--
+-- TOC entry 2093 (class 0 OID 22696)
+-- Dependencies: 1637
+-- Data for Name: matrizcurriculardisciplina; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO matrizcurriculardisciplina (idmatrizcurriculardisciplina, iddisciplina, idmatrizcurricular, ementa) VALUES (1, 1, 1, 'Ementa Portugês da 7ª Série');
+INSERT INTO matrizcurriculardisciplina (idmatrizcurriculardisciplina, iddisciplina, idmatrizcurricular, ementa) VALUES (2, 2, 1, 'Ementa Espanhol da 7ª Série');
+
+
+--
+-- TOC entry 2086 (class 0 OID 22177)
+-- Dependencies: 1621
+-- Data for Name: nota; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (3, 2, 1, 1, 9);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (4, 3, 1, 1, 7);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (5, 4, 1, 1, 2.25);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (2, 9, 2, 1, 9.8000002);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (7, 1, 2, 1, 9.5);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (8, 5, 1, 1, 10);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (9, 6, 1, 1, 9.6999998);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (10, 8, 2, 1, 7);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (11, 1, 1, 1, 9);
+INSERT INTO nota (idnota, idavaliacao, iddisciplina, idmatricula, valor) VALUES (12, 2, 2, 1, 7);
+
+
+--
+-- TOC entry 2069 (class 0 OID 22016)
+-- Dependencies: 1589
+-- Data for Name: periodoavaliacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO periodoavaliacao (idperiodoavaliacao, idcurso, ano, semestre, abreviacao, descricao) VALUES (1, 1, '_2011', '_1_SEMESTRE', '1B', '1⁰ Bimestre');
+INSERT INTO periodoavaliacao (idperiodoavaliacao, idcurso, ano, semestre, abreviacao, descricao) VALUES (2, 1, '_2011', '_1_SEMESTRE', '2B', '2⁰ Bimestre');
+INSERT INTO periodoavaliacao (idperiodoavaliacao, idcurso, ano, semestre, abreviacao, descricao) VALUES (3, 1, '_2011', '_2_SEMESTRE', '3B', '3⁰ Bimestre');
+INSERT INTO periodoavaliacao (idperiodoavaliacao, idcurso, ano, semestre, abreviacao, descricao) VALUES (4, 1, '_2011', '_2_SEMESTRE', '4B', '4⁰ Bimestre');
+
+
+--
+-- TOC entry 2078 (class 0 OID 22109)
+-- Dependencies: 1607
+-- Data for Name: pessoa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (2, '38192039208', 'Fernanda Tonelli', 'fertonelli@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (5, '21487965247', 'Joana Francesa', 'joana@gmail.com', 'CASADO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (6, '39102930192', 'Daniela Corrêa', 'dgodoy@google.com', 'CASADO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (7, '78452132569', 'Carolina Godoy', 'carolina@gmail.com', 'CASADO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (28, '12332212221', 'sdfsdfsd', '2342sdfsdfdsf', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (26, '44328327182', 'nome besta', 'nb@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (23, '32819228192', 'Joaquim bixona', 'bixona@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (22, '86506879690', 'Ingeborg', 'inge@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (20, '31689320869', 'Deborah Godoy', 'deborah@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (17, '21487965241', 'Maria', 'maria@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (15, '28392819201', 'Bruno Maria José', 'brunomaria@gmail.com', 'SOLTEIRO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (19, '87382738291', 'Manoel M C Neto', 'manoelmcneto@gmail.com', 'CASADO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (18, '28329338221', 'Deborah', 'deborah@gmail.com', 'CASADO');
+INSERT INTO pessoa (idpessoa, cpf, nome, email, estadocivil) VALUES (1, '31689320868', 'Bruno G M Corrêa', 'brunogmc@gmail.com', 'SOLTEIRO');
+
+
+--
+-- TOC entry 2088 (class 0 OID 22195)
+-- Dependencies: 1625
+-- Data for Name: pessoaendereco; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (1, 1, 1);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (5, 5, 5);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (6, 6, 6);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (7, 7, 7);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (22, 17, 17);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (23, 18, 18);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (24, 19, 19);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (25, 20, 20);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (29, 22, 22);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (30, 23, 23);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (33, 26, 26);
+INSERT INTO pessoaendereco (idpessoaendereco, idendereco, idpessoa) VALUES (35, 28, 28);
+
+
+--
+-- TOC entry 2087 (class 0 OID 22186)
+-- Dependencies: 1623
+-- Data for Name: pessoatelefone; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (1, 1, 1);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (5, 5, 5);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (6, 6, 6);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (7, 7, 7);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (20, 15, 15);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (22, 17, 17);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (23, 18, 18);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (24, 19, 19);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (25, 20, 20);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (29, 22, 22);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (30, 23, 23);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (33, 26, 26);
+INSERT INTO pessoatelefone (idpessoatelefone, idtelefone, idpessoa) VALUES (35, 28, 28);
+
+
+--
+-- TOC entry 2080 (class 0 OID 22125)
+-- Dependencies: 1610
+-- Data for Name: professor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO professor (idtipofuncao, matricula) VALUES (1, 1000);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (5, 1004);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (6, 1005);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (7, 1006);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (17, 1009);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (18, 1010);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (19, 1011);
+INSERT INTO professor (idtipofuncao, matricula) VALUES (23, 1012);
+
+
+--
+-- TOC entry 2082 (class 0 OID 22140)
+-- Dependencies: 1613
+-- Data for Name: responsavel; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO responsavel (idtipofuncao, profissao, localtrabalho, renda) VALUES (2, 'Estudante', 'UFSCar', 2000);
+INSERT INTO responsavel (idtipofuncao, profissao, localtrabalho, renda) VALUES (20, 'Professora', 'Centro Potencial', 1500);
+INSERT INTO responsavel (idtipofuncao, profissao, localtrabalho, renda) VALUES (22, 'Aposentada', 'nenhum', 3500);
+INSERT INTO responsavel (idtipofuncao, profissao, localtrabalho, renda) VALUES (26, 'Estudante', 'casa', 1000);
+INSERT INTO responsavel (idtipofuncao, profissao, localtrabalho, renda) VALUES (28, 'asdadas', 'asdasdas', 3500);
+
+
+--
+-- TOC entry 2089 (class 0 OID 22420)
+-- Dependencies: 1629
+-- Data for Name: sec_perfil; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2091 (class 0 OID 22436)
+-- Dependencies: 1633
+-- Data for Name: sec_relusuarioperfil; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2090 (class 0 OID 22428)
+-- Dependencies: 1631
+-- Data for Name: sec_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (30, NULL, 18, '1006', '$2a$10$ssQEdAkrVE/31n3zRGfNOenb0nZuIcCapfMKVCkdlLOy2Xj/bmPBy', 'ALUNO', '2011-09-03 19:01:23.628', NULL, NULL, 'pt_BR', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (32, NULL, 21, '1007', '$2a$10$v7euqYhmad9KqykHG3v5SuP24IrXVVbnElYroFPm51emVWHbvR1de', 'ALUNO', '2011-09-15 22:58:02.404', NULL, NULL, 'pt_BR', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (3, 5, NULL, '21487965247', '$2a$10$VgQot.Nf0JnRT85Tw7AF4.Pg8TNmVgCglFd0Jsvwfx0RvhrBMDqFS', 'PROFESSOR', '2011-03-31 23:03:22.889', '2011-03-31 23:36:43.637', NULL, 'pt_BR', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (5, 7, NULL, '78452132569', '$2a$10$4SBv8v7ZeF1oMonOXN3CceK5XmIpv0QiLGGMnOZhNBa/t6DvbjoL.', 'PROFESSOR', '2011-04-06 08:38:29.411', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (11, 15, NULL, '28392819201', '$2a$10$qwi2p1EyMSZJWuqH044oI.8f2OLYNoSVCjOfgJv8d4.f0o5.X9GC6', 'PROFESSOR', '2011-04-07 22:30:38.56', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (13, 17, NULL, '21487965241', '$2a$10$rCcFuECd1YMCWlLqeuilN.tPT.7iybrIoyE5jY4nfZmppuS1hj6x.', 'PROFESSOR', '2011-04-09 10:42:06.387', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (14, 18, NULL, '28329338221', '$2a$10$PHIQO2/6ZWoleB2g1gsz5eeDl3tXBAZz5ha4OZAutbcM83Mw7QEi2', 'PROFESSOR', '2011-04-09 10:48:49.987', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (15, 19, NULL, '87382738291', '$2a$10$cblK/5lBkUlRHxmuPum7SOoJA4W6x/UXwK2qMjJ2kXYMyR9k0VQGy', 'PROFESSOR', '2011-04-09 10:57:07.031', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (20, 22, NULL, '86506879680', '$2a$10$fX18zoTq.tZ3/Hywd0d0K.ic6z1ta6UxqHWqGKgcIIMQ6Nn3ti7fe', 'RESPONSAVEL', '2011-04-11 22:22:53.53', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (21, 23, NULL, '32819228192', '$2a$10$E3rUg8VCnkhMRZt7DaTdiuiyde8IhZzY4otFPonemXOyZzfjdGljy', 'PROFESSOR', '2011-04-15 22:13:23.203', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (24, 26, NULL, '44328327182', '$2a$10$wg5kkXh6GVktWi5B4oXOeODMflJOs96hdz5WTioKOa70apRgy1f8a', 'RESPONSAVEL', '2011-05-11 22:57:00.504', NULL, NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (26, 28, NULL, '12332212221', '$2a$10$Gf7ojGaR.CpSF6R3mofa6OP0uwnW1pj66fpfjd8Ym.NuYDF5lw6wi', 'RESPONSAVEL', '2011-09-02 20:31:30.988', NULL, NULL, 'pt_BR', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (16, 20, NULL, '31689320869', '$2a$10$/5rapYpeoTdYTGN7NBHxY.bqFxBc2UcNFh.MW9N67jCK7LknKLF/a', 'RESPONSAVEL', '2011-04-10 23:56:13.141', '2011-09-13 23:24:21.713', NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (4, 6, NULL, '39102930192', '$2a$10$mW9I9bep.gepSTodvDix7O9xaUsjl3P1DY7QZWkcq4qJf3trLzWca', 'PROFESSOR', '2011-04-04 23:10:14.867', '2011-09-12 23:06:23.775', NULL, 'en_US', true);
+INSERT INTO sec_usuario (idusuario, idpessoa, idaluno, usuario, senha, tipousuario, datacriacao, dataultimoacesso, dataexpiracao, localepadrao, ativo) VALUES (1, 1, NULL, '31689320868', '$2a$10$fOPZe32Ero0GbVMBStWrK.hGq0MdNT2pb7dHyfNDIcf0ONQoLW1aK', 'PROFESSOR', '2011-03-31 20:53:40.985535', '2011-09-16 19:07:55.505', '2011-08-31 20:53:40.985535', 'pt_BR', true);
+
+
+--
+-- TOC entry 2071 (class 0 OID 22034)
+-- Dependencies: 1593
+-- Data for Name: serie; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO serie (idserie, idcurso, descricao, ordem, idseriesucessora) VALUES (1, 1, '7ª Série', 7, 1);
+
+
+--
+-- TOC entry 2072 (class 0 OID 22043)
+-- Dependencies: 1595
+-- Data for Name: telefone; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (6, 21, '38293829', 'RESIDENCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (7, 11, '63722819', 'RESIDENCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (17, 11, '22222222', 'RESIDENCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (5, 17, '93302910', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (18, 12, '36533306', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (20, 11, '28192218', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (1, 16, '88095062', 'CELULAR');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (15, 22, '12123456', 'CELULAR');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (19, 221, '22121212', 'CELULAR');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (22, 11, '38622859', 'RESIDENCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (23, 12, '2919201', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (26, 12, '21312312', 'RESIDENCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (28, 12, '123123', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (31, 11, '2144-5454', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (33, 19, '7878-9789', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (32, 19, '4547-8411', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (34, 16, '4547-8787', 'COMERCIAL');
+INSERT INTO telefone (idtelefone, codigoarea, numero, tipo) VALUES (35, 16, '1728-1928', 'COMERCIAL');
+
+
+--
+-- TOC entry 2079 (class 0 OID 22118)
+-- Dependencies: 1609
+-- Data for Name: tipofuncao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (2, 2, 2, 'Responsavel', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (6, 6, 1, 'Professor', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (17, 17, 1, 'Professor', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (18, 18, 1, 'Professor', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (19, 19, 1, 'Professor', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (20, 20, 2, 'Responsavel', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (22, 22, 2, 'Responsavel', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (26, 26, 2, 'Responsavel', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (1, 1, 1, 'Professor', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (23, 23, 1, 'Professor', false);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (7, 7, 1, 'Professor', false);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (28, 28, 2, 'Responsavel', true);
+INSERT INTO tipofuncao (idtipofuncao, idpessoa, codigofuncao, dtype, ativo) VALUES (5, 5, 1, 'Professor', false);
+
+
+--
+-- TOC entry 2076 (class 0 OID 22091)
+-- Dependencies: 1603
+-- Data for Name: turma; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO turma (idturma, idserie, descricao, codigo, semestre, ano, idturno, idescola, status) VALUES (1, 1, 'Turma A', 'A', '_1_SEMESTRE', '_2011', 1, 1, 1);
+
+
+--
+-- TOC entry 2067 (class 0 OID 21995)
+-- Dependencies: 1585
+-- Data for Name: turno; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO turno (idturno, descricao, horainicio, horatermino) VALUES (1, 'Manhã', '07:00:00', '12:00:00');
+
+
+--
+-- TOC entry 1990 (class 2606 OID 22138)
+-- Dependencies: 1612 1612
+-- Name: alocacao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY alocacao
+    ADD CONSTRAINT alocacao_pk PRIMARY KEY (idalocacao);
+
+
+--
+-- TOC entry 1995 (class 2606 OID 22155)
+-- Dependencies: 1615 1615
+-- Name: aluno_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aluno
+    ADD CONSTRAINT aluno_pk PRIMARY KEY (idaluno);
+
+
+--
+-- TOC entry 1958 (class 2606 OID 22030)
+-- Dependencies: 1591 1591
+-- Name: avaliacao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY avaliacao
+    ADD CONSTRAINT avaliacao_pk PRIMARY KEY (idavaliacao);
+
+
+--
+-- TOC entry 2025 (class 2606 OID 22742)
+-- Dependencies: 1639 1639
+-- Name: configuracaoglobal_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY configuracaoglobal
+    ADD CONSTRAINT configuracaoglobal_pk PRIMARY KEY (idconfiguracaoglobal);
+
+
+--
+-- TOC entry 1952 (class 2606 OID 22012)
+-- Dependencies: 1587 1587
+-- Name: curso_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY curso
+    ADD CONSTRAINT curso_pk PRIMARY KEY (idcurso);
+
+
+--
+-- TOC entry 1946 (class 2606 OID 21991)
+-- Dependencies: 1583 1583
+-- Name: disciplina_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY disciplina
+    ADD CONSTRAINT disciplina_pk PRIMARY KEY (iddisciplina);
+
+
+--
+-- TOC entry 1966 (class 2606 OID 22057)
+-- Dependencies: 1597 1597
+-- Name: endereco_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY endereco
+    ADD CONSTRAINT endereco_pk PRIMARY KEY (idendereco);
+
+
+--
+-- TOC entry 1970 (class 2606 OID 22066)
+-- Dependencies: 1599 1599
+-- Name: escola_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY escola
+    ADD CONSTRAINT escola_pk PRIMARY KEY (idescola);
+
+
+--
+-- TOC entry 1972 (class 2606 OID 22088)
+-- Dependencies: 1601 1601
+-- Name: escolacurso_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY escolacurso
+    ADD CONSTRAINT escolacurso_pk PRIMARY KEY (idescolacurso);
+
+
+--
+-- TOC entry 1978 (class 2606 OID 22105)
+-- Dependencies: 1605 1605
+-- Name: escolatelefone_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY escolatelefone
+    ADD CONSTRAINT escolatelefone_pk PRIMARY KEY (idescolatelefone);
+
+
+--
+-- TOC entry 2001 (class 2606 OID 22173)
+-- Dependencies: 1619 1619
+-- Name: frequencia_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY frequencia
+    ADD CONSTRAINT frequencia_pk PRIMARY KEY (idfrequencia);
+
+
+--
+-- TOC entry 1998 (class 2606 OID 22164)
+-- Dependencies: 1617 1617
+-- Name: matricula_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY matricula
+    ADD CONSTRAINT matricula_pk PRIMARY KEY (idmatricula);
+
+
+--
+-- TOC entry 2019 (class 2606 OID 22682)
+-- Dependencies: 1635 1635
+-- Name: matrizcurricular_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY matrizcurricular
+    ADD CONSTRAINT matrizcurricular_pk PRIMARY KEY (idmatrizcurricular);
+
+
+--
+-- TOC entry 2022 (class 2606 OID 22704)
+-- Dependencies: 1637 1637
+-- Name: matrizcurriculardisciplina_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY matrizcurriculardisciplina
+    ADD CONSTRAINT matrizcurriculardisciplina_pk PRIMARY KEY (idmatrizcurriculardisciplina);
+
+
+--
+-- TOC entry 2004 (class 2606 OID 22182)
+-- Dependencies: 1621 1621
+-- Name: nota_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY nota
+    ADD CONSTRAINT nota_pk PRIMARY KEY (idnota);
+
+
+--
+-- TOC entry 1955 (class 2606 OID 22021)
+-- Dependencies: 1589 1589
+-- Name: periodoavaliacao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY periodoavaliacao
+    ADD CONSTRAINT periodoavaliacao_pk PRIMARY KEY (idperiodoavaliacao);
+
+
+--
+-- TOC entry 1981 (class 2606 OID 22114)
+-- Dependencies: 1607 1607
+-- Name: pessoa_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pessoa
+    ADD CONSTRAINT pessoa_pk PRIMARY KEY (idpessoa);
+
+
+--
+-- TOC entry 2010 (class 2606 OID 22200)
+-- Dependencies: 1625 1625
+-- Name: pessoaendereco_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pessoaendereco
+    ADD CONSTRAINT pessoaendereco_pk PRIMARY KEY (idpessoaendereco);
+
+
+--
+-- TOC entry 2007 (class 2606 OID 22191)
+-- Dependencies: 1623 1623
+-- Name: pessoatelefone_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pessoatelefone
+    ADD CONSTRAINT pessoatelefone_pk PRIMARY KEY (idpessoatelefone);
+
+
+--
+-- TOC entry 1987 (class 2606 OID 22129)
+-- Dependencies: 1610 1610
+-- Name: professor_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY professor
+    ADD CONSTRAINT professor_pk PRIMARY KEY (idtipofuncao);
+
+
+--
+-- TOC entry 1992 (class 2606 OID 22144)
+-- Dependencies: 1613 1613
+-- Name: responsavel_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY responsavel
+    ADD CONSTRAINT responsavel_pk PRIMARY KEY (idtipofuncao);
+
+
+--
+-- TOC entry 2012 (class 2606 OID 22425)
+-- Dependencies: 1629 1629
+-- Name: sec_perfil_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sec_perfil
+    ADD CONSTRAINT sec_perfil_pk PRIMARY KEY (idperfil);
+
+
+--
+-- TOC entry 2014 (class 2606 OID 22433)
+-- Dependencies: 1631 1631
+-- Name: sec_usuario_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sec_usuario
+    ADD CONSTRAINT sec_usuario_pk PRIMARY KEY (idusuario);
+
+
+--
+-- TOC entry 2016 (class 2606 OID 22441)
+-- Dependencies: 1633 1633
+-- Name: sec_usuarioperfil_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sec_relusuarioperfil
+    ADD CONSTRAINT sec_usuarioperfil_pk PRIMARY KEY (idusuarioperfil);
+
+
+--
+-- TOC entry 1961 (class 2606 OID 22039)
+-- Dependencies: 1593 1593
+-- Name: serie_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY serie
+    ADD CONSTRAINT serie_pk PRIMARY KEY (idserie);
+
+
+--
+-- TOC entry 1964 (class 2606 OID 22048)
+-- Dependencies: 1595 1595
+-- Name: telefone_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY telefone
+    ADD CONSTRAINT telefone_pk PRIMARY KEY (idtelefone);
+
+
+--
+-- TOC entry 1984 (class 2606 OID 22123)
+-- Dependencies: 1609 1609
+-- Name: tipofuncao_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipofuncao
+    ADD CONSTRAINT tipofuncao_pk PRIMARY KEY (idtipofuncao);
+
+
+--
+-- TOC entry 1975 (class 2606 OID 22096)
+-- Dependencies: 1603 1603
+-- Name: turma_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY turma
+    ADD CONSTRAINT turma_pk PRIMARY KEY (idturma);
+
+
+--
+-- TOC entry 1949 (class 2606 OID 22000)
+-- Dependencies: 1585 1585
+-- Name: turno_pk; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY turno
+    ADD CONSTRAINT turno_pk PRIMARY KEY (idturno);
+
+
+--
+-- TOC entry 1988 (class 1259 OID 22139)
+-- Dependencies: 1612 1612 1612
+-- Name: alocacao_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX alocacao_idx ON alocacao USING btree (idturma, iddisciplina, idtipofuncao);
+
+
+--
+-- TOC entry 1993 (class 1259 OID 22156)
+-- Dependencies: 1615
+-- Name: aluno_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX aluno_idx ON aluno USING btree (ra);
+
+
+--
+-- TOC entry 1956 (class 1259 OID 22031)
+-- Dependencies: 1591 1591
+-- Name: avaliacao_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX avaliacao_idx ON avaliacao USING btree (idperiodoavaliacao, abreviacao);
+
+
+--
+-- TOC entry 2023 (class 1259 OID 22743)
+-- Dependencies: 1639
+-- Name: configuracaoglobal_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX configuracaoglobal_idx ON configuracaoglobal USING btree (key_);
+
+
+--
+-- TOC entry 1950 (class 1259 OID 22013)
+-- Dependencies: 1587
+-- Name: curso_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX curso_idx ON curso USING btree (descricao);
+
+
+--
+-- TOC entry 1944 (class 1259 OID 21992)
+-- Dependencies: 1583
+-- Name: disciplina_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX disciplina_idx ON disciplina USING btree (abreviacao);
+
+
+--
+-- TOC entry 1967 (class 1259 OID 22067)
+-- Dependencies: 1599
+-- Name: escola_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX escola_idx ON escola USING btree (cnpj);
+
+
+--
+-- TOC entry 1968 (class 1259 OID 22068)
+-- Dependencies: 1599
+-- Name: escola_nome_unique; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX escola_nome_unique ON escola USING btree (nome);
+
+
+--
+-- TOC entry 1976 (class 1259 OID 22106)
+-- Dependencies: 1605 1605
+-- Name: escolatelefone_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX escolatelefone_idx ON escolatelefone USING btree (idescola, idtelefone);
+
+
+--
+-- TOC entry 1999 (class 1259 OID 22174)
+-- Dependencies: 1619 1619 1619
+-- Name: frequencia_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX frequencia_idx ON frequencia USING btree (idmatricula, idperiodoavaliacao, iddisciplina);
+
+
+--
+-- TOC entry 1996 (class 1259 OID 22165)
+-- Dependencies: 1617 1617 1617
+-- Name: matricula_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX matricula_idx ON matricula USING btree (idaluno, dataentrada, idturma);
+
+
+--
+-- TOC entry 2017 (class 1259 OID 22683)
+-- Dependencies: 1635 1635
+-- Name: matrizcurricular_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX matrizcurricular_idx ON matrizcurricular USING btree (idescola, idserie);
+
+
+--
+-- TOC entry 2020 (class 1259 OID 22705)
+-- Dependencies: 1637 1637
+-- Name: matrizcurriculardisciplina_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX matrizcurriculardisciplina_idx ON matrizcurriculardisciplina USING btree (iddisciplina, idmatrizcurricular);
+
+
+--
+-- TOC entry 2002 (class 1259 OID 22183)
+-- Dependencies: 1621 1621 1621
+-- Name: nota_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX nota_idx ON nota USING btree (idavaliacao, iddisciplina, idmatricula);
+
+
+--
+-- TOC entry 1953 (class 1259 OID 22388)
+-- Dependencies: 1589 1589
+-- Name: periodoavaliacao_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX periodoavaliacao_idx ON periodoavaliacao USING btree (abreviacao, semestre);
+
+
+--
+-- TOC entry 1979 (class 1259 OID 22115)
+-- Dependencies: 1607
+-- Name: pessoa_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX pessoa_idx ON pessoa USING btree (cpf);
+
+
+--
+-- TOC entry 2008 (class 1259 OID 22201)
+-- Dependencies: 1625 1625
+-- Name: pessoaendereco_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX pessoaendereco_idx ON pessoaendereco USING btree (idendereco, idpessoa);
+
+
+--
+-- TOC entry 2005 (class 1259 OID 22192)
+-- Dependencies: 1623 1623
+-- Name: pessoatelefone_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX pessoatelefone_idx ON pessoatelefone USING btree (idtelefone, idpessoa);
+
+
+--
+-- TOC entry 1985 (class 1259 OID 22130)
+-- Dependencies: 1610
+-- Name: professor_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX professor_idx ON professor USING btree (matricula);
+
+
+--
+-- TOC entry 1959 (class 1259 OID 22040)
+-- Dependencies: 1593
+-- Name: serie_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX serie_idx ON serie USING btree (descricao);
+
+
+--
+-- TOC entry 1962 (class 1259 OID 22049)
+-- Dependencies: 1595 1595
+-- Name: telefone_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX telefone_idx ON telefone USING btree (codigoarea, numero);
+
+
+--
+-- TOC entry 1982 (class 1259 OID 22124)
+-- Dependencies: 1609 1609
+-- Name: tipofuncao_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX tipofuncao_idx ON tipofuncao USING btree (idpessoa, codigofuncao);
+
+
+--
+-- TOC entry 1973 (class 1259 OID 22409)
+-- Dependencies: 1603 1603 1603 1603
+-- Name: turma_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX turma_idx ON turma USING btree (descricao, codigo, semestre, ano);
+
+
+--
+-- TOC entry 1947 (class 1259 OID 22001)
+-- Dependencies: 1585
+-- Name: turno_idx; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX turno_idx ON turno USING btree (descricao);
+
+
+--
+-- TOC entry 2046 (class 2606 OID 22357)
+-- Dependencies: 1994 1615 1617
+-- Name: aluno_matricula_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matricula
+    ADD CONSTRAINT aluno_matricula_fk FOREIGN KEY (idaluno) REFERENCES aluno(idaluno);
+
+
+--
+-- TOC entry 2058 (class 2606 OID 22452)
+-- Dependencies: 1615 1631 1994
+-- Name: aluno_sec_usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sec_usuario
+    ADD CONSTRAINT aluno_sec_usuario_fk FOREIGN KEY (idaluno) REFERENCES aluno(idaluno);
+
+
+--
+-- TOC entry 2051 (class 2606 OID 22252)
+-- Dependencies: 1621 1591 1957
+-- Name: avaliacao_nota_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY nota
+    ADD CONSTRAINT avaliacao_nota_fk FOREIGN KEY (idavaliacao) REFERENCES avaliacao(idavaliacao);
+
+
+--
+-- TOC entry 2065 (class 2606 OID 22744)
+-- Dependencies: 1639 2024 1639
+-- Name: configuracaoglobal_configuracaoglobal_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY configuracaoglobal
+    ADD CONSTRAINT configuracaoglobal_configuracaoglobal_fk FOREIGN KEY (parent) REFERENCES configuracaoglobal(idconfiguracaoglobal);
+
+
+--
+-- TOC entry 2031 (class 2606 OID 22227)
+-- Dependencies: 1587 1601 1951
+-- Name: curso_escolacurso_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY escolacurso
+    ADD CONSTRAINT curso_escolacurso_fk FOREIGN KEY (idcurso) REFERENCES curso(idcurso);
+
+
+--
+-- TOC entry 2026 (class 2606 OID 22237)
+-- Dependencies: 1951 1587 1589
+-- Name: curso_periodoavaliacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY periodoavaliacao
+    ADD CONSTRAINT curso_periodoavaliacao_fk FOREIGN KEY (idcurso) REFERENCES curso(idcurso);
+
+
+--
+-- TOC entry 2028 (class 2606 OID 22232)
+-- Dependencies: 1593 1951 1587
+-- Name: curso_serie_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY serie
+    ADD CONSTRAINT curso_serie_fk FOREIGN KEY (idcurso) REFERENCES curso(idcurso);
+
+
+--
+-- TOC entry 2040 (class 2606 OID 22212)
+-- Dependencies: 1612 1583 1945
+-- Name: disciplina_alocacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY alocacao
+    ADD CONSTRAINT disciplina_alocacao_fk FOREIGN KEY (iddisciplina) REFERENCES disciplina(iddisciplina);
+
+
+--
+-- TOC entry 2047 (class 2606 OID 22217)
+-- Dependencies: 1619 1583 1945
+-- Name: disciplina_frequencia_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY frequencia
+    ADD CONSTRAINT disciplina_frequencia_fk FOREIGN KEY (iddisciplina) REFERENCES disciplina(iddisciplina);
+
+
+--
+-- TOC entry 2063 (class 2606 OID 22706)
+-- Dependencies: 1583 1637 1945
+-- Name: disciplina_matrizcurriculardisciplina_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matrizcurriculardisciplina
+    ADD CONSTRAINT disciplina_matrizcurriculardisciplina_fk FOREIGN KEY (iddisciplina) REFERENCES disciplina(iddisciplina);
+
+
+--
+-- TOC entry 2050 (class 2606 OID 22207)
+-- Dependencies: 1621 1583 1945
+-- Name: disciplina_nota_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY nota
+    ADD CONSTRAINT disciplina_nota_fk FOREIGN KEY (iddisciplina) REFERENCES disciplina(iddisciplina);
+
+
+--
+-- TOC entry 2030 (class 2606 OID 22287)
+-- Dependencies: 1599 1965 1597
+-- Name: endereco_escola_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY escola
+    ADD CONSTRAINT endereco_escola_fk FOREIGN KEY (idendereco) REFERENCES endereco(idendereco);
+
+
+--
+-- TOC entry 2055 (class 2606 OID 22282)
+-- Dependencies: 1965 1597 1625
+-- Name: endereco_pessoaendereco_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoaendereco
+    ADD CONSTRAINT endereco_pessoaendereco_fk FOREIGN KEY (idendereco) REFERENCES endereco(idendereco);
+
+
+--
+-- TOC entry 2032 (class 2606 OID 22302)
+-- Dependencies: 1601 1599 1969
+-- Name: escola_escolacurso_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY escolacurso
+    ADD CONSTRAINT escola_escolacurso_fk FOREIGN KEY (idescola) REFERENCES escola(idescola);
+
+
+--
+-- TOC entry 2037 (class 2606 OID 22292)
+-- Dependencies: 1605 1599 1969
+-- Name: escola_escolatelefone_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY escolatelefone
+    ADD CONSTRAINT escola_escolatelefone_fk FOREIGN KEY (idescola) REFERENCES escola(idescola);
+
+
+--
+-- TOC entry 2062 (class 2606 OID 22689)
+-- Dependencies: 1635 1969 1599
+-- Name: escola_matrizcurricular_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matrizcurricular
+    ADD CONSTRAINT escola_matrizcurricular_fk FOREIGN KEY (idescola) REFERENCES escola(idescola);
+
+
+--
+-- TOC entry 2035 (class 2606 OID 22297)
+-- Dependencies: 1603 1599 1969
+-- Name: escola_turma_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY turma
+    ADD CONSTRAINT escola_turma_fk FOREIGN KEY (idescola) REFERENCES escola(idescola);
+
+
+--
+-- TOC entry 2049 (class 2606 OID 22367)
+-- Dependencies: 1619 1997 1617
+-- Name: matricula_frequencia_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY frequencia
+    ADD CONSTRAINT matricula_frequencia_fk FOREIGN KEY (idmatricula) REFERENCES matricula(idmatricula);
+
+
+--
+-- TOC entry 2052 (class 2606 OID 22362)
+-- Dependencies: 1997 1617 1621
+-- Name: matricula_nota_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY nota
+    ADD CONSTRAINT matricula_nota_fk FOREIGN KEY (idmatricula) REFERENCES matricula(idmatricula);
+
+
+--
+-- TOC entry 2064 (class 2606 OID 22711)
+-- Dependencies: 1635 2018 1637
+-- Name: matrizcurricular_matrizcurriculardisciplina_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matrizcurriculardisciplina
+    ADD CONSTRAINT matrizcurricular_matrizcurriculardisciplina_fk FOREIGN KEY (idmatrizcurricular) REFERENCES matrizcurricular(idmatrizcurricular);
+
+
+--
+-- TOC entry 2027 (class 2606 OID 22247)
+-- Dependencies: 1591 1589 1954
+-- Name: periodoavaliacao_avaliacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY avaliacao
+    ADD CONSTRAINT periodoavaliacao_avaliacao_fk FOREIGN KEY (idperiodoavaliacao) REFERENCES periodoavaliacao(idperiodoavaliacao);
+
+
+--
+-- TOC entry 2048 (class 2606 OID 22242)
+-- Dependencies: 1619 1589 1954
+-- Name: periodoavaliacao_frequencia_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY frequencia
+    ADD CONSTRAINT periodoavaliacao_frequencia_fk FOREIGN KEY (idperiodoavaliacao) REFERENCES periodoavaliacao(idperiodoavaliacao);
+
+
+--
+-- TOC entry 2056 (class 2606 OID 22322)
+-- Dependencies: 1607 1980 1625
+-- Name: pessoa_pessoaendereco_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoaendereco
+    ADD CONSTRAINT pessoa_pessoaendereco_fk FOREIGN KEY (idpessoa) REFERENCES pessoa(idpessoa) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 2054 (class 2606 OID 22327)
+-- Dependencies: 1980 1623 1607
+-- Name: pessoa_pessoatelefone_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoatelefone
+    ADD CONSTRAINT pessoa_pessoatelefone_fk FOREIGN KEY (idpessoa) REFERENCES pessoa(idpessoa);
+
+
+--
+-- TOC entry 2057 (class 2606 OID 22447)
+-- Dependencies: 1607 1631 1980
+-- Name: pessoa_sec_usuario_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sec_usuario
+    ADD CONSTRAINT pessoa_sec_usuario_fk FOREIGN KEY (idpessoa) REFERENCES pessoa(idpessoa);
+
+
+--
+-- TOC entry 2038 (class 2606 OID 22332)
+-- Dependencies: 1609 1607 1980
+-- Name: pessoa_tipofuncao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipofuncao
+    ADD CONSTRAINT pessoa_tipofuncao_fk FOREIGN KEY (idpessoa) REFERENCES pessoa(idpessoa);
+
+
+--
+-- TOC entry 2042 (class 2606 OID 22347)
+-- Dependencies: 1610 1612 1986
+-- Name: professor_alocacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY alocacao
+    ADD CONSTRAINT professor_alocacao_fk FOREIGN KEY (idtipofuncao) REFERENCES professor(idtipofuncao);
+
+
+--
+-- TOC entry 2044 (class 2606 OID 22352)
+-- Dependencies: 1991 1613 1615
+-- Name: responsavel_aluno_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aluno
+    ADD CONSTRAINT responsavel_aluno_fk FOREIGN KEY (idtipofuncao) REFERENCES responsavel(idtipofuncao);
+
+
+--
+-- TOC entry 2059 (class 2606 OID 22442)
+-- Dependencies: 2011 1633 1629
+-- Name: sec_perfil_usuarioperfil_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sec_relusuarioperfil
+    ADD CONSTRAINT sec_perfil_usuarioperfil_fk FOREIGN KEY (idperfil) REFERENCES sec_perfil(idperfil);
+
+
+--
+-- TOC entry 2060 (class 2606 OID 22457)
+-- Dependencies: 1631 2013 1633
+-- Name: sec_usuario_usuarioperfil_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sec_relusuarioperfil
+    ADD CONSTRAINT sec_usuario_usuarioperfil_fk FOREIGN KEY (idusuario) REFERENCES sec_usuario(idusuario);
+
+
+--
+-- TOC entry 2061 (class 2606 OID 22684)
+-- Dependencies: 1593 1960 1635
+-- Name: serie_matrizcurricular_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matrizcurricular
+    ADD CONSTRAINT serie_matrizcurricular_fk FOREIGN KEY (idserie) REFERENCES serie(idserie);
+
+
+--
+-- TOC entry 2029 (class 2606 OID 22257)
+-- Dependencies: 1593 1593 1960
+-- Name: serie_serie_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY serie
+    ADD CONSTRAINT serie_serie_fk FOREIGN KEY (idseriesucessora) REFERENCES serie(idserie);
+
+
+--
+-- TOC entry 2034 (class 2606 OID 22267)
+-- Dependencies: 1593 1603 1960
+-- Name: serie_turma_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY turma
+    ADD CONSTRAINT serie_turma_fk FOREIGN KEY (idserie) REFERENCES serie(idserie);
+
+
+--
+-- TOC entry 2036 (class 2606 OID 22277)
+-- Dependencies: 1595 1605 1963
+-- Name: telefone_escolatelefone_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY escolatelefone
+    ADD CONSTRAINT telefone_escolatelefone_fk FOREIGN KEY (idtelefone) REFERENCES telefone(idtelefone);
+
+
+--
+-- TOC entry 2053 (class 2606 OID 22272)
+-- Dependencies: 1595 1623 1963
+-- Name: telefone_pessoatelefone_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoatelefone
+    ADD CONSTRAINT telefone_pessoatelefone_fk FOREIGN KEY (idtelefone) REFERENCES telefone(idtelefone);
+
+
+--
+-- TOC entry 2039 (class 2606 OID 22342)
+-- Dependencies: 1610 1609 1983
+-- Name: tipofuncao_professor_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY professor
+    ADD CONSTRAINT tipofuncao_professor_fk FOREIGN KEY (idtipofuncao) REFERENCES tipofuncao(idtipofuncao);
+
+
+--
+-- TOC entry 2043 (class 2606 OID 22337)
+-- Dependencies: 1613 1609 1983
+-- Name: tipofuncao_responsavel_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY responsavel
+    ADD CONSTRAINT tipofuncao_responsavel_fk FOREIGN KEY (idtipofuncao) REFERENCES tipofuncao(idtipofuncao);
+
+
+--
+-- TOC entry 2041 (class 2606 OID 22317)
+-- Dependencies: 1612 1974 1603
+-- Name: turma_alocacao_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY alocacao
+    ADD CONSTRAINT turma_alocacao_fk FOREIGN KEY (idturma) REFERENCES turma(idturma);
+
+
+--
+-- TOC entry 2045 (class 2606 OID 22312)
+-- Dependencies: 1974 1603 1617
+-- Name: turma_matricula_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY matricula
+    ADD CONSTRAINT turma_matricula_fk FOREIGN KEY (idturma) REFERENCES turma(idturma);
+
+
+--
+-- TOC entry 2033 (class 2606 OID 22222)
+-- Dependencies: 1948 1603 1585
+-- Name: turno_turma_fk; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY turma
+    ADD CONSTRAINT turno_turma_fk FOREIGN KEY (idturno) REFERENCES turno(idturno);
+
+
+-- Completed on 2011-09-16 20:20:14 BRT
+
+--
+-- PostgreSQL database dump complete
+--
+

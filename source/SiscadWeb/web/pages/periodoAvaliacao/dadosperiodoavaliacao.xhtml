@@ -1,0 +1,21 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formDadosPeriodoAvaliacao">
+
+        <p:fieldset id="fsDadosPeriodoAvaliacao" legend="#{i18n.periodoAvaliacao}" collapsed="false">
+
+            <dt:dadosComunsPeriodoAvaliacao managedBean="#{crudPeriodoAvaliacaoBean}" />
+
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudPeriodoAvaliacaoBean.create}" rendered="#{crudPeriodoAvaliacaoBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudPeriodoAvaliacaoBean.update}" rendered="#{crudPeriodoAvaliacaoBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudPeriodoAvaliacaoBean.back}" rendered="#{crudPeriodoAvaliacaoBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>

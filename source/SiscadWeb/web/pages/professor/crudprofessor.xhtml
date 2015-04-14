@@ -1,0 +1,27 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="/pages/templates/masterLayout.xhtml">
+
+    <ui:define name="content">
+
+        <f:metadata>
+            <f:viewParam name="mode" value="#{crudProfessorBean.mode}"/>
+        </f:metadata>
+
+        <h:panelGroup id="pgEngloba">
+
+            <h:panelGroup id="pgCreateUpdate" rendered="#{crudProfessorBean.mode == 'c' || crudProfessorBean.mode == 'u'}">
+                <ui:include src="/pages/professor/dadosprofessor.xhtml" />
+            </h:panelGroup>
+
+            <h:panelGroup id="pgRetrieveDelete" rendered="#{crudProfessorBean.mode == 'r' || crudProfessorBean.mode == 'd'}">
+                <ui:include src="/pages/professor/listaprofessores.xhtml" />
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+    </ui:define>
+
+</ui:composition>

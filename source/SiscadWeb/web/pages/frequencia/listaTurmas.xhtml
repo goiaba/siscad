@@ -1,0 +1,170 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="/pages/templates/masterLayout.xhtml">
+
+    <ui:define name="content">
+
+        <h:form id="formEscolaCurso">
+
+            <h:panelGrid columns="9"  style="padding: 5px;">
+
+                <h:outputLabel value="#{i18n.escola}" for="escolas" />
+
+                <h:selectOneMenu id="escolas" value="#{registrarFrequenciaBean.escolaSelecionada}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneEscola}" noSelectionOption="true" />
+                    <f:selectItems value="#{registrarFrequenciaBean.escolas}" />
+                    <f:validator validatorId="escolaValidator" />
+                    <p:ajax update="growl anos semestres cursos formTurmas" listener="#{registrarFrequenciaBean.selectListener}"/>
+
+                </h:selectOneMenu>
+
+                <h:outputLabel value="#{i18n.curso}" for="cursos" />
+
+                <h:selectOneMenu id="cursos" value="#{registrarFrequenciaBean.cursoSelecionado}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneCurso}" noSelectionOption="true" />
+                    <f:selectItems value="#{registrarFrequenciaBean.cursos}" />
+                    <f:validator validatorId="cursoValidator" />
+                    <p:ajax update="growl anos semestres escolas formTurmas" listener="#{registrarFrequenciaBean.selectListener}" />
+
+                </h:selectOneMenu>
+
+                <h:outputLabel value="#{i18n.semestre}" for="semestres" />
+
+                <h:selectOneMenu id="semestres" value="#{registrarFrequenciaBean.semestreSelecionado}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneSemestre}" noSelectionOption="true" />
+                    <f:selectItems value="#{registrarFrequenciaBean.semestres}" />
+                    <p:ajax update="growl anos escolas cursos formTurmas" listener="#{registrarFrequenciaBean.selectListener}" />
+
+                </h:selectOneMenu>
+
+                <h:outputLabel value="#{i18n.ano}" for="anos" />
+
+                <h:selectOneMenu id="anos" value="#{registrarFrequenciaBean.anoSelecionado}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneAno}" noSelectionOption="true" />
+                    <f:selectItems value="#{registrarFrequenciaBean.anos}" />
+                    <p:ajax update="growl semestres escolas cursos formTurmas" listener="#{registrarFrequenciaBean.selectListener}" />
+
+                </h:selectOneMenu>
+
+                <p:commandButton value="#{i18n.procurar}" update="growl formTurmas" action="#{registrarFrequenciaBean.buscar}" />
+
+            </h:panelGrid>
+
+        </h:form>
+
+        <h:form id="formTurmas">
+
+            <p:dataTable id="turmas"
+                         rendered="#{registrarFrequenciaBean.tabelaTurmasVisivel}"
+                         value="#{registrarFrequenciaBean.listaSerieTurma}"
+                         var="turma"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         rows="10"
+                         emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+                <p:column headerText="#{i18n.escola}">
+
+                    #{turma.turma.escola.nome}
+
+                </p:column>
+                
+                <p:column headerText="#{i18n.curso}">
+
+                    #{turma.turma.serie.curso.descricao}
+
+                </p:column>
+
+                <p:column headerText="#{i18n.ano}">
+
+                    <h:outputText value="#{turma.turma.ano}" converter="anoConverter" />
+
+                </p:column>
+
+                <p:column headerText="#{i18n.semestre}">
+
+                    <h:outputText value="#{turma.turma.periodo}" converter="periodoConverter" />
+
+                </p:column>
+
+                <p:column headerText="#{i18n.turmas}">
+
+                    #{turma.descricao}
+
+                </p:column>
+                
+
+                <p:column headerText="#{i18n.disciplinas}" >
+
+                    <h:selectOneMenu id="disciplinas" value="#{registrarFrequenciaBean.disciplinaSelecionada}">
+
+                        <f:selectItem itemLabel="#{i18n.selecioneDisciplina}" noSelectionOption="true" />
+                        <f:selectItems value="#{registrarFrequenciaBean.disciplinas}" />
+                        <f:validator validatorId="disciplinaValidator" />
+                        <p:ajax update="growl frequencia" listener="#{registrarFrequenciaBean.selectDisciplinasListener}" />
+
+                    </h:selectOneMenu>
+
+                </p:column>
+
+                <p:column headerText="#{i18n.frequencia}">
+
+                    <h:selectOneMenu id="frequencia" value="#{registrarFrequenciaBean.periodoFrequenciaSelecionado}" disabled="#{!registrarFrequenciaBean.selectPeriodoFrequenciaHabilitado}">
+
+                        <f:selectItem itemLabel="#{i18n.selecionePeriodo}" noSelectionOption="true" />
+                        <f:selectItems value="#{registrarFrequenciaBean.periodoFrequencias}" />
+                        <f:validator validatorId="periodoAvaliacaoValidator" />
+                        <p:ajax listener="#{registrarFrequenciaBean.frequenciaListener}" update="dialogFrequencias" oncomplete="dlgFrequencias.show();"/>
+
+                    </h:selectOneMenu>
+
+                </p:column>
+
+            </p:dataTable>
+
+
+        </h:form>
+
+        <p:dialog id="dialogFrequencias" widgetVar="dlgFrequencias" minWidth="800" draggable="false" header="#{registrarFrequenciaBean.tituloDialogFrequencias}" modal="true" closable="true" resizable="false">
+
+            <h:form id="formFrequencias">
+
+                <p:dataTable id="tableFrequencias" value="#{registrarFrequenciaBean.serieTurmaSelecionada.listaMatriculaFrequencia}" var="aluno">
+
+                    <p:column headerText="#{i18n.ra}" style="text-align: center; width: 110px;">
+
+                        #{aluno.matricula.aluno.ra}
+
+                    </p:column>
+
+                    <p:column headerText="#{i18n.nome}" style="text-align: left; width: 650px;">
+
+                        #{aluno.matricula.aluno.nome}
+
+                    </p:column>
+
+                    <p:column headerText="#{i18n.frequencia}" style="text-align: center; width: 40px;">
+
+                        <h:outputText value="#{aluno.frequencia}" rendered="#{!aluno.primeiroRegistro}" style="width: 30px;" />
+                        <h:inputText value="#{aluno.frequencia}" rendered="#{aluno.primeiroRegistro}" style="width: 30px;" />
+
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:commandButton value="#{i18n.salvar}" action="#{registrarFrequenciaBean.registrarFrequencias}" oncomplete="dlgFrequencias.hide();" />
+                <p:commandButton value="#{i18n.cancelar}" onclick="dlgFrequencias.hide();" />
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:define>
+
+</ui:composition>

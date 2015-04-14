@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <f:view locale="#{loginBean.localeEmUso}">
+
+        <h:head>
+            <title>#{i18n.tituloSistema}</title>
+        </h:head>
+
+        <h:body>
+
+            <h:outputStylesheet library="css" name="estilo.css" />
+
+            <p:panel id="siscadMain">
+
+                <p:growl id="growl" />
+
+                <p:ajaxStatus id="processing" style="width:16px;height:16px;">
+
+                    <f:facet name="start">
+                        <h:graphicImage value="#{resource['images:ajaxloading.gif']}" />
+                    </f:facet>
+
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+
+                </p:ajaxStatus>
+                    
+                <p:panel id="header">
+                    <ui:include src="/pages/menu/menu.xhtml" />
+                </p:panel>
+
+                <p:panel id="content-wrapper">
+                    <ui:insert name="content" />
+                </p:panel>
+
+                <p:panel id="footer">
+                    <ui:include src="/pages/footer/footer.xhtml" />
+                </p:panel>
+
+            </p:panel>
+
+        </h:body>
+
+    </f:view>
+
+</html>

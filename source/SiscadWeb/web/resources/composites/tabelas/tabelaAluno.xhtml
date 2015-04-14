@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="emptyMessage" />
+
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:outputPanel id="alunos">
+
+            <p:dataTable value="#{cc.attrs.managedBean.alunos}" var="aluno" emptyMessage="#{cc.attrs.emptyMessage}">
+
+                <p:column>
+                    <f:facet name="header">#{i18n.ra}</f:facet>
+                    <h:outputText value="#{aluno.ra}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.nome}</f:facet>
+                    <h:outputText value="#{aluno.nome}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.sexo}</f:facet>
+                    <h:outputText value="#{aluno.sexo}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.dataNascimento}</f:facet>
+                    <h:outputText value="#{aluno.datanascimento}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.localNascimento}</f:facet>
+                    <h:outputText value="#{aluno.localNascimento}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.nacionalidade}</f:facet>
+                    <h:outputText value="#{aluno.nacionalidade}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.email}</f:facet>
+                    <h:outputText value="#{aluno.email}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.cpfResponsavel}</f:facet>
+                    <h:outputText value="#{aluno.responsavel.cpf}" />
+                </p:column>                
+
+                <p:column>
+                    <f:facet name="header">#{i18n.opcoes}</f:facet>
+                    <p:commandLink value="#{i18n.remover}" update="#{cc.clientId}:alunos" process="@this">
+                        <p:collector value="#{aluno}" removeFrom="#{cc.attrs.managedBean.alunos}" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:outputPanel>
+
+    </composite:implementation>
+
+</html>

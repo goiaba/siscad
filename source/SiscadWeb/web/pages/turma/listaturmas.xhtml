@@ -1,0 +1,63 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formBuscaTurma">
+
+        <p:fieldset id="fsDadosTurma" legend="#{i18n.buscaTurma}" collapsed="false">
+
+            <dt:dadosComunsTurma managedBean="#{crudTurmaBean}" requiredFields="false" />
+
+        </p:fieldset>
+
+        <p:commandButton value="#{i18n.procurar}" update="growl formListaTurma" action="#{crudTurmaBean.retrieve}" />
+
+    </h:form>
+
+    <h:form id="formListaTurma">
+
+        <p:dataTable id="turmas"
+                     rendered="#{crudTurmaBean.renderTable}"
+                     value="#{crudTurmaBean.dataModel}"
+                     var="turma"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.descricao}">#{turma.descricao}</p:column>
+
+            <p:column headerText="#{i18n.codTurma}">#{turma.codigo}</p:column>
+
+            <p:column headerText="#{i18n.escola}">#{turma.escola}</p:column>
+
+            <p:column headerText="#{i18n.serie}">#{turma.serie}</p:column>
+
+            <p:column headerText="#{i18n.turno}">#{turma.turno}</p:column>
+
+            <p:column headerText="#{i18n.periodo}"><h:outputText value="#{turma.periodo}" converter="periodoConverter" /></p:column>
+
+            <p:column headerText="#{i18n.ano}"><h:outputText value="#{turma.ano}" converter="anoConverter" /></p:column>
+
+            <p:column headerText="#{i18n.statusTurma}"><h:outputText value="#{turma.status}" /></p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudTurmaBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{turma}" target="#{crudTurmaBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

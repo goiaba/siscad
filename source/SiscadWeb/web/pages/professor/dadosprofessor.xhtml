@@ -1,0 +1,71 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:tabelas="http://java.sun.com/jsf/composite/composites/tabelas"
+                xmlns:dialogs="http://java.sun.com/jsf/composite/composites/dialogs">
+
+    <h:form id="formProfessor">
+
+        <p:fieldset legend="#{i18n.dadosPessoais}">
+
+            <h:panelGrid columns="2" id="gridDadosPessoais">
+
+                <h:outputLabel for="cpf" value="#{i18n.cpf}:" />
+                <p:inputMask mask="999.999.999-99" validator="#{crudProfessorBean.validarCpf}" readonly="#{crudProfessorBean.cpfReadOnly}" value="#{crudProfessorBean.professor.pessoa.cpf}" id="cpf" required="true" requiredMessage="#{i18n.cpfRequerido}" immediate="true" />
+
+                <h:outputLabel for="matricula" value="#{i18n.matricula}:" rendered="#{crudProfessorBean.renderMatricula}" />
+                <p:inputText value="#{crudProfessorBean.professor.matricula}" id="matricula" rendered="#{crudProfessorBean.renderMatricula}" />
+
+                <h:outputLabel for="nome" value="#{i18n.nome}:" />
+                <p:inputText value="#{crudProfessorBean.professor.pessoa.nome}" id="nome" required="true" requiredMessage="#{i18n.nomeRequerido}" />
+
+                <h:outputLabel for="email" value="#{i18n.email}:" />
+                <p:inputText value="#{crudProfessorBean.professor.pessoa.email}" id="email" required="true" requiredMessage="#{i18n.emailRequerido}" validatorMessage="#{i18n.emailInvalido}">
+                    <f:validateRegex pattern="[a-zA-Z0-9_]*[@]{1}[a-zA-Z0-9_]*[.]{1}[a-zA-Z]{2,3}" />
+                </p:inputText>
+                <h:outputLabel for="selectEstadoCivil" value="#{i18n.estadoCivil}:" />
+                <h:selectOneMenu id="selectEstadoCivil" value="#{crudProfessorBean.professor.pessoa.estadoCivil}" required="true" requiredMessage="#{i18n.estadoCivilRequerido}" converter="estadoCivilConverter">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudProfessorBean.listaEstadoCivil}"/>
+
+                </h:selectOneMenu>
+
+                <h:outputLabel for="idioma" value="#{i18n.idioma}:" />
+                <h:selectOneMenu id="idioma" value="#{crudProfessorBean.localePadrao}" required="true" requiredMessage="#{i18n.idiomaRequerido}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudProfessorBean.supportedLocales}"/>
+
+                </h:selectOneMenu>
+
+            </h:panelGrid>
+
+        </p:fieldset>
+
+        <p:button value="#{i18n.addEndereco}" onclick="dlgEndereco.show();return false;" />
+        <p:button value="#{i18n.addTelefone}" onclick="dlgTelefone.show();return false;" />
+
+        <p:commandButton id="enviar" value="#{i18n.inserir}" action="#{crudProfessorBean.inserir}" update="growl" rendered="#{crudProfessorBean.mode == 'c'}" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudProfessorBean.alterar}" update="growl pgEngloba" rendered="#{crudProfessorBean.mode == 'u'}" />
+        <p:commandButton id="voltar" immediate="true" value="#{i18n.voltarParaLista}" action="#{crudProfessorBean.voltar}" update="pgEngloba" rendered="#{crudProfessorBean.mode == 'u'}" />
+
+    </h:form>
+
+    <h:form id="formTabelas">
+        <p:accordionPanel id="accordionTabelas" activeIndex="-1" autoHeight="true" collapsible="true">
+            <p:tab title="#{i18n.enderecos}" >
+                <tabelas:tabelaEndereco managedBean="#{crudProfessorBean}" emptyMessage="#{i18n.enderecoRequerido}" />
+            </p:tab>
+
+            <p:tab title="#{i18n.telefones}" >
+                <tabelas:tabelaTelefone managedBean="#{crudProfessorBean}" emptyMessage="#{i18n.telefoneRequerido}" />
+            </p:tab>
+        </p:accordionPanel>
+    </h:form>
+
+    <dialogs:dialogTelefone managedBean="#{crudProfessorBean}" widgetVar="dlgTelefone" formsToUpdate="formTabelas" />
+    <dialogs:dialogEndereco managedBean="#{crudProfessorBean}" widgetVar="dlgEndereco" formsToUpdate="formTabelas" />
+
+</ui:composition>

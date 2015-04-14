@@ -1,0 +1,43 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+        <h:form id="formListaEscola">
+
+            <p:dataTable id="escolas"
+                         value="#{crudEscolaBean.dataModel}"
+                         var="escola"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         rows="10"
+                         emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+                <p:column headerText="#{i18n.cnpjEscola}">
+                    <p:resizable />
+                    #{escola.cnpj}
+                </p:column>
+
+                <p:column headerText="#{i18n.nomeEscola}">
+                    <p:resizable />
+                    #{escola.nome}
+                </p:column>
+
+                <p:column>
+
+                    <p:commandLink action="#{crudEscolaBean.prepareToUpdate}" title="#{i18n.editar}" update="pgEngloba">
+                        <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                    </p:commandLink>
+
+                    <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                        <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                        <f:setPropertyActionListener value="#{escola}" target="#{crudEscolaBean.entity}" />
+                    </p:commandLink>
+
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
+
+</ui:composition>

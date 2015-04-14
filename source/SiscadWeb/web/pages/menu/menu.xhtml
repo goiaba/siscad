@@ -1,0 +1,119 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form>
+
+        <h:panelGrid columns="2" style="width: 100%;">
+
+            <p:menubar autoSubmenuDisplay="true">
+
+                <p:menuitem value="#{i18n.home}" url="/principal.jsf" />
+
+                <p:submenu label="#{i18n.cadastros}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+
+                    <p:submenu label="#{i18n.crudCurso}" rendered="#{loginBean.usuario.aoMenosDiretor}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/curso/crudcurso.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/curso/crudcurso.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudEscola}" rendered="#{loginBean.usuario.administrador}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/escola/crudescola.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/escola/crudescola.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudSerie}" rendered="#{loginBean.usuario.aoMenosDiretor}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/serie/crudserie.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/serie/crudserie.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudDisciplina}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/disciplina/cruddisciplina.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/disciplina/cruddisciplina.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudPeriodoAvaliacao}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/periodoAvaliacao/crudperiodoavaliacao.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/periodoAvaliacao/crudperiodoavaliacao.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudAvaliacao}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/avaliacao/crudavaliacao.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/avaliacao/crudavaliacao.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudProfessor}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/professor/crudprofessor.jsf?mode=c" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/professor/crudprofessor.jsf?mode=r" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudAluno}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/aluno/crudaluno.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/aluno/crudaluno.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.crudResponsavel}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/responsavel/crudresponsavel.jsf?mode=c"/>
+                        <p:menuitem value="#{i18n.listar}" url="/pages/responsavel/crudresponsavel.jsf?mode=r" />
+                    </p:submenu>
+
+                </p:submenu>
+
+                <p:submenu label="#{i18n.funcionalidades}" rendered="#{loginBean.usuario.aoMenosProfessor}">
+
+                    <p:submenu label="#{i18n.crudTurma}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.abrirTurma}" url="/pages/turma/crudturma.jsf?mode=create" />
+                        <p:menuitem value="#{i18n.manutencao}" url="/pages/turma/crudturma.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.matriculas}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.matricularAluno}" url="/pages/matricula/matricula.jsf"/>
+                        <p:menuitem value="#{i18n.manutencao}" url="/pages/matricula/manutencao.jsf?m=true" />
+                    </p:submenu>
+
+                    <p:submenu label="#{i18n.alocacoes}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/alocacao/crudalocacao.jsf?mode=create"/>
+                        <p:menuitem value="#{i18n.listar}" url="/pages/alocacao/crudalocacao.jsf?mode=retrieve" />
+                    </p:submenu>
+
+                    <p:menuitem value="#{i18n.registrarNota}" url="/pages/registroNota/listaTurmas.jsf" rendered="#{loginBean.usuario.aoMenosProfessor}" />
+                    <p:menuitem value="#{i18n.registrarFrequencia}" url="/pages/frequencia/listaTurmas.jsf" rendered="#{loginBean.usuario.aoMenosProfessor}" />
+
+                </p:submenu>
+
+                <p:submenu label="#{i18n.configuracoes}">
+
+                    <p:menuitem value="#{i18n.alterarDadosPessoais}" url="/pages/usuario/alterarDadosPessoais.jsf?mode=d" rendered="#{loginBean.usuario.aoMenosSecretario}" />
+                    <p:menuitem value="#{i18n.alterarSenha}" url="/pages/usuario/alterarSenha.jsf?mode=p" />
+
+                    <p:submenu label="#{i18n.usuarios}" rendered="#{loginBean.usuario.aoMenosSecretario}">
+
+                        <p:menuitem value="#{i18n.inserir}" url="/pages/usuario/crudUsuario.jsf?mode=create" rendered="#{loginBean.usuario.aoMenosSecretario}" />
+                        <p:menuitem value="#{i18n.listar}" url="/pages/usuario/crudUsuario.jsf?mode=retrieve" rendered="#{loginBean.usuario.aoMenosSecretario}" />
+
+                    </p:submenu>
+
+                </p:submenu>
+
+                <p:menuitem value="#{i18n.logout}" action="#{loginBean.logout}" ajax="false" />
+
+            </p:menubar>
+
+            <h:panelGroup layout="block" styleClass="i18n">
+
+                <h:commandLink id="pt_BR" title="Português" actionListener="#{loginBean.onChooseLocale}">
+                    <p:graphicImage value="#{resource['images:brazil.png']}" />  
+                </h:commandLink>
+
+                <h:commandLink id="en_US" title="English" actionListener="#{loginBean.onChooseLocale}">
+                    <p:graphicImage value="#{resource['images:united-states.png']}" />  
+                </h:commandLink>
+
+            </h:panelGroup>
+
+        </h:panelGrid>
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,21 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formDadosDisciplina">
+
+        <p:fieldset id="fsDadosDisciplina" legend="#{i18n.disciplina}" collapsed="false">
+
+            <dt:dadosComunsDisciplina managedBean="#{crudDisciplinaBean}" requiredFields="true" />
+
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudDisciplinaBean.create}" rendered="#{crudDisciplinaBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudDisciplinaBean.update}" rendered="#{crudDisciplinaBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudDisciplinaBean.back}" rendered="#{crudDisciplinaBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>

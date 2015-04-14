@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <!-- INTERFACE -->
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="{cc.attrs.requiredFields}" type="br.com.r2jb.siscad.managedBean.CrudAlocacaoBean" />
+        <composite:attribute name="requiredFields" default="true" />
+
+    </composite:interface>
+
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+
+        <h:panelGrid id="pgMatriculaNome" columns="3">
+            <h:outputLabel id="olMatriculaNomeProfessor" value="#{i18n.professor}" />
+            <p:autoComplete id="acNomeProfessor"
+                            minQueryLength="3"
+                            rendered="#{cc.attrs.managedBean.editMatricula}"
+                            value="#{cc.attrs.managedBean.entity.professor}"
+                            completeMethod="#{cc.attrs.managedBean.complete}"
+                            var="p"
+                            itemLabel="#{p.pessoa.nome}"
+                            itemValue="#{p}"
+                            onSelectUpdate="pgMatriculaNome pgDados growl"
+                            forceSelection="true"
+                            selectListener="#{cc.attrs.managedBean.populaCampos}"
+                            required="#{cc.attrs.requiredFields}" />
+
+            <h:outputText id="otMatriculaNome" value="#{cc.attrs.managedBean.entity.professor.matricula} - #{cc.attrs.managedBean.entity.professor.pessoa.nome}" rendered="#{!cc.attrs.managedBean.editMatricula}" />
+            <p:commandButton id="btAlterar" image="ui-icon-search" style="width: 24px; height: 24px" title="#{i18n.procurar}" action="#{cc.attrs.managedBean.alterarProfessorSelecionado}" update="pgMatriculaNome pgDados" rendered="#{!cc.attrs.managedBean.editMatricula}" />
+        </h:panelGrid>
+
+        <h:panelGrid id="gridDadosAlocacao" columns="2">
+            <h:outputLabel value="#{i18n.escola}:" for="escolas" />
+            <h:selectOneMenu id="escolas" value="#{cc.attrs.managedBean.escolaSelecionada}" required="{cc.attrs.requiredFields}">
+                <f:selectItem itemLabel="#{i18n.selecioneEscola}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaEscola}" />
+                <p:ajax update="growl ano series cursos periodo turmas" />
+            </h:selectOneMenu>
+
+            <h:outputLabel for="periodo" value="#{i18n.periodo}" />
+            <h:selectOneMenu id="periodo" value="#{cc.attrs.managedBean.periodoSelecionado}" >
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaPeriodo}" />
+                <p:ajax update="growl ano series cursos escolas turmas" />
+            </h:selectOneMenu>
+
+            <h:outputLabel for="ano" value="#{i18n.ano}" />
+            <h:selectOneMenu id="ano" value="#{cc.attrs.managedBean.anoSelecionado}">
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaAno}" />
+                <p:ajax update="growl periodo series cursos escolas turmas" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="#{i18n.curso}:" for="cursos" />
+            <h:selectOneMenu id="cursos" value="#{cc.attrs.managedBean.cursoSelecionado}">
+                <f:selectItem itemLabel="#{i18n.selecioneCurso}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaCurso}" />
+                <p:ajax update="growl periodo ano escolas series turmas" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="#{i18n.serie}:" for="series" />
+            <h:selectOneMenu id="series" value="#{cc.attrs.managedBean.serieSelecionada}">
+                <f:selectItem itemLabel="#{i18n.selecioneSerie}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaSerie}" />
+                <p:ajax update="growl periodo ano cursos escolas turmas" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="#{i18n.turmas}:" for="turmas" />
+            <h:selectOneMenu id="turmas" value="#{cc.attrs.managedBean.entity.turma}" required="#{cc.attrs.requiredFields}">
+                <f:selectItem itemLabel="#{i18n.selecioneTurma}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaTurma}" />
+            </h:selectOneMenu>
+
+            <h:outputLabel value="#{i18n.disciplinas}:" for="disciplinas" />
+            <h:selectOneMenu id="disciplina" value="#{cc.attrs.managedBean.entity.disciplina}" required="#{cc.attrs.requiredFields}">
+                <f:selectItem itemLabel="#{i18n.selecioneDisciplina}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaDisciplina}" />
+            </h:selectOneMenu>
+        </h:panelGrid>
+
+    </composite:implementation>
+
+</html>

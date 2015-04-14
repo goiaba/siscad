@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="emptyMessage" />
+        <composite:attribute name="showOptionsColumn" default="true" />
+
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:outputPanel id="enderecos">
+
+            <p:dataTable value="#{cc.attrs.managedBean.enderecoBean.enderecos}" var="endereco" emptyMessage="#{cc.attrs.emptyMessage}" styleClass="lista-endereco">
+
+                <p:column>
+                    <f:facet name="header">#{i18n.rua}</f:facet>
+                    <h:outputText value="#{endereco.rua}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.numero}</f:facet>
+                    <h:outputText value="#{endereco.numero}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.complemento}</f:facet>
+                    <h:outputText value="#{endereco.complemento}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.bairro}</f:facet>
+                    <h:outputText value="#{endereco.bairro}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.cep}</f:facet>
+                    <h:outputText value="#{endereco.cep}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.cidade}</f:facet>
+                    <h:outputText value="#{endereco.cidade}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.estado}</f:facet>
+                    <h:outputText value="#{endereco.estado}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">#{i18n.tipoEndereco}</f:facet>
+                    <h:outputText value="#{endereco.tipo}" converter="tipoEnderecoConverter" />
+                </p:column>
+
+                <p:column rendered="#{cc.attrs.showOptionsColumn}">
+                    <f:facet name="header">#{i18n.opcoes}</f:facet>
+                    <p:commandLink value="#{i18n.remover}" update="#{cc.clientId}:enderecos" process="@this">
+                        <p:collector value="#{endereco}" removeFrom="#{cc.attrs.managedBean.enderecoBean.enderecos}" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:outputPanel>
+
+    </composite:implementation>
+
+</html>

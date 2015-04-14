@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical">
+        
+    <LinearLayout android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background">
+        
+        <TextView
+        android:id="@+id/txtRaAluno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RA do ALuno" />
+
+        <EditText
+        android:id="@+id/raAluno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:inputType="number">
+            <requestFocus />
+        </EditText>
+
+        <Button
+        android:id="@+id/bttBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Consultar Notas" />
+
+    </LinearLayout>
+</ScrollView>

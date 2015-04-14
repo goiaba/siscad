@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="SiscadPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>br.com.r2jb.siscad.business.entity.Alocacao</class>
+    <class>br.com.r2jb.siscad.business.entity.Aluno</class>
+    <class>br.com.r2jb.siscad.business.entity.Avaliacao</class>
+    <class>br.com.r2jb.siscad.business.entity.Curso</class>
+    <class>br.com.r2jb.siscad.business.entity.Disciplina</class>
+    <class>br.com.r2jb.siscad.business.entity.Endereco</class>
+    <class>br.com.r2jb.siscad.business.entity.Escola</class>
+    <class>br.com.r2jb.siscad.business.entity.EscolaCurso</class>
+    <class>br.com.r2jb.siscad.business.entity.EscolaTelefone</class>
+    <class>br.com.r2jb.siscad.business.entity.Matricula</class>
+    <class>br.com.r2jb.siscad.business.entity.MatrizCurricular</class>
+    <class>br.com.r2jb.siscad.business.entity.Nota</class>
+    <class>br.com.r2jb.siscad.business.entity.PeriodoAvaliacao</class>
+    <class>br.com.r2jb.siscad.business.entity.Pessoa</class>
+    <class>br.com.r2jb.siscad.business.entity.PessoaEndereco</class>
+    <class>br.com.r2jb.siscad.business.entity.PessoaTelefone</class>
+    <class>br.com.r2jb.siscad.business.entity.Professor</class>
+    <class>br.com.r2jb.siscad.business.entity.Responsavel</class>
+    <class>br.com.r2jb.siscad.business.entity.Serie</class>
+    <class>br.com.r2jb.siscad.business.entity.Telefone</class>
+    <class>br.com.r2jb.siscad.business.entity.TipoFuncao</class>
+    <class>br.com.r2jb.siscad.business.entity.Turma</class>
+    <class>br.com.r2jb.siscad.business.entity.Turno</class>
+    <class>br.com.r2jb.siscad.business.entity.MatrizCurricularDisciplina</class>
+    <class>br.com.r2jb.siscad.business.entity.Frequencia</class>
+    <class>br.com.r2jb.siscad.util.entity.security.Perfil</class>
+    <class>br.com.r2jb.siscad.util.entity.security.Usuario</class>
+    <class>br.com.r2jb.siscad.util.entity.security.PerfilRecurso</class>
+    <class>br.com.r2jb.siscad.util.entity.security.Recurso</class>
+    <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/siscad"/>
+      <property name="javax.persistence.jdbc.password" value="rootroot"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="eclipselink.logging.level" value="FINE"/>
+    </properties>
+  </persistence-unit>
+</persistence>

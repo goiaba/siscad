@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="emptyMessage" />
+        <composite:attribute name="showOptionsColumn" default="true" type="java.lang.Boolean"/>
+
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:outputPanel id="telefones">
+
+            <p:dataTable value="#{cc.attrs.managedBean.telefoneBean.telefones}" var="telefone" emptyMessage="#{cc.attrs.emptyMessage}" styleClass="lista-telefone">
+
+                <p:column styleClass="tel-cod-area">
+                    <f:facet name="header">#{i18n.codigoArea}</f:facet>
+                    <h:outputText value="#{telefone.codigoarea}" />
+                </p:column>
+
+                <p:column styleClass="tel-numero">
+                    <f:facet name="header">#{i18n.numero}</f:facet>
+                    <h:outputText value="#{telefone.numero}" />
+                </p:column>
+
+                <p:column styleClass="tel-tipo">
+                    <f:facet name="header">#{i18n.tipoTelefone}</f:facet>
+                    <h:outputText value="#{telefone.tipo}" converter="tipoTelefoneConverter" />
+                </p:column>
+
+                <p:column styleClass="tel-opcoes" rendered="#{cc.attrs.showOptionsColumn}">
+                    <f:facet name="header">#{i18n.opcoes}</f:facet>
+                    <p:commandLink value="#{i18n.remover}" update="#{cc.clientId}:telefones" process="@this">
+                        <p:collector value="#{telefone}" removeFrom="#{cc.attrs.managedBean.telefoneBean.telefones}" />
+                    </p:commandLink>
+                </p:column>
+
+            </p:dataTable>
+
+        </p:outputPanel>
+
+    </composite:implementation>
+
+</html>

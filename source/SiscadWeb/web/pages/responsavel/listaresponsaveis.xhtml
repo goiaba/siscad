@@ -1,0 +1,75 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form id="formBuscaResponsavel">
+
+        <h:panelGrid columns="3" id="gridBusca">
+
+            <h:outputLabel value="#{i18n.buscaResponsavel}" for="termoBusca" />
+            <p:inputText value="#{crudResponsavelBean.termoBusca}" id="termoBusca" required="true" requiredMessage="#{i18n.campoObrigatorio}" />
+            <p:commandButton value="#{i18n.procurar}" update="growl formListaResponsavel" action="#{crudResponsavelBean.buscar}" />
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <h:form id="formListaResponsavel">
+
+        <p:dataTable id="responsaveis"
+                     rendered="#{crudResponsavelBean.renderTable}"
+                     value="#{crudResponsavelBean.listaRetornoBusca}"
+                     var="responsavel"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.cpf}">#{responsavel.pessoa.cpf}</p:column>
+
+            <p:column headerText="#{i18n.nome}">#{responsavel.pessoa.nome}</p:column>
+
+            <p:column headerText="#{i18n.email}">#{responsavel.pessoa.email}</p:column>
+
+            <p:column headerText="#{i18n.estadoCivil}"><h:outputText value="#{responsavel.pessoa.estadoCivil}" converter="estadoCivilConverter" /></p:column>
+
+            <p:column headerText="#{i18n.profissao}">#{responsavel.profissao}</p:column>
+
+            <p:column headerText="#{i18n.localTrabalho}">#{responsavel.localTrabalho}</p:column>
+
+            <p:column headerText="#{i18n.renda}">#{responsavel.renda}</p:column>
+
+            <p:column>
+
+                <p:commandLink action="#{crudResponsavelBean.preparaParaAlteracao}" title="#{i18n.editar}" update="pgEngloba">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </p:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{responsavel}" target="#{crudResponsavelBean.tipoFuncao}" />
+                </p:commandLink>
+                
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+    <p:outputPanel id="opDialogExclusao">
+
+        <p:confirmDialog message="#{i18n.confirmaExclusaoPessoa}" header="#{i18n.confirmaExclusaoPessoaTitulo}" severity="Alert" widgetVar="confirmaExclusao">
+
+            <h:form>
+
+                <p:commandButton value="#{i18n.sim}" update="growl formListaResponsavel" oncomplete="confirmaExclusao.hide();" actionListener="#{crudResponsavelBean.removerListener}" />
+                <p:commandButton value="#{i18n.nao}" onclick="confirmaExclusao.hide();" />
+
+            </h:form>
+
+        </p:confirmDialog>
+
+    </p:outputPanel>
+
+</ui:composition>

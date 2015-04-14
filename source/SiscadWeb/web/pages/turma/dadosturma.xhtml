@@ -1,0 +1,21 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formDadosTurma">
+
+        <p:fieldset id="fsDadosTurma" legend="#{i18n.turma}" collapsed="false">
+
+            <dt:dadosComunsTurma managedBean="#{crudTurmaBean}" requiredFields="true" />
+
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudTurmaBean.create}" rendered="#{crudTurmaBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudTurmaBean.update}" rendered="#{crudTurmaBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudTurmaBean.back}" rendered="#{crudTurmaBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>

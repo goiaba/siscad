@@ -1,0 +1,53 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formBuscaTurma">
+
+        <p:fieldset id="fsDadosTurma" legend="#{i18n.buscaTurma}" collapsed="false">
+
+            <dt:dadosComunsDisciplina managedBean="#{crudDisciplinaBean}" requiredFields="false" />
+
+        </p:fieldset>
+
+        <p:commandButton value="#{i18n.procurar}" update="growl formListaDisciplina" action="#{crudDisciplinaBean.retrieve}" />
+
+    </h:form>
+
+    <h:form id="formListaDisciplina">
+
+        <p:dataTable id="disciplinas"
+                     rendered="#{crudDisciplinaBean.renderTable}"
+                     value="#{crudDisciplinaBean.dataModel}"
+                     var="disciplina"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.descricao}">#{disciplina.nome}</p:column>
+
+            <p:column headerText="#{i18n.abreviacao}">#{disciplina.abreviacao}</p:column>
+
+            <p:column headerText="#{i18n.descricao}">#{disciplina.descricao}</p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudDisciplinaBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{turma}" target="#{crudDisciplinaBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

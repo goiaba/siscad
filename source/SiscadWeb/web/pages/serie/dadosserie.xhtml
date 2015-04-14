@@ -1,0 +1,40 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+        <h:form id="formSerie">
+
+            <p:fieldset id="fieldsetSerie" legend="#{i18n.crudSerie}" toggleable="false">
+
+                <h:panelGrid columns="2" width="50%">
+
+                    <h:outputLabel for="descricao" value="#{i18n.descricao}:" />
+                    <p:inputText id="descricao" value="#{crudSerieBean.entity.descricao}" required="true" requiredMessage="#{i18n.campoObrigatorio}"/>
+
+                    <h:outputLabel for="ordem" value="#{i18n.ordem}:" />
+                    <p:inputMask mask="9" id="ordem" value="#{crudSerieBean.entity.ordem}" required="true" requiredMessage="#{i18n.campoObrigatorio}"/>
+
+                    <h:outputLabel for="curso" value="#{i18n.curso}:" />
+                    <h:selectOneMenu id="curso" value="#{crudSerieBean.entity.curso}" required="true" requiredMessage="#{i18n.campoObrigatorio}">
+                        <f:selectItem itemLabel="#{i18n.selecioneCurso}" noSelectionOption="true" />
+                        <f:selectItems value="#{crudSerieBean.listaCurso}"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel for="serieSucessora" value="#{i18n.ultimaSerie}:" />
+                    <h:selectOneMenu  id="serieSucessora" value="#{crudSerieBean.entity.serieSucessora}" required="true" requiredMessage="#{i18n.campoObrigatorio}">
+                        <f:selectItem itemLabel="#{i18n.selecioneSerie}" noSelectionOption="true" />
+                        <f:selectItems value="#{crudSerieBean.listaSeriePosterior}"/>
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+            </p:fieldset>
+
+            <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudSerieBean.create}" process="@form" rendered="#{crudSerieBean.createMode}" update="formSerie growl" />
+            <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudSerieBean.update}" rendered="#{crudSerieBean.updateMode}" update="pgEngloba growl" />
+            <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudSerieBean.back}" rendered="#{crudSerieBean.updateMode}" update="pgEngloba" />
+
+        </h:form>
+
+</ui:composition>

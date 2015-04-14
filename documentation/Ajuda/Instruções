@@ -1,0 +1,20 @@
+
+	1 - Criação do arquivo JSP, com a estrutura necessária. Criei uma estrutura bem ridícula de template que não é muito boa, mas facilita bastante nossa vida. Como o intúito era apenas a facilidade, pois migraremos para o JSF2, acho que valeu a pena. Dentro de WEB-INF existe a pasta jspf (de jsp fragments). Ali está uma estrutura de pastas, e um arquivo jspf é apenas o fragmento de jsp necessário para o formulário que se deseja criar. O menu, header e footer já estão criados, e podem ser modificados (footer.jspf, header.jspf, leftmenu.jspf);
+	2 - Criação do FormObject, para facilitar as verificações de validade do form que o usuário envia e também para servirem como backingBeans, que serão acessados pelo jspf (br.com.r2jb.siscad.view.formObject);
+	3 - Criaçao do servlet que tratará a requisição (br.com.r2jb.siscad.view.servlet);
+	4 - O Servlet, através do ServiceLocator, faz chamada SOMENTE às fachadas (quero dizer, não é legal pular a camada chamando diretamente os DAOs);
+	5 - As fachadas podem referenciar outras fachadas e os DAOs. Tudo isso através do ServiceLocator, sem ser necessário instanciar nenhuma classe (br.com.r2jb.siscad.business.facade);
+	6 - Chegando aos DAOs a informação é persistida, e a resposta volta pelas camadas na ordem inversa (br.com.r2jb.siscad.dao).
+
+
+	* As classes que representam as entidades do sistema estão em br.com.r2jb.business.entity. Se alguma nova entidade precisar ser criada deve ser registrada no arquivo persistence.xml;
+	* Como padrão, um método de serviço que retorna um Professor fica na fachada ProfessorFacade, um que retorna Endereco fica na EnderecoFacade, e assim por diante. A mesma coisa para os DAOs.
+	* Fachadas e DAOs sempre possuem uma interface. Se a fachada Nota deve ser criada, então NotaFacade será a interface (e será armazenada em br.com.r2jb.siscad.business.facade.nota) e NotaFacadeImpl a implementação da mesma (armazenada em br.com.r2jb.siscad.business.facade.nota.impl). O mesmo vale para os DAOs, com a diferença de serem armazenados em br.com.r2jb.siscad.dao.nota ebr.com.r2jb.siscad.dao.nota.impl. Se hover a necessidade de criar novas Fachadas e DAOs, eles devem ser registrados junto ao Spring. Isso é feito, simplesmente adicionando-se um elemento "bean" ao arquivo properties-config.xml (src/conf) com os seguintes atributos:
+	
+		- id: o mesmo nome da interface (NotaFacade no exemplo);
+		- scope: normalmente singleton, mas existem outras possibilidades;
+		- class: a classe que implementa a interface (br.com.r2jb.siscad.business.facade.nota.impl.NotaImpl).
+
+Acredito que seja basicamente isso!
+
+http://benpryor.com/blog/2006/08/23/java-advantages-of-interfaces/

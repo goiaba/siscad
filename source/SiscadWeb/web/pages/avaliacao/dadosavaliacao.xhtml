@@ -1,0 +1,21 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formDadosAvaliacao">
+
+        <p:fieldset id="fsDadosAvaliacao" legend="#{i18n.avaliacoes}" collapsed="false">
+
+            <dt:dadosComunsAvaliacao managedBean="#{crudAvaliacaoBean}" />
+
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudAvaliacaoBean.create}" rendered="#{crudAvaliacaoBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudAvaliacaoBean.update}" rendered="#{crudAvaliacaoBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudAvaliacaoBean.back}" rendered="#{crudAvaliacaoBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>

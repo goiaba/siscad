@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <application>
+
+        <resource-bundle>
+            <base-name>resources.i18n.messages</base-name>
+            <var>i18n</var>
+        </resource-bundle>
+
+        <locale-config>
+            <default-locale>pt_BR</default-locale>
+            <supported-locale>pt_BR</supported-locale>
+            <supported-locale>en_US</supported-locale>
+        </locale-config>
+        
+    </application>
+    
+    <lifecycle>
+        <phase-listener>br.com.r2jb.siscad.phaseListener.SiscadWebPhaseListener</phase-listener>
+    </lifecycle>
+
+</faces-config>

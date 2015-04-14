@@ -1,0 +1,76 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                template="/pages/templates/masterLayout.xhtml">
+
+    <ui:define name="content">
+        <h:form>
+
+            <p:fieldset id="fsMatricula" legend="#{i18n.matricula}">
+                <h:panelGrid id="pgRaNome" columns="3">
+                    <h:outputLabel id="olRaNomeAluno" value="#{i18n.aluno}" />
+                    <p:autoComplete id="acNomeAluno"
+                                    minQueryLength="3"
+                                    rendered="#{matricularAlunoBean.editRa}"
+                                    value="#{matricularAlunoBean.matricula.aluno}"
+                                    completeMethod="#{matricularAlunoBean.complete}"
+                                    var="a"
+                                    itemLabel="#{a.nome}"
+                                    itemValue="#{a}"
+                                    onSelectUpdate="pgRaNome pgDados growl"
+                                    forceSelection="true"
+                                    selectListener="#{matricularAlunoBean.populaCampos}"/>
+
+                    <h:outputText id="otRaNome" value="#{matricularAlunoBean.matricula.aluno.ra} - #{matricularAlunoBean.matricula.aluno.nome}" rendered="#{!matricularAlunoBean.editRa}" />
+                    <p:commandButton id="btAlterar" image="ui-icon-search" style="width: 24px; height: 24px" title="#{i18n.procurar}" action="#{matricularAlunoBean.alterarAlunoSelecionado}" update="pgRaNome pgDados" rendered="#{!matricularAlunoBean.editRa}" />
+                </h:panelGrid>
+
+                <h:panelGrid id="pgDados" columns="2">
+                    <h:outputLabel value="#{i18n.escola}:" for="escolas" />
+                    <h:selectOneMenu id="escolas" value="#{matricularAlunoBean.escolaSelecionada}">
+                        <f:selectItem itemLabel="#{i18n.selecioneEscola}" noSelectionOption="true" />
+                        <f:selectItems value="#{matricularAlunoBean.escolas}" />
+                        <f:validator validatorId="escolaValidator" />
+                        <p:ajax update="growl cursos series turmas" />
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="#{i18n.curso}:" for="cursos" />
+                    <h:selectOneMenu id="cursos" value="#{matricularAlunoBean.cursoSelecionado}">
+                        <f:selectItem itemLabel="#{i18n.selecioneCurso}" noSelectionOption="true" />
+                        <f:selectItems value="#{matricularAlunoBean.cursos}" />
+                        <f:validator validatorId="cursoValidator" />
+                        <p:ajax update="growl escolas series turmas" />
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="#{i18n.serie}:" for="series" />
+                    <h:selectOneMenu id="series" value="#{matricularAlunoBean.serieSelecionado}">
+                        <f:selectItem itemLabel="#{i18n.selecioneSerie}" noSelectionOption="true" />
+                        <f:selectItems value="#{matricularAlunoBean.series}" />
+                        <f:validator validatorId="serieValidator" />
+                        <p:ajax update="growl cursos escolas turmas" />
+                    </h:selectOneMenu>
+                   
+                    <h:outputLabel value="#{i18n.turmas}:" for="turmas" />
+                    <h:selectOneMenu id="turmas" value="#{matricularAlunoBean.matricula.turma}">
+                        <f:selectItem itemLabel="#{i18n.selecioneTurma}" noSelectionOption="true" />
+                        <f:selectItems value="#{matricularAlunoBean.turmas}" />
+                        <f:validator validatorId="turmaValidator" />
+                    </h:selectOneMenu>
+
+                    <h:outputText value="#{i18n.dataMatricula}:" />
+                    <p:inputText id="dataMatricula" value="#{matricularAlunoBean.matricula.dataentrada}" readonly="true">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:inputText>
+
+                </h:panelGrid>
+
+            </p:fieldset>
+            
+            <p:commandButton id="efetuarMatricula" value="#{i18n.efetuarMatricula}" action="#{matricularAlunoBean.matricularAluno}" update="fsMatricula growl" />
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>
+

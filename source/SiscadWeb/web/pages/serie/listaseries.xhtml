@@ -1,0 +1,64 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form id="formBuscaSerie">
+
+        <h:panelGrid columns="3" id="gridBusca">
+
+            <h:outputLabel value="#{i18n.buscaSerie}" for="termoBusca" />
+            <h:selectOneMenu id="termoBusca" value="#{crudSerieBean.curso}" required="true" requiredMessage="#{i18n.campoObrigatorio}">
+                <f:selectItem itemLabel="#{i18n.selecioneCurso}" noSelectionOption="true" />
+                <f:selectItems value="#{crudSerieBean.listaCurso}"/>
+            </h:selectOneMenu>
+
+            <p:commandButton value="#{i18n.procurar}" update="growl formListaSerie" action="#{crudSerieBean.retrieve}" />
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <h:form id="formListaSerie">
+
+        <p:dataTable id="series"
+                     value="#{crudSerieBean.dataModel}"
+                     var="serie"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.serie}">
+                <p:resizable />
+                #{serie.descricao}
+            </p:column>
+
+            <p:column headerText="#{i18n.seriePosterior}">
+                <p:resizable />
+                #{serie.serieSucessora}
+            </p:column>
+
+            <p:column headerText="#{i18n.ordem}">
+                <p:resizable />
+                #{serie.ordem}
+            </p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudSerieBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:edit.png']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:delete.png']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{serie}" target="#{crudSerieBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

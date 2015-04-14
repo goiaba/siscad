@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="widgetVar" required="true" />
+        <composite:attribute name="formsToUpdate" />
+
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:dialog id="dialogTelefone" header="#{i18n.novoTelefone}" styleClass="dialog-auto-width" widgetVar="#{cc.attrs.widgetVar}" draggable="false" modal="true">
+
+            <h:form id="formTelefone">
+
+                <h:panelGrid columns="2" id="gridDadosTelefone">
+
+                    <h:outputLabel value="#{i18n.codigoArea}:" for="codigoArea" />
+                    <p:inputMask mask="99" value="#{cc.attrs.managedBean.telefoneBean.telefone.codigoarea}" id="codigoArea" required="true" requiredMessage="#{i18n.codigoAreaRequerido}" converter="integerConverter" />
+
+                    <h:outputLabel value="#{i18n.numero}:" for="numeroTelefone" />
+                    <p:inputMask mask="9999-9999" value="#{cc.attrs.managedBean.telefoneBean.telefone.numero}" id="numeroTelefone" required="true" requiredMessage="#{i18n.numeroRequerido}" />
+
+                    <h:outputLabel value="#{i18n.tipoTelefone}:" for="selectTipoTelefone" />
+                    <h:selectOneMenu id="selectTipoTelefone" value="#{cc.attrs.managedBean.telefoneBean.telefone.tipo}" required="true" requiredMessage="#{i18n.tipoTelefoneRequerido}">
+
+                        <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                        <f:selectItems value="#{cc.attrs.managedBean.telefoneBean.listaTipoTelefone}"/>
+                        
+                    </h:selectOneMenu>
+
+                </h:panelGrid>
+
+                <p:commandButton value="#{i18n.limpar}" type="reset"/>
+
+                <p:commandButton value="#{i18n.inserir}"
+                                 update="#{cc.attrs.formsToUpdate} growl"
+                                 action="#{cc.attrs.managedBean.telefoneBean.newTelefone}"
+                                 oncomplete="#{cc.attrs.widgetVar}.hide();">
+
+                    <p:collector value="#{cc.attrs.managedBean.telefoneBean.telefone}" addTo="#{cc.attrs.managedBean.telefoneBean.telefones}" />
+
+                </p:commandButton>
+
+            </h:form>
+
+        </p:dialog>
+
+    </composite:implementation>
+
+</html>

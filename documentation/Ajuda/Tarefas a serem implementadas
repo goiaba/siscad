@@ -1,0 +1,45 @@
+Siscad - visões e funcionalidades de acordo com o ator
+
+	Administrador
+
+		CRUD de Escola (RF1, RF2, RF3);
+		CRUD de Aluno (RF4, RF5, RF6);
+		CRUD de Professor (RF7, RF8, RF9);
+		CRUD de Responsável (RF10, RF11, RF12);
+		CRUD de Secretário Acadêmico (RF13, RF14, RF15);
+		CRUD de Turma (RF16, RF17, RF18);
+		CRUD de Disciplina (RF19, RF20, RF21);
+		CRUD de Matricular Aluno (RF22, RF23, RF24);
+		CRUD de Nota do Aluno (RF25, RF26, RF27);
+		CRUD de Frequência do Aluno (RF28, RF29, RF30);
+
+	Mantenedor/Diretor
+
+		CRUD de Aluno (RF4, RF5, RF6);
+		CRUD de Professor (RF7, RF8, RF9);
+		CRUD de Responsável (RF10, RF11, RF12);
+		CRUD de Secretário Acadêmico (RF13, RF14, RF15);
+		CRUD de Turma (RF16, RF17, RF18);
+		CRUD de Matricular Aluno (RF22, RF23, RF24);
+		CRUD de Nota do Aluno (RF25, RF26, RF27);
+		CRUD de Frequência do Aluno (RF28, RF29, RF30);
+
+	Secretaria Acadêmica
+
+		CRUD de Aluno (RF4, RF5, RF6);
+		CRUD de Professor (RF7, RF8, RF9);
+		CRUD de Responsável (RF10, RF11, RF12);
+		CRUD de Turma (RF16, RF17, RF18);
+		CRUD de Matricular Aluno (RF22, RF23, RF24);
+		CRUD de Nota do Aluno (RF25, RF26, RF27);
+		CRUD de Frequência do Aluno (RF28, RF29, RF30);
+
+	Professor
+
+		CRUD de Nota do Aluno (RF25, RF26, RF27);
+		CRUD de Frequência do Aluno (RF28, RF29, RF30);
+	
+	Aluno
+
+
+	Pai/Responsável

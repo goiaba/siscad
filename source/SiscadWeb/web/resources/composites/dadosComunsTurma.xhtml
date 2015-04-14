@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <!-- INTERFACE -->
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="requiredFields" required="true" />
+
+    </composite:interface>
+
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+
+        <h:panelGrid id="gridDadosTurma" columns="2">
+
+            <h:outputLabel for="descricao" value="#{i18n.descricao}" />
+            <h:inputText id="descricao" value="#{cc.attrs.managedBean.entity.descricao}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.descricaoRequerida}" />
+
+            <h:outputLabel for="codTurma" value="#{i18n.codTurma}" />
+            <h:selectOneMenu id="codTurma" value="#{cc.attrs.managedBean.entity.codigo}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.codTurmaRequerido}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaCodigoTurma}" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="escola" value="#{i18n.escola}" />
+            <h:selectOneMenu id="escola" value="#{cc.attrs.managedBean.entity.escola}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.escolaRequerida}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaEscola}" />
+                <p:ajax update="growl serie turno periodo ano statusTurma" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="serie" value="#{i18n.serie}" />
+            <h:selectOneMenu id="serie" value="#{cc.attrs.managedBean.entity.serie}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.serieRequerida}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaSerie}" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="turno" value="#{i18n.turno}" />
+            <h:selectOneMenu id="turno" value="#{cc.attrs.managedBean.entity.turno}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.turnoRequerido}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaTurno}" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="periodo" value="#{i18n.periodo}" />
+            <h:selectOneMenu id="periodo" value="#{cc.attrs.managedBean.entity.periodo}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.periodoRequerido}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaPeriodo}" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="ano" value="#{i18n.ano}" />
+            <h:selectOneMenu id="ano" value="#{cc.attrs.managedBean.entity.ano}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.anoRequerido}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaAno}" />
+
+            </h:selectOneMenu>
+
+            <h:outputLabel for="abrirTurma" value="#{i18n.abrirTurma}" rendered="#{cc.attrs.managedBean.createMode}" />
+            <h:selectBooleanCheckbox id="abrirTurma" value="#{cc.attrs.managedBean.abrirTurma}" rendered="#{cc.attrs.managedBean.createMode}" />
+
+            <h:outputLabel for="statusTurma" value="#{i18n.statusTurma}" rendered="#{!cc.attrs.managedBean.createMode}" />
+            <h:selectOneMenu id="statusTurma" value="#{cc.attrs.managedBean.entity.status}" required="#{cc.attrs.requiredFields}" requiredMessage="#{i18n.statusTurmaRequerido}" rendered="#{!cc.attrs.managedBean.createMode}">
+
+                <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                <f:selectItems value="#{cc.attrs.managedBean.listaStatusTurma}" />
+
+            </h:selectOneMenu>
+
+        </h:panelGrid>
+
+    </composite:implementation>
+    
+</html>

@@ -1,0 +1,25 @@
+SSH:
+
+	host: latosensu.dc.ufscar.br
+	port: 2002
+	user: g3web2010
+	pass: brunogmc@gmail
+
+SVN:
+
+	path: svn://latosensu.dc.ufscar.br/home/g3web2010/svn/projeto/siscad
+	pass: g3web2010 | professor
+	user: g3web2010 | professor
+
+Banco:
+
+	host: https://latosensu.dc.ufscar.br/phppgadmin/
+	user: g3web2010
+	pass: g3web2010.ls.pwd
+
+Tomcat:
+
+	host: http://latosensu.dc.ufscar.br
+	port: 30080
+	user: bruno
+	pass: goiaba

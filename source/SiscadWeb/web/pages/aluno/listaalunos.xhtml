@@ -1,0 +1,54 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui">
+
+    <h:form id="formBuscaAluno">
+
+        <h:panelGrid columns="3" id="gridBusca">
+
+            <h:outputLabel value="#{i18n.buscaAluno}" for="termoBusca" />
+            <p:inputText value="#{crudAlunoBean.searchTerm}" id="termoBusca" required="true" requiredMessage="#{i18n.campoObrigatorio}" />
+            <p:commandButton value="#{i18n.procurar}" update="growl formListaAluno" action="#{crudAlunoBean.retrieve}" />
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <h:form id="formListaAluno">
+
+        <p:dataTable id="alunos"
+                     rendered="#{crudAlunoBean.renderTable}"
+                     value="#{crudAlunoBean.dataModel}"
+                     var="aluno"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.ra}">#{aluno.ra}</p:column>
+
+            <p:column headerText="#{i18n.nome}">#{aluno.nome}</p:column>
+
+            <p:column headerText="#{i18n.sexo}"><h:outputText value="#{aluno.sexo}" converter="sexoConverter" /></p:column>
+
+            <p:column headerText="#{i18n.email}">#{aluno.email}</p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudAlunoBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{aluno}" target="#{crudAlunoBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

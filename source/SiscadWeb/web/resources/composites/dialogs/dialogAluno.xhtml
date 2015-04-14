@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" />
+        <composite:attribute name="widgetVar" required="true" />
+        <composite:attribute name="formsToUpdate" />
+
+    </composite:interface>
+
+    <composite:implementation>
+
+        <p:dialog id="dialogAluno" header="#{i18n.addEditAluno}" styleClass="dialog-auto-width" widgetVar="#{cc.attrs.widgetVar}" modal="true">
+
+            <h:form id="formAluno">
+
+                <h:panelGrid columns="2" id="gridDadosAluno">
+
+                    <h:outputLabel value="#{i18n.nome}:" for="nomeAluno" />
+                    <p:inputText value="#{cc.attrs.managedBean.aluno.nome}" id="nomeAluno" required="true" />
+
+                    <h:outputLabel value="#{i18n.sexo}:" for="sexo" />
+                    <h:selectOneMenu id="sexo" value="#{cc.attrs.managedBean.aluno.sexo}" required="true">
+                        <f:selectItem itemLabel="Feminino" itemValue="Feminino"/>
+                        <f:selectItem itemLabel="Masculino" itemValue="Masculino"/>
+                    </h:selectOneMenu>
+
+                    <h:outputLabel value="#{i18n.dataNascimento}:" for="dataNascimento" />
+                    <p:inputText value="#{cc.attrs.managedBean.aluno.dataNascimento}" id="dataNascimento" required="true" />
+
+                    <h:outputLabel value="#{i18n.localNascimento}:" for="localNascimento" />
+                    <p:inputText value="#{cc.attrs.managedBean.aluno.localNascimento}" id="localNascimento" required="true" />
+
+                    <h:outputLabel value="#{i18n.nacionalidade}:" for="nacionalidade" />
+                    <p:inputText value="#{cc.attrs.managedBean.aluno.nacionalidade}" id="nacionalidade" required="true" />
+
+                    <h:outputLabel value="#{i18n.email}:" for="email" />
+                    <p:inputText value="#{cc.attrs.managedBean.aluno.email}" id="email" required="true" />
+
+                    <h:outputLabel value="#{i18n.cpfResponsavel}:" for="responsavel" />
+                    <p:inputText value="#{cc.attrs.managedBean.aluno.responsavel.cpf}" id="responsavel" required="true" />
+
+                </h:panelGrid>
+
+                <p:commandButton value="#{i18n.limpar}" type="reset"/>
+
+                <p:commandButton value="#{i18n.inserir}"
+                                 update="#{cc.attrs.formsToUpdate}"
+                                 action="#{cc.attrs.managedBean.newAluno}"
+                                 oncomplete="#{cc.attrs.widgetVar}.hide();">
+
+                    <p:collector value="#{cc.attrs.managedBean.aluno}" addTo="#{cc.attrs.managedBean.alunos}" />
+
+                </p:commandButton>
+
+            </h:form>
+
+        </p:dialog>
+
+    </composite:implementation>
+
+</html>

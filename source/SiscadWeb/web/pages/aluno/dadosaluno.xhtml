@@ -1,0 +1,112 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:tabelas="http://java.sun.com/jsf/composite/composites/tabelas"
+                xmlns:dialogs="http://java.sun.com/jsf/composite/composites/dialogs">
+
+    <h:form id="formDadosAlunoResponsavel">
+
+        <p:fieldset id="fsDadosAluno" legend="#{i18n.dadosPessoaisAluno}" collapsed="false">
+
+            <h:panelGrid id="gridDadosPessoaisAluno" columns="2">
+
+                <h:outputLabel for="raAluno" value="#{i18n.ra}" rendered="#{crudAlunoBean.mostraCampoRA}"/>
+                <h:outputText value="#{crudAlunoBean.entity.ra}" id="raAluno" rendered="#{crudAlunoBean.mostraCampoRA}" />
+
+                <h:outputLabel for="nomeAluno" value="#{i18n.nome}" />
+                <p:inputText value="#{crudAlunoBean.entity.nome}" id="nomeAluno" requiredMessage="#{i18n.nomeRequerido}" />
+
+                <h:outputLabel for="sexoAluno" value="#{i18n.sexo}" />
+                <h:selectOneMenu id="sexoAluno" value="#{crudAlunoBean.entity.sexo}" converter="sexoConverter" required="true" requiredMessage="#{i18n.sexoRequerido}">
+
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudAlunoBean.listaSexo}" />
+
+                </h:selectOneMenu>
+
+                <h:outputLabel for="dataNascimentoAluno" value="#{i18n.dataNascimento}" />
+                <p:calendar id="dataNascimentoAluno" navigator="true" value="#{crudAlunoBean.entity.dataNascimento}" mindate="01/01/1930" requiredMessage="#{i18n.dataNascimentoRequerido}" />
+
+                <h:outputLabel for="localNascimentoAluno" value="#{i18n.localNascimento}" />
+                <p:inputText value="#{crudAlunoBean.entity.localNascimento}" id="localNascimentoAluno" requiredMessage="#{i18n.localNascimentoRequerido}" />
+
+                <h:outputLabel for="nacionalidadeAluno" value="#{i18n.nacionalidade}" />
+                <p:inputText value="#{crudAlunoBean.entity.nacionalidade}" id="nacionalidadeAluno" requiredMessage="#{i18n.nacionalidadeRequerido}" />
+
+                <h:outputLabel for="emailAluno" value="#{i18n.email}" />
+                <p:inputText value="#{crudAlunoBean.entity.email}" id="emailAluno" requiredMessage="#{i18n.emailRequerido}" validatorMessage="#{i18n.emailInvalido}">
+                    <f:validateRegex pattern="[a-zA-Z0-9_]*[@]{1}[a-zA-Z0-9_]*[.]{1}[a-zA-Z]{2,3}" />
+                </p:inputText>
+
+            </h:panelGrid>
+
+        </p:fieldset>
+
+        <p:fieldset id="fsDadosResponsavel" legend="#{i18n.dadosPessoaisResponsavel}" collapsed="false" rendered="#{crudAlunoBean.camposResponsavelVisible}">
+
+            <h:panelGrid columns="2" id="gridDadosPessoaisResponsavel">
+
+                <h:outputLabel for="cpfResponsavel" value="#{i18n.cpf}" />
+                <p:inputMask id="cpfResponsavel" mask="999.999.999-99" value="#{crudAlunoBean.responsavel.pessoa.cpf}" required="true" requiredMessage="#{i18n.cpfRequerido}">
+                    <p:ajax event="blur" process="@this" update="fsDadosResponsavel pgDialogs formTabelas" listener="#{crudAlunoBean.verifyCpfExists}"/>
+                </p:inputMask>
+
+                <h:outputLabel for="nomeResponsavel" value="#{i18n.nome}" />
+                <p:inputText id="nomeResponsavel" value="#{crudAlunoBean.responsavel.pessoa.nome}" required="true" requiredMessage="#{i18n.nomeRequerido}" readonly="#{crudAlunoBean.camposResponsavelReadOnly}" />
+
+                <h:outputLabel for="emailResponsavel" value="#{i18n.email}" />
+                <p:inputText value="#{crudAlunoBean.responsavel.pessoa.email}" id="emailResponsavel" required="true" requiredMessage="#{i18n.emailRequerido}" readonly="#{crudAlunoBean.camposResponsavelReadOnly}" />
+
+                <h:outputLabel for="selectEstadoCivilResponsavel" value="#{i18n.estadoCivil}" />
+                <h:selectOneMenu id="selectEstadoCivilResponsavel" value="#{crudAlunoBean.responsavel.pessoa.estadoCivil}" required="true" requiredMessage="#{i18n.estadoCivilRequerido}" disabled="#{crudAlunoBean.camposResponsavelReadOnly}">
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudAlunoBean.listaEstadoCivil}"/>
+                </h:selectOneMenu>
+
+                <h:outputLabel for="profissaoResponsavel" value="#{i18n.profissao}" />
+                <p:inputText value="#{crudAlunoBean.responsavel.profissao}" id="profissaoResponsavel" required="true" requiredMessage="#{i18n.profissaoRequerida}" readonly="#{crudAlunoBean.camposResponsavelReadOnly}" />
+
+                <h:outputLabel for="localTrabalhoResponsavel" value="#{i18n.localTrabalho}" />
+                <p:inputText value="#{crudAlunoBean.responsavel.localTrabalho}" id="localTrabalhoResponsavel" required="true" requiredMessage="#{i18n.localTrabalhoRequerido}" readonly="#{crudAlunoBean.camposResponsavelReadOnly}" />
+
+                <h:outputLabel for="rendaResponsavel" value="#{i18n.renda}" />
+                <p:inputText value="#{crudAlunoBean.responsavel.renda}" id="rendaResponsavel" required="true" requiredMessage="#{i18n.rendaRequerida}" readonly="#{crudAlunoBean.camposResponsavelReadOnly}" />
+
+                <h:outputLabel for="idiomaResponsavel" value="#{i18n.idioma}" />
+                <h:selectOneMenu id="idiomaResponsavel" value="#{crudAlunoBean.defaultUserLocale}" required="true" requiredMessage="#{i18n.idiomaRequerido}" disabled="#{crudAlunoBean.camposResponsavelReadOnly}">
+                    <f:selectItem itemLabel="#{i18n.selecioneGenerico}" noSelectionOption="true" />
+                    <f:selectItems value="#{crudAlunoBean.supportedLocales}"/>
+                </h:selectOneMenu>
+
+            </h:panelGrid>
+
+        </p:fieldset>
+
+        <h:panelGroup id="pgDialogs" layout="span">
+            <p:button id="enderecoButton" value="#{i18n.addEndereco}" onclick="dlgEndereco.show();return false;" rendered="#{!crudAlunoBean.camposResponsavelReadOnly and crudAlunoBean.camposResponsavelVisible}" />
+            <p:button id="telefoneButton" value="#{i18n.addTelefone}" onclick="dlgTelefone.show();return false;" rendered="#{!crudAlunoBean.camposResponsavelReadOnly and crudAlunoBean.camposResponsavelVisible}" />
+        </h:panelGroup>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudAlunoBean.create}" rendered="#{crudAlunoBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudAlunoBean.update}" rendered="#{crudAlunoBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudAlunoBean.back}" rendered="#{crudAlunoBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+    <h:form id="formTabelas" rendered="#{crudAlunoBean.camposResponsavelVisible}">
+        <p:accordionPanel id="accordionTabelas" activeIndex="-1" autoHeight="true" collapsible="true">
+            <p:tab title="#{i18n.enderecos}" >
+                <tabelas:tabelaEndereco managedBean="#{crudAlunoBean}" emptyMessage="#{i18n.enderecoRequerido}" showOptionsColumn="false" />
+            </p:tab>
+
+            <p:tab title="#{i18n.telefones}" >
+                <tabelas:tabelaTelefone managedBean="#{crudAlunoBean}" emptyMessage="#{i18n.telefoneRequerido}" showOptionsColumn="false" />
+            </p:tab>
+        </p:accordionPanel>
+    </h:form>
+
+    <dialogs:dialogTelefone managedBean="#{crudAlunoBean}" widgetVar="dlgTelefone" formsToUpdate="formTabelas" />
+    <dialogs:dialogEndereco managedBean="#{crudAlunoBean}" widgetVar="dlgEndereco" formsToUpdate="formTabelas" />
+
+</ui:composition>

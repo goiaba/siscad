@@ -1,0 +1,59 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formBuscaAvaliacao">
+
+        <p:fieldset id="fsDadosAvaliacao" legend="#{i18n.buscaAvaliacao}" collapsed="false">
+
+            <dt:dadosComunsAvaliacao managedBean="#{crudAvaliacaoBean}" requiredFields="false" />
+
+        </p:fieldset>
+
+        <p:commandButton value="#{i18n.procurar}" update="growl formListaAvaliacao" action="#{crudAvaliacaoBean.retrieve}" />
+
+    </h:form>
+
+    <h:form id="formListaAvaliacao">
+
+        <p:dataTable id="avaliacoes"
+                     rendered="#{crudAvaliacaoBean.renderTable}"
+                     value="#{crudAvaliacaoBean.dataModel}"
+                     var="avaliacao"
+                     paginator="true"
+                     paginatorPosition="bottom"
+                     rows="10"
+                     emptyMessage="#{i18n.nenhumRegistroEncontrado}">
+
+            <p:column headerText="#{i18n.descricao}">#{avaliacao.descricao}</p:column>
+
+            <p:column headerText="#{i18n.abreviacao}">#{avaliacao.abreviacao}</p:column>
+
+            <p:column headerText="#{i18n.peso}">#{avaliacao.peso}</p:column>
+
+            <p:column headerText="#{i18n.periodoAvaliacao}"><h:outputText value="#{avaliacao.periodoAvaliacao.descricao}" /></p:column>
+
+            <p:column headerText="#{i18n.periodo}"><h:outputText value="#{avaliacao.periodoAvaliacao.semestre}" converter="periodoConverter" /></p:column>
+
+            <p:column headerText="#{i18n.ano}"><h:outputText value="#{avaliacao.periodoAvaliacao.ano}" converter="anoConverter" /></p:column>
+
+            <p:column>
+
+                <h:commandLink action="#{crudAvaliacaoBean.prepareToUpdate}" title="#{i18n.editar}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;" />
+                </h:commandLink>
+
+                <p:commandLink onclick="confirmaExclusao.show();" title="#{i18n.remover}">
+                    <p:graphicImage value="#{resource['images:error.gif']}" style="border-width: 0px;"/>
+                    <f:setPropertyActionListener value="#{avaliacao}" target="#{crudAvaliacaoBean.entity}" />
+                </p:commandLink>
+
+            </p:column>
+
+        </p:dataTable>
+
+    </h:form>
+    
+</ui:composition>

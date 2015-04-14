@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.prime.com.tr/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:composite="http://java.sun.com/jsf/composite">
+
+    <!-- INTERFACE -->
+    <composite:interface>
+
+        <composite:attribute name="managedBean" required="true" type="br.com.r2jb.siscad.managedBean.AbstractCrudBean" />
+        <composite:attribute name="i18nConfirmacaoExclusao" type="java.lang.String" default="#{i18n.confirmaExclusaoGenerico}" />
+        <composite:attribute name="i18nTituloConfirmacaoExclusao" type="java.lang.String" default="#{i18n.tituloConfirmaExclusaoGenerico}"/>
+        <composite:attribute name="srcCreateUpdate" required="true" type="java.lang.String" />
+        <composite:attribute name="srcRetrieveDelete" required="true" type="java.lang.String" />
+
+    </composite:interface>
+
+    <!-- IMPLEMENTATION -->
+    <composite:implementation>
+
+        <f:metadata>
+            <f:viewParam name="mode" value="#{cc.attrs.managedBean.mode}" converter="modeConverter" />
+        </f:metadata>
+
+        <p:confirmDialog message="#{cc.attrs.i18nConfirmacaoExclusao}" header="#{cc.attrs.i18nTituloConfirmacaoExclusao}" severity="Alert" widgetVar="confirmaExclusao">
+            <h:form>
+                <p:commandButton ajax="true" value="#{i18n.sim}" update="growl formListaAluno" oncomplete="confirmaExclusao.hide();" actionListener="#{cc.attrs.managedBean.delete}" />
+                <p:commandButton value="#{i18n.nao}" onclick="confirmaExclusao.hide();" />
+            </h:form>
+        </p:confirmDialog>
+
+        <h:panelGroup id="pgEngloba">
+
+            <h:panelGroup id="pgCreateUpdate" rendered="#{cc.attrs.managedBean.createMode || cc.attrs.managedBean.updateMode}">
+                <ui:include src="#{cc.attrs.srcCreateUpdate}" />
+            </h:panelGroup>
+
+            <h:panelGroup id="pgRetrieveDelete" rendered="#{cc.attrs.managedBean.retrieveMode || cc.attrs.managedBean.deleteMode}">
+                <ui:include src="#{cc.attrs.srcRetrieveDelete}" />
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+    </composite:implementation>
+
+</html>

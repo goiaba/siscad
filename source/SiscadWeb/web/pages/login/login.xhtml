@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.prime.com.tr/ui">
+    
+    <h:head>
+
+        <title>#{i18n.tituloSistema}</title>
+
+    </h:head>
+
+    <h:body>
+
+        <p:growl id="growl" />
+
+        <p:dialog header="#{i18n.loginHeader}" visible="true" closable="false" draggable="false" resizable="false" width="370" closeOnEscape="false">
+
+            <h:form id="formLogin" style="text-align: center;">
+
+                <h:panelGrid id="login" columns="2">
+
+                    <h:outputLabel value="#{i18n.loginCpfRa}" for="usuario" />
+                    <h:inputText id="usuario" value="#{loginBean.username}" />
+
+                    <h:outputLabel value="#{i18n.senha}" for="passwd" />
+                    <h:inputSecret id="passwd" value="#{loginBean.senha}" />
+
+                </h:panelGrid>
+
+                <h:commandButton value="#{i18n.login}" action="#{loginBean.login}" />
+
+            </h:form>
+
+
+        </p:dialog>
+
+    </h:body>
+
+</html>

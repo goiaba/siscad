@@ -1,0 +1,21 @@
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.prime.com.tr/ui"
+                xmlns:dt="http://java.sun.com/jsf/composite/composites">
+
+    <h:form id="formDadosAlocacao">
+
+        <p:fieldset id="fsDadosAlocacao" legend="#{i18n.alocacoes}" collapsed="false">
+
+            <dt:dadosComunsAlocacao managedBean="#{crudAlocacaoBean}" />
+            
+        </p:fieldset>
+
+        <p:commandButton id="inserir" value="#{i18n.inserir}" action="#{crudAlocacaoBean.create}" rendered="#{crudAlocacaoBean.createMode}" update="pgEngloba growl" />
+        <p:commandButton id="alterar" value="#{i18n.alterar}" action="#{crudAlocacaoBean.update}" rendered="#{crudAlocacaoBean.updateMode}" update="pgEngloba growl" />
+        <p:commandButton id="voltar" value="#{i18n.voltarParaLista}" action="#{crudAlocacaoBean.back}" rendered="#{crudAlocacaoBean.updateMode}" update="pgEngloba" />
+
+    </h:form>
+
+</ui:composition>
